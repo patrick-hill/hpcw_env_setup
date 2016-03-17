@@ -1,0 +1,8 @@
+---
+- name: VSCode --> Check if installed
+  stat: path=/opt/VSCode-linux-x64/code
+  register: vscode_check
+
+- name: VSCode --> Ubuntu install
+  include: "ubuntu.yml"
+  when: ansible_distribution == 'Ubuntu' and vscode_check.stat.exists == False

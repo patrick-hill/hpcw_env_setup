@@ -1,0 +1,50 @@
+---
+- name: WhatPulse --> Download archive
+  get_url:
+    url: "{{ whatpulse_link }}"
+    dest: "{{ whatpulse_dl_path }}"
+    validate_certs: False
+  register: what_pulse_downloaded
+  
+- name: WhatPulse --> Creates install directory
+  file: path=/opt/what-pulse state=directory recurse=yes
+  
+- name: WhatPulse --> Extract archive
+  unarchive:
+    src: "{{ whatpulse_dl_path }}"
+    dest: "/opt/what-pulse/"
+    copy: no
+  sudo: yes
+  when: what_pulse_downloaded|changed
+  
+- name: WhatPulse --> Install dependencies
+  apt: pkg={{item}} state=installed
+  with_items:
+        - openssl
+        - libqtcore4
+        - libqtwebkit4
+        - libqt4-sql
+        - libqt4-sql-sqlite
+        - libssl-dev
+        - libqtscript4-core
+        - libqtscript4-gui
+        - libqtscript4-network
+        - libqtscript4-webkit
+        - libpcap0.8
+        - libpcapnav0
+  
+- name: WhatPulse --> netcp setup
+  shell: setcap cap_net_raw,cap_net_admin=eip /opt/what-pulse/whatpulse
+  sudo: yes
+  
+- name: WhatPulse --> Symlink executable
+  file:
+    src: /opt/what-pulse/whatpulse 
+    dest: /usr/local/bin/whatpulse
+    state: link
+  sudo: yes
+
+- name: WhatPulse --> Remove archive
+  file:
+    path: "{{ whatpulse_dl_path }}"
+    state: absent

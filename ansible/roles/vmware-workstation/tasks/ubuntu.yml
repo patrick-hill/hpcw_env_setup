@@ -1,0 +1,11 @@
+---
+- name: VMWare Workstation --> Download installer
+  get_url:
+    url: "{{ vmware_link }}"
+    dest: "{{ vmware_dl_path }}"
+    validate_certs: False
+  register: vmware_downloaded
+  
+- name: VMWare Workstation --> Execute installer
+  shell: "{{ vmware_dl_path }}  --eulas-agreed --required --console {{ vmware_serial_param }}"
+  sudo: yes

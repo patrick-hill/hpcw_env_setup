@@ -1,0 +1,22 @@
+---
+- name: VSCode --> Download archive
+  get_url:
+    url: "{{ vs_code_link }}"
+    dest: "{{ vs_code_dl_path }}"
+    validate_certs: False
+  register: vs_code_downloaded
+  
+- name: VSCode --> Extract archive
+  unarchive:
+    src: "{{ vs_code_dl_path }}"
+    dest: "/opt/"
+    copy: no
+  sudo: yes
+  when: vs_code_downloaded|changed
+  
+- name: VSCode --> Symlink executable
+  file:
+    src: /opt/VSCode-linux-x64/code 
+    dest: /usr/local/bin/code
+    state: link
+  sudo: yes

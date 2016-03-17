@@ -1,0 +1,8 @@
+---
+- name: WhatPulse --> Check if installed
+  stat: path=/opt/what-pulse/whatpulse
+  register: whatpulse_check
+
+- name: WhatPulse --> Ubuntu install
+  include: "ubuntu.yml"
+  when: ansible_distribution == 'Ubuntu' and whatpulse_check.stat.exists == False

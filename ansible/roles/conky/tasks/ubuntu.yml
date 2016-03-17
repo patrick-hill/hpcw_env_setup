@@ -1,0 +1,10 @@
+---
+- name: Conky --> Add Conky-Manager PPA
+  apt_repository: repo='ppa:teejee2008/ppa'
+  
+- name: Conky --> Install
+  apt: pkg={{item}} state=installed  update_cache=yes
+  with_items:
+        - conky
+        - conky-manager
+  

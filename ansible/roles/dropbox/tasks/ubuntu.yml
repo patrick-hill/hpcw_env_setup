@@ -1,0 +1,17 @@
+---
+- name: Dropbox --> Download installer
+  get_url: url={{ dropbox_link }} dest={{ dropbox_dl_path }}
+
+- name: Dropbox --> Install deb
+  apt: deb={{ dropbox_dl_path }}
+  
+- name: Dropbox --> Install dependencies
+  apt: pkg={{ item }} state=installed
+  with_items:
+        # - nemo-dropbox
+        - python-gpgme
+
+- name: Dropbox --> Remove deb file
+  file:
+    path: "{{ dropbox_dl_path }}"
+    state: absent

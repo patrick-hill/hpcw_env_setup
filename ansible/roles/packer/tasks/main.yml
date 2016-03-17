@@ -1,0 +1,8 @@
+---
+- name: Packer --> Check if installed
+  stat: path=/opt/packer/packer
+  register: packer_check
+
+- name: Packer --> Ubuntu install
+  include: "ubuntu.yml"
+  when: ansible_distribution == 'Ubuntu' and packer_check.stat.exists == False

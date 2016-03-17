@@ -1,0 +1,21 @@
+---
+- name: Vagrant --> Download archive
+  get_url: url={{ vagrant_link }} dest={{ vagrant_dl_path }}
+
+- name: Vagrant --> Install deb package
+  apt: deb={{ vagrant_dl_path }}
+  
+- name: Vagrant --> Remove deb
+  file:
+    path: "{{ vagrant_dl_path }}"
+    state: absent
+    
+- name: Vagrant --> Install plugins
+  shell: vagrant plugin install {{item}}
+  with_items:
+        - vagrant-vmware-workstation
+        - vagrant-salt
+        - vagrant-multiprovider-snap
+        - vagrant-hostmanager
+        - vagrant-ansible-local
+        - vagrant-reload

@@ -1,0 +1,32 @@
+---
+- name: Packer --> Download archive
+  get_url:
+    url: "{{ packer_link }}"
+    dest: "{{ packer_dl_path }}"
+    validate_certs: False
+  register: packer_downloaded
+  
+- name: Packer --> Create install directory
+  file: path=/opt/packer state=directory recurse=yes
+  when: packer_downloaded|changed
+  
+- name: Packer --> Extract archive
+  unarchive:
+    src: "{{ packer_dl_path }}"
+    dest: "/opt/packer/"
+    copy: no
+  sudo: yes
+  when: packer_downloaded|changed
+  
+- name: Packer --> Symlink executable
+  file:
+    src: /opt/packer/packer 
+    dest: /usr/local/bin/packer
+    state: link
+  sudo: yes
+  when: packer_downloaded|changed
+
+- name: Packer --> Remove archive
+  file:
+    path: "{{ packer_dl_path }}"
+    state: absent

@@ -1,0 +1,52 @@
+---
+- name: Update sources
+  apt: update_cache=yes
+  
+- name: Install common packages
+  apt: pkg={{item}} state=installed
+  with_items:
+        # Common sys utils
+        - curl
+        - wget
+        - vim
+        - nfs-common
+        - zip
+        - unzip
+        - rar
+        - unrar
+        - gcc
+        - make
+        - build-essential
+        - software-properties-common
+        - python-gpgme
+        - python-simplejson
+        # Coding 
+        - git
+        - numlockx
+        - groovy
+        - npm
+        - gradle
+        # ToDo's
+        # - autokey-gtk
+        # - autokey-common
+        # - skype
+        # - virtualbox-5.0
+
+- name: Install linux headers
+  shell: apt install -y linux-headers-$(uname -r)
+        
+- name: Set Greeter Script
+  lineinfile:
+    dest: /usr/share/lightdm/lightdm.conf.d/50-unity-greeter.conf
+    line: "greeter-setup-script= xset led 3;/usr/bin/numlockx on;"
+  sudo: yes
+  
+- name: Setup git settings
+  shell: git config --global core.excludesfile ~/.gitignore_global && git config --global user.name "{{ git_user_name }}" && git config --global user.email "{{ git_user_email }}"
+
+- name: Copy SSH Keys
+  shell: echo 'not done'
+  
+- name: Pull Repos
+  shell: echo 'not done'
+#   shell: ./scripts/repos.groovy 'github' ~/src patrick-hill
