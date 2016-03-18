@@ -5,19 +5,22 @@
 - name: Install common packages
   apt: pkg={{item}} state=installed
   with_items:
-        # Common sys utils
-        - curl
-        - wget
-        - vim
+        # Core utils
         - nfs-common
-        - zip
-        - unzip
-        - rar
-        - unrar
         - gcc
         - make
         - build-essential
         - software-properties-common
+        # Archives
+        - zip
+        - unzip
+        - rar
+        - unrar
+        # Common utils
+        - curl
+        - wget
+        - vim
+        - vim-gnome
         - python-gpgme
         - python-simplejson
         # Coding 

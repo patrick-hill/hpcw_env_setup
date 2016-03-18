@@ -39,6 +39,7 @@
     - vagrant
     - packer
     - conky
+    - virtualbox
     # - vmware
     
   post_tasks:
