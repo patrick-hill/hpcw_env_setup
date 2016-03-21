@@ -8,6 +8,7 @@ Currently I'm running Ubuntu 15.10 so the roles are talored as such.
 * 
 
 # TODO
+* Setup Backups?
 * Chrome: Add menu item?
 * Cinnamon: Set as default DE?
 * Conky: Setup default profile (from dotfiles?)

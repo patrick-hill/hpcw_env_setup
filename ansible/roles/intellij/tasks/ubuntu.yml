@@ -20,3 +20,9 @@
     dest: /usr/local/bin/idea
     state: link
   sudo: yes
+
+- name: Intellij --> Desktop File
+  copy:
+    src: intellij.desktop
+    dest: /usr/share/applications/intellij.desktop
+    mode: 0644

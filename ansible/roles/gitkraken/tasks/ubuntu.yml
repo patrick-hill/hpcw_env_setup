@@ -1,0 +1,11 @@
+---
+- name: GitKraken --> Download installer
+  get_url: url={{ gitkraken_link }} dest={{ gitkraken_dl_path }}
+
+- name: GitKraken --> Install deb
+  apt: deb={{ gitkraken_dl_path }}
+
+- name: GitKraken --> Remove deb file
+  file:
+    path: "{{ gitkraken_dl_path }}"
+    state: absent

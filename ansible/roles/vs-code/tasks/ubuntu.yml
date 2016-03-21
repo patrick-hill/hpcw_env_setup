@@ -20,3 +20,9 @@
     dest: /usr/local/bin/code
     state: link
   sudo: yes
+
+- name: VSCode --> Desktop File
+  copy:
+    src: code.desktop
+    dest: /usr/share/applications/code.desktop
+    mode: 0644

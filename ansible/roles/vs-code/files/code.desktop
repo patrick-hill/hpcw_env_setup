@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=
+Name=Code
+GenericName=code
+Type=Application
+Exec=code
+Icon=/opt/VSCode-linux-x64/resources/app/resources/linux/code.png
+Categories=Programming

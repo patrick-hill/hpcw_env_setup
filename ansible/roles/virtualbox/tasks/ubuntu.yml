@@ -1,21 +1,26 @@
 ---
-- name: Virtualbox --> Add repo key
-  apt_key:
-    url: https://www.virtualbox.org/download/oracle_vbox.asc
-    state: present
-  sudo: yes
-
-- name: Virtualbox --> Add to source
-  lineinfile:
-    dest: /etc/apt/sources.list.d/virtualbox.list
-    line: "deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian stable contrib"
-    create: yes
-    mode: 0644
-  sudo: yes
-
 - name: Virtualbox --> Install
   apt: 
-    pkg: virtualbox-5.0
+    pkg: virtualbox
     state: installed
-    update_cache: yes
+
+#- name: Virtualbox --> Add repo key
+#  apt_key:
+#    url: https://www.virtualbox.org/download/oracle_vbox.asc
+#    state: present
+#  sudo: yes
+
+#- name: Virtualbox --> Add to source
+#  lineinfile:
+#    dest: /etc/apt/sources.list.d/virtualbox.list
+#    line: "deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian stable contrib"
+#    create: yes
+#    mode: 0644
+#  sudo: yes
+
+#- name: Virtualbox --> Install
+#  apt: 
+#    pkg: virtualbox-5.0
+#    state: installed
+#    update_cache: yes
   

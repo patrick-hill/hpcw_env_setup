@@ -7,12 +7,12 @@
   register: what_pulse_downloaded
   
 - name: WhatPulse --> Creates install directory
-  file: path=/opt/what-pulse state=directory recurse=yes
+  file: path=/opt/whatpulse state=directory recurse=yes
   
 - name: WhatPulse --> Extract archive
   unarchive:
     src: "{{ whatpulse_dl_path }}"
-    dest: "/opt/what-pulse/"
+    dest: "/opt/whatpulse/"
     copy: no
   sudo: yes
   when: what_pulse_downloaded|changed
@@ -34,12 +34,12 @@
         - libpcapnav0
   
 - name: WhatPulse --> netcp setup
-  shell: setcap cap_net_raw,cap_net_admin=eip /opt/what-pulse/whatpulse
+  shell: setcap cap_net_raw,cap_net_admin=eip /opt/whatpulse/whatpulse
   sudo: yes
   
 - name: WhatPulse --> Symlink executable
   file:
-    src: /opt/what-pulse/whatpulse 
+    src: /opt/whatpulse/whatpulse 
     dest: /usr/local/bin/whatpulse
     state: link
   sudo: yes
@@ -48,3 +48,9 @@
   file:
     path: "{{ whatpulse_dl_path }}"
     state: absent
+
+- name: WhatPulse --> Desktop File
+  copy:
+    src: whatpulse.desktop
+    dest: /usr/share/applications/whatpulse.desktop
+    mode: 0644
