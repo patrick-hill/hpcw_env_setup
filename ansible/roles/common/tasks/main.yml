@@ -45,7 +45,7 @@
 - name: Common --> Set Greeter Script
   lineinfile:
     dest: /usr/share/lightdm/lightdm.conf.d/50-unity-greeter.conf
-    line: "greeter-setup-script='xset led 3; /usr/bin/numlockx on;'"
+    line: "greeter-setup-script=xset led 3"
   sudo: yes
 
 - name: Common --> Disable Guest Session
