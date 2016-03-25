@@ -4,6 +4,7 @@
   sudo: true
   vars:
     os_username: phill
+    autokey_backup_dir: /home/phill/Dropbox/0-Backups/configs/autokey
     git_user_name: "Patrick Hill"
     git_user_email: "Hill@HillsPCWorld.com"
     gitkraken_link: https://release.gitkraken.com/linux/gitkraken-amd64.deb
@@ -31,6 +32,7 @@
   
   roles:
     - common
+    - autokey
     - cinnamon-desktop
     - chrome
     - conky

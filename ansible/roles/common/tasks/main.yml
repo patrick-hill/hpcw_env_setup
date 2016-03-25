@@ -11,7 +11,7 @@
         - make
         - build-essential
         - software-properties-common
-        # exFat Filesystem
+        # Filesystems
         - exfat-fuse
         - exfat-utils
         # Archives
@@ -27,6 +27,8 @@
         - vim-gnome
         - python-gpgme
         - python-simplejson
+        # Media
+        - vlc
         # Coding 
         - git
         - numlockx
@@ -34,10 +36,7 @@
         - npm
         - gradle
         # ToDo's
-        # - autokey-gtk
-        # - autokey-common
         # - skype
-        # - virtualbox-5.0
 
 - name: Common --> Install linux headers
   shell: apt install -y linux-headers-$(uname -r)

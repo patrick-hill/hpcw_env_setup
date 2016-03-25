@@ -1,0 +1,10 @@
+---
+- name: Autokey --> Checking if installed
+  command: dpkg-query -W autokey-gtk
+  register: deb_check
+  failed_when: deb_check.rc > 1
+  changed_when: deb_check.rc == 1
+
+- name: Autokey --> Ubuntu install
+  include: "ubuntu.yml"
+  when: ansible_distribution == 'Ubuntu' and deb_check.rc == 1

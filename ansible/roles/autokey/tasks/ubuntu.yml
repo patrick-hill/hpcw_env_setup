@@ -1,0 +1,12 @@
+---
+- name: Autokey --> Install
+  apt: pkg={{item}} state=installed
+  with_items:
+        - autokey-gtk
+
+- name: Autokey --> Dirs
+  file: path=/home/{{os_username}}/.config/ state=directory recurse=yes
+  
+- name: Autokey --> Symlink Backup Dir
+  shell: ln -s {{autokey_backup_dir}} /home/{{os_username}}/.config
+  
