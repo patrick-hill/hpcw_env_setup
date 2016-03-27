@@ -1,0 +1,32 @@
+---
+- name: RPMFusion Repo
+  yum:  name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm state=present update_cache=yes
+
+- name: bootstrap SABnzbd install
+  copy: src=SABnzbd.repo
+        dest=/etc/yum.repos.d/
+        owner=root group=root mode=0644
+
+- name:     Install prerequisites for SAB
+  command:  yum -y install wget git par2cmdline p7zip unrar unzip python-yenc python-feedparser python-configobj python-cheetah python-dbus python-support pyOpenSSL
+
+- name:    Create dirs 
+  command: mkdir -p /apps/data/.sabnzbd
+
+- name:     Clone repo
+  command:  git clone https://github.com/sabnzbd/sabnzbd.git /apps/sabnzbd
+
+- name:     Take ownership of apps
+  command:  chown -R usenet:usenet /apps
+
+- name: SAB service
+  copy: src=sabnzbd.service
+        dest=/etc/systemd/system/
+        owner=root group=root mode=0644
+
+- name:     Copy ini file
+  command:  
+
+- name:     enable SAB service
+  command:  systemctl enable sabnzbd.service
+

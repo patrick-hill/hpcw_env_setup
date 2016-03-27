@@ -1,0 +1,42 @@
+---
+- hosts: proxy
+  gather_facts: no
+  sudo: true
+
+  pre_tasks:
+    - shell: echo 'hello'
+    
+  roles:
+    - common-vms
+    - openssl
+    - nginx
+    - firewall
+
+  post_tasks:
+    # Setup Proxy Homepage
+    - name:     Create site dir's
+      command:  sudo mkdir -p /var/www/proxy.hpcw.com/
+    
+    - name: Clone template
+      git:  repo=https://github.com/IronSummitMedia/startbootstrap-4-col-portfolio.git
+            dest=/vagrant/public_html
+            #   dest=/var/www/proxy.hpcw.com/public_html
+
+    - name:     Site shortcut
+      command:  sudo ln -s /vagrant/public_html /var/www/proxy.hpcw.com/public_html
+
+    - name:     Set owner
+      command:  sudo chown -R nginx:nginx /vagrant/public_html
+
+    - name:     Set perms
+      command:  sudo chmod 755 /var/www
+
+    - name: Reboot system
+      raw: /sbin/shutdown -r 1
+      changed_when: True
+  
+    # If we need to use this server again after restart, use below...
+    # - name: Wait for system to complete reboot (5 min max / 90 sec delay)
+    #   wait_for: host=192.168.125.6 port=22 timeout=300 delay=90 state=started
+    #   delegate_to: 127.0.0.1
+    #   ignore_errors: yes

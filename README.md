@@ -42,4 +42,4 @@ Bash powered setup driven from my Mac script adapted for Linux. Very repatative 
 
 ## Env-Mac:
 **Status: Archived**   
-Bash powered setup powered mainly by [Brew](http://brew.sh/) & [Brew Cask](https://github.com/caskroom/homebrew-cask)
+Bash setup powered mainly by [Brew](http://brew.sh/) & [Brew Cask](https://github.com/caskroom/homebrew-cask)

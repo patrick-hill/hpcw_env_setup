@@ -31,7 +31,7 @@
     - shell: echo 'Starting...'
   
   roles:
-    - common
+    - common-devhouse
     - autokey
     - cinnamon-desktop
     - chrome
