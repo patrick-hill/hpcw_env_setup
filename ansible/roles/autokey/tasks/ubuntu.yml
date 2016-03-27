@@ -8,5 +8,6 @@
   file: path=/home/{{os_username}}/.config/ state=directory recurse=yes
   
 - name: Autokey --> Symlink Backup Dir
-  shell: ln -s {{autokey_backup_dir}} /home/{{os_username}}/.config
+  file: dest=/home/{{os_username}}/.config src={{autokey_backup_dir}} state=link
+  # shell: ln -s {{autokey_backup_dir}} /home/{{os_username}}/.config
   

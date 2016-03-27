@@ -40,11 +40,25 @@
 
 - name: Common --> Install linux headers
   shell: apt install -y linux-headers-$(uname -r)
-        
+  
+- name: Common --> Login Script --> Create Dir
+  file: dest=/opt/misc state=directory
+  sudo: yes
+  
+- name: Common --> Login Script --> Create and Populate Script
+  lineinfile:
+    dest: /opt/misc/login-setup.sh
+    state: present
+    regexp: "^%wheel"
+    line: "#!/usr/bin/env bash\n\nxset led\nnumlockx on"
+    create: yes
+    mode: "a+x"
+  sudo: yes 
+
 - name: Common --> Set Greeter Script
   lineinfile:
     dest: /usr/share/lightdm/lightdm.conf.d/50-unity-greeter.conf
-    line: "greeter-setup-script=xset led 3"
+    line: "greeter-setup-script=/opt/misc/login-setup.sh"
   sudo: yes
 
 - name: Common --> Disable Guest Session
@@ -65,13 +79,13 @@
 
 # NFS Mounts
 - name: Common --> NFS --> Hills_Shared
-  mount: name=/home/phill/mnt/hills_shared src=freenas.local:/mnt/R6-18TB/Hills_Shared fstype=nfs4 opts=rw,hard,intr state=mounted
+  mount: name=/home/phill/mnt/hills_shared src=10.0.0.150:/mnt/R6-18TB/Hills_Shared fstype=nfs4 opts=rw,hard,intr state=mounted
 
 - name: Common --> NFS --> Hill_Main
-  mount: name=/home/phill/mnt/hill_main src=freenas.local:/mnt/R6-18TB/Hill_Main fstype=nfs4 opts=rw,hard,intr state=mounted
+  mount: name=/home/phill/mnt/hill_main src=10.0.0.150:/mnt/R6-18TB/Hill_Main fstype=nfs4 opts=rw,hard,intr state=mounted
   
 - name: Common --> NFS --> Games
-  mount: name=/home/phill/mnt/games src=freenas.local:/mnt/R6-12TB/Games fstype=nfs4 opts=rw,hard,intr state=mounted
+  mount: name=/home/phill/mnt/games src=10.0.0.150:/mnt/R6-12TB/Games fstype=nfs4 opts=rw,hard,intr state=mounted
 
 - name: Common --> SSH --> Copy SSH Keys
   shell: echo 'not done'

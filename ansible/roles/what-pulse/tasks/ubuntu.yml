@@ -37,14 +37,14 @@
   shell: setcap cap_net_raw,cap_net_admin=eip /opt/whatpulse/whatpulse
   sudo: yes
   
-- name: WhatPulse --> Copy Non-Interactive Permissions Setup Script
+- name: WhatPulse --> Copy My Interactive Permissions Setup Script
   copy:
-    src: non-interactive-permissions-setup.sh
-    dest: /opt/whatpulse/non-interactive-permissions-setup.sh
+    src: setup-input-permissions-enhanced.sh
+    dest: /opt/whatpulse/setup-input-permissions-enhanced.sh
     mode: 0644
   
 - name: WhatPulse --> Input Permissions Setup (Non-Interactive)
-  shell: /opt/whatpulse/non-interactive-permissions-setup.sh {{os_username}}
+  shell: /opt/whatpulse/setup-input-permissions-enhanced.sh true {{os_username}}
   sudo: yes
   
 - name: WhatPulse --> Symlink executable
