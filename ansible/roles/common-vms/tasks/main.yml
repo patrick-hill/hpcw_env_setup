@@ -1,27 +1,38 @@
 ---
-- name: Creating groups
-  group: name=admins state=present
+- name:     Common-vms --> Disable Firewall :)
+  command:  systemctl disable firewalld.service && systemctl stop firewalld.service
+  when:     disable_firewall
 
-- name: Create Users - phill
-  user: name=phill comment=AdminGod group=admins password={{ password }} state=present
-  
-- name: Fix VBox file sharing
-  file:
-    src: /opt/VBoxGuestAdditions-4.3.10/lib/VBoxGuestAdditions
-    dest: /usr/lib/VBoxGuestAdditions
-    state: link
-    force: yes
-
-- name:     Disable SELinux for testing ease
+- name:     Common-vms --> Disable SELinux for testing ease
   command:  sed -i /etc/selinux/config -r -e 's/^SELINUX=.*/SELINUX=disabled/g'
+  when:     disable_selinux
 
-- name:     Install EPEL repo
-  yum:      name=epel-release state=latest update_cache=yes
+- name:   Common-vms --> Creating groups
+  group:  name={{ stack_user_group }} state=present gid={{ stack_user_group_gid }}
 
-- name: Install common packages
+- name: Common-vms --> Create usenet user
+  user: name={{ stack_user }} state=present uid={{ stack_user_uid }} group={{ stack_user_group }}
+
+- name: Common-vms --> Install EPEL repo
+  yum:  name=epel-release state=latest update_cache=yes
+
+- name: Common-vms --> Install common packages
   yum:  pkg={{ item }} state=installed
   with_items:
     - git
     - wget
     - nfs-utils
     - nfs-utils-lib
+
+- name:   Common-vms --> NFS --> Hills_Shared/dataset_files/Media
+  mount:  name={{ nfs_target }} src={{ nfs_source }} fstype={{ nfs_type }} opts={{ nfs_opts }} state=mounted
+
+
+
+  
+# - name: Common-vms --> Fix VBox file sharing
+#   file:
+#     src: /opt/VBoxGuestAdditions-4.3.10/lib/VBoxGuestAdditions
+#     dest: /usr/lib/VBoxGuestAdditions
+#     state: link
+#     force: yes

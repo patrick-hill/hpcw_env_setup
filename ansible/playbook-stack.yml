@@ -1,25 +1,25 @@
 ---
 - hosts: stack
-  gather_facts: no
+  gather_facts: yes
   sudo: true
   vars:
-    - password: $6$rounds=656000$B/OzGPN5bfVkA8l9$yAKugT8qHocV7DmqzaMZSMzkwRgNO2j8H0tQaCyQIDottPgT8lZKHoXSZLZTX9o9d4c7qbS50DBC8wfCh3K0g1
-
+    disable_firewall: true
+    disable_selinux: true
+    stack_user: usenet
+    stack_password: welcome1
+    stack_user_uid: 1020
+    stack_user_group: usenet
+    stack_user_group_gid: 1020
+    nfs_source: 10.0.0.150:/mnt/R6-18TB/Hills_Shared/dataset_files/Media
+    nfs_target: /mnt/Media
+    nfs_type: nfs4
+    nfs_opts: rw,hard,intr
+    ssl_dir: /apps/ssl
+    ssl_key_password: welcome1
+    
   pre_tasks:
-    - name:     Disable Firewall :)
-      command:  systemctl disable firewalld.service && systemctl stop firewalld.service
-      
-    - name:     Create usenet user
-      user:     name=usenet
-      
-      # yum -y install nfs-utils autofs
-      # mkdir /Hills_Shared
-      # echo "/Hills_Shared /etc/auto.hills-shared --timeout=600 --ghost" > /etc/auto.master
-      # echo "Hills_Shared -fstype=nfs,rw 10.0.0.150:/Hills_Shared" > /etc/auto.hills-shared
-      # service autofs restart
-      # chkconfig autofs on
-      # 
-      
+    - shell:  echo "Starting..."
+            
   roles:
     - common-vms
     - openssl
@@ -28,6 +28,7 @@
     
   post_tasks:
     - name: Reboot system
-      raw: /sbin/shutdown -r 1
+      raw: /sbin/shutdown -r 0
+      sudo: yes
       changed_when: True
   
