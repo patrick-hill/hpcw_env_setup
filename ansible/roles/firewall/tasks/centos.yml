@@ -1,0 +1,16 @@
+---
+# Enabled --> Configure
+- name:     Firewall --> Enable and Start
+  service:  name=firewalld.service enabled=yes state=started
+  when:     firewall_enabled == true
+
+# Disabled
+- name:     Firewall --> Disable
+  service:  name=firewalld.service enabled=no state=stopped
+  when:     firewall_enabled == false
+  
+# Services
+# - name:     Add http in firewalld
+#   command:  firewall-cmd --permanent --add-service={{ item }}
+#   with_items: {{ firewall_enable_services }}
+#   when:     firewall_enable_services is defined  

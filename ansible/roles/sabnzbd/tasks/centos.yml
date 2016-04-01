@@ -1,32 +1,140 @@
 ---
-- name: SickRage --> RPMFusion Repo
-  yum:  name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm state=present update_cache=yes
+# Guides:
+  #: http://www.digitesters.com/install-sabnzbd-on-centos-7/
+  
+# - name: Sabnzbd --> Add repo
+#   copy: src=SABnzbd.repo
+#         dest=/etc/yum.repos.d/
+#         owner=root group=root mode=0644
 
-- name: SickRage --> Add repo
-  copy: src=SABnzbd.repo
-        dest=/etc/yum.repos.d/
-        owner=root group=root mode=0644
+- name: Sabnzbd --> Install prerequisites
+  yum:  pkg={{ item }} state=installed
+  with_items:
+      # Common
+      - wget
+      - git
+      # Compiler
+      - gcc
+      - gcc-c++
+      - libgcc
+      - make
+      - cmake
+      # Python
+      - python
+      - python-libs
+      - python-configobj
+      - python-pycurl
+      - python-pyudev
+      - python-setuptools
+      - python-cheetah
+      - python-devel
+      - python-tools
+      - python-feedparser
+      - par2cmdline     
+      - pyOpenSSL
+      # OpenSSL
+      - openssl
+      - openssl-devel
+      - openssl-libs
+      # Compression
+      - gzip
+      - bzip2
+      - p7zip
+      - unrar
+      - unzip
+      
+      # - python-yenc
+      # - python-dbus
+      # - python-support
 
-- name:     SickRage --> Install prerequisites for SAB
-  command:  yum -y install wget git par2cmdline p7zip unrar unzip python-yenc python-feedparser python-configobj python-cheetah python-dbus python-support pyOpenSSL
+  # par2 multicore guide
+  # https://forums.sabnzbd.org/viewtopic.php?f=16&t=18793#p99702
 
-- name:    SickRage --> Create dirs 
-  command: mkdir -p /apps/data/.sabnzbd
+# Yenc
+- name: Sabnzbd --> Yenc --> Download file
+  get_url:
+    url: "http://www.golug.it/pub/yenc/yenc-0.4.0.tar.gz"
+    dest: "/tmp/yenc-0.4.0.tar.gz"
+    validate_certs: False
+  register: downloaded_yenc
+  
+- name: Sabnzbd --> Yenc --> Extract file
+  unarchive:
+    src: "/tmp/yenc-0.4.0.tar.gz"
+    dest: "/tmp"
+    copy: no
+  sudo: yes
+  when: downloaded_yenc|changed
+  
+- name: Sabnzbd --> Yenc --> Remove download file
+  file: path=/tmp/yenc-0.4.0.tar.gz state=absent
 
-- name:     SickRage --> Clone repo
-  command:  git clone https://github.com/sabnzbd/sabnzbd.git /apps/sabnzbd
+- name:     Sabnzbd --> Yenc --> Build
+  command:  python setup.py build
+  args:
+    chdir: /tmp/yenc-0.4.0
 
-- name:     SickRage --> Take ownership of apps
-  command:  chown -R {{ stack_user }}:{{ stack_user_group }} /apps
+- name:     Sabnzbd --> Yenc --> Install
+  command:  python setup.py install
+  args:
+    chdir: /tmp/yenc-0.4.0
 
-- name: SickRage --> SAB service
+- name: Sabnzbd --> Yenc --> Remove files
+  file: path=/tmp/yenc-0.4.0 state=absent
+
+  #pyOpenSSL
+- name: Sabnzbd --> pyOpenSSL --> Download file
+  get_url:
+    url: "https://launchpad.net/pyopenssl/main/0.11/+download/pyOpenSSL-0.11.tar.gz"
+    dest: "/tmp"
+    validate_certs: False
+  register: downloaded_pyopenssl
+  
+- name: Sabnzbd --> pyOpenSSL --> Extract file
+  unarchive:
+    src: "/tmp/pyOpenSSL-0.11.tar.gz"
+    dest: "/tmp"
+    copy: no
+  sudo: yes
+  when: downloaded_pyopenssl|changed
+  
+- name: Sabnzbd --> pyOpenSSL --> Remove download file
+  file: path=/tmp/pyOpenSSL-0.11.tar.gz state=absent
+
+- name:     Sabnzbd --> pyOpenSSL --> Build
+  command:  python setup.py build
+  args:
+    chdir: /tmp/pyOpenSSL-0.11
+
+- name:     Sabnzbd --> pyOpenSSL --> Install
+  command:  python setup.py install
+  args:
+    chdir: /tmp/pyOpenSSL-0.11
+
+- name: Sabnzbd --> pyOpenSSL --> Remove files
+  file: path=/tmp/pyOpenSSL-0.11 state=absent
+
+# Firewall
+- name:     Sabnzbd --> Firewall 8080
+  command:  firewall-cmd --permanent --add-port=8080/tcp
+  when:     firewall_enabled == true
+
+- name:     Sabnzbd --> Firewall 9090
+  command:  firewall-cmd --permanent --add-port=9090/tcp
+  when:     firewall_enabled == true
+
+#Sabnzbd
+- name: Sabnzbd --> Clone repo
+  git:  repo=https://github.com/sabnzbd/sabnzbd.git
+        dest=/apps/sabnzbd
+
+- name: Sabnzbd --> Take ownership of apps
+  file: dest=/apps owner={{ stack_user }} group={{ stack_user_group }} recurse=yes
+
+- name: Sabnzbd --> Add service
   copy: src=sabnzbd.service
         dest=/etc/systemd/system/
         owner=root group=root mode=0644
-
-# - name: SickRage --> Copy ini file
-#   copy: src=sabnzbd_config.ini
-#         dest=/apps/data/.sabnzbd/sabnzbd_config.ini
-
-- name:     SickRage --> enable SAB service
-  command:  systemctl enable sabnzbd.service
+        
+- name:     Sabnzbd --> Enable service
+  service:  name=sabnzbd.service enabled=yes state=started

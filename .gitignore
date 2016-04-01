@@ -21,6 +21,12 @@ misc.xml
 
 # Vagrant Files
 .vagrant
+
+# Ansible
 ansible.cfg
 ansible/plugins/human_log.py
 ansible/plugins/human_log.pyc
+*.retry
+
+# Configs
+sabnzbd.ini

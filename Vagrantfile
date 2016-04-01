@@ -2,7 +2,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.require_plugin "vagrant-reload"
+# Requirements
+# This project requires the vagrant plugin: vagrant-reload
+
 # Configs
 Vagrant.require_version ">= 1.7.0"
 VAGRANTFILE_API_VERSION = "2"

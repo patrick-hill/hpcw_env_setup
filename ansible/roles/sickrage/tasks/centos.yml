@@ -1,0 +1,24 @@
+---
+- name: SickRage --> Install Requirements
+  yum: pkg={{ item }} state=installed
+  with_items:
+    - python-cheetah
+    - python-setproctitle
+
+- name: SickRage --> Clone repo from GitHub
+  git:  repo=https://github.com/SickRage/SickRage.git
+        dest=/apps/sickrage
+        version=master
+
+- name: SickRage --> Set dir owner
+  file: path=/apps/sickrage owner={{ stack_user }}
+        group={{ stack_user_group }} recurse=yes
+        state=directory
+
+- name: SickRage --> Add service
+  copy: src=sickrage.service
+        dest=/etc/systemd/system/
+        owner=root group=root mode=0644
+
+- name:     SickRage --> Enable service
+  service:  name=sickrage.service enabled=yes state=started

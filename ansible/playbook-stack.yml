@@ -3,7 +3,10 @@
   gather_facts: yes
   sudo: true
   vars:
-    disable_firewall: true
+    firewall_enabled: false
+    # firewall_enable_services:
+    #   - http
+    #   - https
     disable_selinux: true
     stack_user: usenet
     stack_password: welcome1
@@ -22,9 +25,22 @@
             
   roles:
     - common-vms
+    - firewall
     - openssl
-    - sabnzbd
-    # - sickrage
+    - sabnzbd       # port 8080
+    - sickrage      # port 8081
+    - couchpotato   # port 5050
+    - headphones    # port 8181
+    - sonarr        # port 8989
+    # - transmission  # port 
+    # http://geekyadmins.com/install-transmission-on-centos-7/
+    # https://elijahpaul.co.uk/script-install-for-transmission-2-83-seedbox-on-centos-6-5/
+    # - guacamole
+
+    # - plex
+    # - subsonic
+    # - owncloud
+    
     
   post_tasks:
     - name: Reboot system

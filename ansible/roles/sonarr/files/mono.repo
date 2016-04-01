@@ -1,0 +1,6 @@
+[mono]
+name=mono for Centos 7 - Base
+baseurl=http://download.mono-project.com/repo/centos/
+failovermethod=priority
+enabled=1
+gpgcheck=0

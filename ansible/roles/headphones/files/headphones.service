@@ -1,0 +1,16 @@
+#
+# Systemd unit file for Headphones
+#
+
+[Unit]
+Description=Headphones Daemon
+
+[Service]
+Type=forking
+User=usenet
+Group=usenet
+ExecStart=/usr/bin/python /apps/headphones/Headphones.py --daemon --datadir=/apps/data/.headphones --config=/apps/data/.headphones/headphones_config.ini --quiet --nolaunch
+GuessMainPID=no
+
+[Install]
+WantedBy=multi-user.target

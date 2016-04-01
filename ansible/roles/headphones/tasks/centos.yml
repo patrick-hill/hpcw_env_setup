@@ -1,0 +1,31 @@
+---
+- name: HeadPhones --> Create dirs
+  file: dest=/apps/data/.headphones state=directory
+
+- name: HeadPhones --> Clone repo
+  git:  repo=https://github.com/rembo10/headphones.git
+        dest=/apps/headphones
+
+- name: HeadPhones --> Take ownership of apps
+  file: dest=/apps owner={{ stack_user }} group={{ stack_user_group }} recurse=yes
+
+- name: HeadPhones --> Add service
+  copy: src=headphones.service
+        dest=/etc/systemd/system/
+        owner=root group=root mode=0644
+        
+- name:     HeadPhones --> Enable service
+  service:  name=headphones.service enabled=yes state=started
+
+- name:     HeadPhones --> Enable service
+  service:  name=headphones.service state=stopped
+  
+- name: HeadPhones --> Configure init
+  lineinfile:
+    dest:   /apps/data/.headphones/headphones_config.ini
+    regexp: "^http_host"
+    line:   "http_host = 0.0.0.0"
+
+- name:     HeadPhones --> Enable service
+  service:  name=headphones.service enabled=yes state=started
+  

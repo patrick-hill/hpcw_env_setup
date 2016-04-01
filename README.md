@@ -17,6 +17,7 @@ This project uses Vagrant & Virtualbox for testing.
 **Status: Active**   
 Ansible provisioning still under development. Flushing our roles, security, backups, integration and overall ability to customize a Linux environment
 ### TODO
+* firewall: add services
 * dotfiles
 * SSH Key Setup
 * Theme setup (Crunchy)

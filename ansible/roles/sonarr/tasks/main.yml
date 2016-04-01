@@ -1,8 +1,8 @@
 ---
-- name: Sabnzbd --> Check if installed
-  stat: path=/apps/sabnzbd
+- name: Sonarr --> Check if installed
+  stat: path=/apps/sonarr
   register: check_installed
 
-- name: Sabnzbd --> CentOS Install
+- name: Sonarr --> CentOS Install
   include: "centos.yml"
   when: ansible_distribution == 'CentOS' and check_installed.stat.exists == False

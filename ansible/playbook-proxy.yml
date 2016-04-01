@@ -2,6 +2,11 @@
 - hosts: proxy
   gather_facts: yes
   sudo: true
+  vars:
+    firewall_enabled: true
+    firewall_enable_services:
+      - http
+      - https
 
   pre_tasks:
     - shell: echo 'hello'
