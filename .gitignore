@@ -29,4 +29,5 @@ ansible/plugins/human_log.pyc
 *.retry
 
 # Configs
-sabnzbd.ini
+sabnzbd_config.ini
+sabnzbd_old.ini

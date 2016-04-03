@@ -1,11 +1,6 @@
 ---
 # Guides:
   #: http://www.digitesters.com/install-sabnzbd-on-centos-7/
-  
-# - name: Sabnzbd --> Add repo
-#   copy: src=SABnzbd.repo
-#         dest=/etc/yum.repos.d/
-#         owner=root group=root mode=0644
 
 - name: Sabnzbd --> Install prerequisites
   yum:  pkg={{ item }} state=installed
@@ -123,13 +118,23 @@
   command:  firewall-cmd --permanent --add-port=9090/tcp
   when:     firewall_enabled == true
 
-#Sabnzbd
+#Sabnzbd Repo
 - name: Sabnzbd --> Clone repo
   git:  repo=https://github.com/sabnzbd/sabnzbd.git
         dest=/apps/sabnzbd
 
-- name: Sabnzbd --> Take ownership of apps
-  file: dest=/apps owner={{ stack_user }} group={{ stack_user_group }} recurse=yes
+#Config
+- name: Sabnzbd --> Create /apps/data/.sabnzbd dir
+  file: dest=/apps/data/.sabnzbd state=directory recurse=yes
+
+- name: Sabnzbd --> Copy Sab config file
+  copy: src={{ sab_config_path }} dest=/apps/data/.sabnzbd
+        owner={{ stack_user }} group={{ stack_user_group }}
+  when: sab_config_path is defined
+
+- name: Sabnzbd --> Set dir owner
+  file: dest=/apps owner={{ stack_user }}
+        group={{ stack_user_group }} recurse=yes
 
 - name: Sabnzbd --> Add service
   copy: src=sabnzbd.service

@@ -19,6 +19,7 @@
     nfs_opts: rw,hard,intr
     ssl_dir: /apps/ssl
     ssl_key_password: welcome1
+    sab_config_path: /home/phill/Dropbox/0-Backups/configs/vms-stack/sabnzbd_config.ini
     
   pre_tasks:
     - shell:  echo "Starting..."
@@ -43,6 +44,10 @@
     
     
   post_tasks:
+    - name: Playbook --> Dir --> Set Owner
+      file: dest=/apps owner={{ stack_user }}
+            group={{ stack_user_group }} recurse=yes
+    
     - name: Reboot system
       raw: /sbin/shutdown -r 0
       sudo: yes

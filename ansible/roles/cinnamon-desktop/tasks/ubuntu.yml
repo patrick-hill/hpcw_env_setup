@@ -1,4 +1,5 @@
 ---
+# Ubuntu 15
 - name: Cinnamon DE --> Install (Ubuntu15)
   apt: pkg={{item}} state=installed
   with_items:
@@ -13,7 +14,8 @@
         - gnome-icon-theme-extras
         - gnome-icon-theme-full
   when: ansible_distribution_major_version == "15"
-   
+
+# Ubuntu 14
 - name: Cinnamon DE --> Add Cinnamon PPA (Ubuntu14)
   apt_repository: repo='ppa:moorkai/cinnamon'
   when: ansible_distribution_major_version == "14"

@@ -27,12 +27,5 @@
     - nfs-utils
     - nfs-utils-lib
 
-- name:   Common-vms --> NFS --> Hills_Shared/dataset_files/Media
+- name:   Common-vms --> NFS mount
   mount:  name={{ nfs_target }} src={{ nfs_source }} fstype={{ nfs_type }} opts={{ nfs_opts }} state=mounted
-
-# - name: Common-vms --> Fix VBox file sharing
-#   file:
-#     src: /opt/VBoxGuestAdditions-4.3.10/lib/VBoxGuestAdditions
-#     dest: /usr/lib/VBoxGuestAdditions
-#     state: link
-#     force: yes
