@@ -4,16 +4,37 @@
   with_items:
     - python-cheetah
     - python-setproctitle
+    
+- name: SickRage --> Install Dependencies w/ pip
+  command: pip install pyopenssl
 
 - name: SickRage --> Clone repo from GitHub
   git:  repo=https://github.com/SickRage/SickRage.git
         dest=/apps/sickrage
         version=master
 
-- name: SickRage --> Set dir owner
-  file: path=/apps/sickrage owner={{ stack_user }}
+- name: SickRage --> Set dir/data owner
+  file: path=/apps/data/.sickrage owner={{ stack_user }}
         group={{ stack_user_group }} recurse=yes
-        state=directory
+        state=directory mode=755
+
+- name: Restore Backup --> Copy archive
+  copy: src={{ sickrage_backup_path }} dest=/apps/data
+        owner={{ stack_user }} group={{ stack_user_group }}
+  when: sickrage_backup_path is defined
+  
+- name: Restore Backup --> Extract archive
+  unarchive:
+    src: /apps/data/sickrage_backup.zip
+    dest: /apps/data/.sickrage
+    copy: no
+  sudo: yes
+  when: sickrage_backup_path is defined
+
+- name: SickRage --> Set dir owner
+  file: path=/apps owner={{ stack_user }}
+        group={{ stack_user_group }} recurse=yes
+        state=directory mode=755
 
 - name: SickRage --> Add service
   copy: src=sickrage.service
@@ -22,3 +43,10 @@
 
 - name:     SickRage --> Enable service
   service:  name=sickrage.service enabled=yes state=started
+
+
+
+# Backed Up Files: cache.db sickrage_config.ini failed.db sickbeard.db cache
+# Used Command: zip -9 -q -r sickrage-`date \+%Y\%m\%d-%T`.zip cache.db sickrage_config.ini failed.db sickbeard.db cache
+
+

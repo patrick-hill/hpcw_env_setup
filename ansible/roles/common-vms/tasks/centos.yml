@@ -26,6 +26,9 @@
     - wget
     - nfs-utils
     - nfs-utils-lib
+    - zip
+    - unzip
+    - python-pip
 
 - name:   Common-vms --> NFS mount
   mount:  name={{ nfs_target }} src={{ nfs_source }} fstype={{ nfs_type }} opts={{ nfs_opts }} state=mounted

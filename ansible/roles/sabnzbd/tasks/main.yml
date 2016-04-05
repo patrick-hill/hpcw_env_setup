@@ -6,7 +6,9 @@
 - name: Sabnzbd --> Create download dirs
   file: dest=/_downloads/{{ item }} state=directory recurse=yes
   with_items:
-      - complete
+      - complete/movies
+      - complete/tvshows
+      - complete/music
       - incomplete
       - nzb_watched
       - nzb_backup

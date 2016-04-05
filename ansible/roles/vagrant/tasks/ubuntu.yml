@@ -13,9 +13,5 @@
 - name: Vagrant --> Install plugins
   shell: vagrant plugin install {{item}}
   with_items:
-        - vagrant-vmware-workstation
-        - vagrant-salt
-        - vagrant-multiprovider-snap
         - vagrant-hostmanager
-        - vagrant-ansible-local
         - vagrant-reload

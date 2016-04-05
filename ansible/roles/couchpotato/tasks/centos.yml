@@ -1,4 +1,8 @@
 ---
+# - name: CouchPotato --> Install Dependencies
+#   command: pip install lxml
+#   sudo: yes
+
 - name: CouchPotato --> Create dirs 
   file: path=/apps/data/.couchpotatoserver owner={{ stack_user }}
         group={{ stack_user_group }} recurse=yes
@@ -9,8 +13,21 @@
         dest=/apps/couchpotatoserver
         version=master
 
+- name: Restore Backup --> Copy archive
+  copy: src={{ couchpotato_backup_path }} dest=/apps/data
+        owner={{ stack_user }} group={{ stack_user_group }}
+  when: couchpotato_backup_path is defined
+  
+- name: Restore Backup --> Extract archive
+  unarchive:
+    src: /apps/data/couchpotato_backup.zip
+    dest: /apps/data/.couchpotatoserver
+    copy: no
+  sudo: yes
+  when: couchpotato_backup_path is defined
+
 - name: CouchPotato --> Set dir owner
-  file: path=/apps/couchpotatoserver owner={{ stack_user }}
+  file: path=/apps/ owner={{ stack_user }}
         group={{ stack_user_group }} recurse=yes
         state=directory
 
@@ -21,3 +38,6 @@
 
 - name:     CouchPotato --> Enable service
   service:  name=couchpotatoserver.service enabled=yes state=started
+
+# Backed Up Files: couchpotatoserver_config.ini cache custom_plugins database
+# Used Command: zip -9 -q -r couchpotato-`date \+%Y\%m\%d-%T`.zip couchpotatoserver_config.ini cache custom_plugins database

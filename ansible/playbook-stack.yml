@@ -20,6 +20,8 @@
     ssl_dir: /apps/ssl
     ssl_key_password: welcome1
     sab_config_path: /home/phill/Dropbox/0-Backups/configs/vms-stack/sabnzbd_config.ini
+    sickrage_backup_path: /home/phill/Dropbox/0-Backups/configs/vms-stack/sickrage_backup.zip
+    couchpotato_backup_path: /home/phill/Dropbox/0-Backups/configs/vms-stack/couchpotato_backup.zip
     
   pre_tasks:
     - shell:  echo "Starting..."

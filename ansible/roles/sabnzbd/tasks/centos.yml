@@ -79,36 +79,9 @@
 
   #pyOpenSSL
 - name: Sabnzbd --> pyOpenSSL --> Download file
-  get_url:
-    url: "https://launchpad.net/pyopenssl/main/0.11/+download/pyOpenSSL-0.11.tar.gz"
-    dest: "/tmp"
-    validate_certs: False
-  register: downloaded_pyopenssl
-  
-- name: Sabnzbd --> pyOpenSSL --> Extract file
-  unarchive:
-    src: "/tmp/pyOpenSSL-0.11.tar.gz"
-    dest: "/tmp"
-    copy: no
+  command: pip install pyopenssl
   sudo: yes
-  when: downloaded_pyopenssl|changed
   
-- name: Sabnzbd --> pyOpenSSL --> Remove download file
-  file: path=/tmp/pyOpenSSL-0.11.tar.gz state=absent
-
-- name:     Sabnzbd --> pyOpenSSL --> Build
-  command:  python setup.py build
-  args:
-    chdir: /tmp/pyOpenSSL-0.11
-
-- name:     Sabnzbd --> pyOpenSSL --> Install
-  command:  python setup.py install
-  args:
-    chdir: /tmp/pyOpenSSL-0.11
-
-- name: Sabnzbd --> pyOpenSSL --> Remove files
-  file: path=/tmp/pyOpenSSL-0.11 state=absent
-
 # Firewall
 - name:     Sabnzbd --> Firewall 8080
   command:  firewall-cmd --permanent --add-port=8080/tcp
