@@ -3,6 +3,7 @@
   gather_facts: yes
   sudo: true
   vars:
+    install_dir: /apps
     firewall_enabled: false
     # firewall_enable_services:
     #   - http
@@ -13,19 +14,24 @@
     stack_user_uid: 1020
     stack_user_group: usenet
     stack_user_group_gid: 1020
-    nfs_source: 10.0.0.150:/mnt/R6-18TB/Hills_Shared/dataset_files/Media
-    nfs_target: /mnt/Media
-    nfs_type: nfs4
-    nfs_opts: rw,hard,intr
-    ssl_dir: /apps/ssl
+    nfs_shares:
+      hills_shared:
+          source: 10.0.0.150:/mnt/R6-18TB/Hills_Shared/dataset_files/Media
+          target: /mnt/Media
+          type: nfs4
+          opts: rw,hard,intr,rsize=8192,wsize=8192
+    ssl_dir: "{{ install_dir }}/ssl"
     ssl_key_password: welcome1
     sab_config_path: /home/phill/Dropbox/0-Backups/configs/vms-stack/sabnzbd_config.ini
     sickrage_backup_path: /home/phill/Dropbox/0-Backups/configs/vms-stack/sickrage_backup.zip
     couchpotato_backup_path: /home/phill/Dropbox/0-Backups/configs/vms-stack/couchpotato_backup.zip
+    mysql_root_password: welcome1
+    stack_mysql_root_password: welcome1
+    guac_sql_password: welcome1
     
   pre_tasks:
     - shell:  echo "Starting..."
-            
+    
   roles:
     - common-vms
     - firewall
@@ -38,7 +44,7 @@
     # - transmission  # port 
     # http://geekyadmins.com/install-transmission-on-centos-7/
     # https://elijahpaul.co.uk/script-install-for-transmission-2-83-seedbox-on-centos-6-5/
-    # - guacamole
+    - guacamole # Override 'mysql_root_password' w/ stack_mysql_root_password
 
     # - plex
     # - subsonic
@@ -47,7 +53,7 @@
     
   post_tasks:
     - name: Playbook --> Dir --> Set Owner
-      file: dest=/apps owner={{ stack_user }}
+      file: dest={{ install_dir }} owner={{ stack_user }}
             group={{ stack_user_group }} recurse=yes
     
     - name: Reboot system

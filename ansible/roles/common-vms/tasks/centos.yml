@@ -13,11 +13,23 @@
 - name: Common-vms --> Create usenet user
   user: name={{ stack_user }} state=present uid={{ stack_user_uid }} group={{ stack_user_group }}
 
+- name: Common-vms --> EPEL Repo check
+  command: yum list installed epel-release
+  register: epel_check
+  failed_when: epel_check.rc > 1
+
 - name: Common-vms --> Install EPEL repo
   yum:  name=epel-release state=latest update_cache=yes
+  when: epel_check.rc == 1
+
+- name: Common-vms --> RPMFusion Repo check
+  command: yum list installed epel-release
+  register: rpm_check
+  failed_when: rpm_check.rc > 1
 
 - name: Common-vms --> RPMFusion Repo
   yum:  name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm state=present update_cache=yes
+  when: rpm_check.rc == 1
 
 - name: Common-vms --> Install common packages
   yum:  pkg={{ item }} state=installed
@@ -30,5 +42,11 @@
     - unzip
     - python-pip
 
-- name:   Common-vms --> NFS mount
-  mount:  name={{ nfs_target }} src={{ nfs_source }} fstype={{ nfs_type }} opts={{ nfs_opts }} state=mounted
+- name:   Common-vms --> NFS mounts
+  mount:  name={{ item.value.target }}
+          src={{ item.value.source }}
+          fstype={{ item.value.type }}
+          opts={{ item.value.opts }}
+          state=mounted
+  with_dict: "{{ nfs_shares }}"
+  

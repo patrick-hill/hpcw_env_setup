@@ -1,0 +1,8 @@
+---
+- name: Guacamole --> Check if installed
+  stat: path=/apps/guacamole
+  register: check_installed
+
+- name: Guacamole --> CentOS Install
+  include: "centos.yml"
+  when: ansible_distribution == 'CentOS' and check_installed.stat.exists == False
