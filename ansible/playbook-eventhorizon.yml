@@ -1,0 +1,37 @@
+---
+#- hosts: eventhorizon
+- hosts: localhost
+  gather_facts: yes
+  sudo: true
+  vars:
+    os_username:    'phill'
+    backup_dir_root: /home/phill/Dropbox/0-Backups
+    git_user_name:  "Patrick Hill"
+    git_user_email: "Hill@HillsPCWorld.com"
+
+
+  pre_tasks:
+    - shell: echo 'Starting...'
+    
+  roles:
+    - dropbox
+    - nfs-mounts
+    - common
+    - autokey
+    - vs-code
+    - what-pulse
+    
+    - chrome
+    - conky
+    - jdk8
+    - gitkraken
+    - remmina
+    - intellij
+    - vagrant
+    - packer
+    - virtualbox
+    
+
+  post_tasks:
+    - shell: echo 'Done'
+

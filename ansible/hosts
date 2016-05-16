@@ -1,3 +1,5 @@
+localhost ansible_connection=local
+
 [devhouse]
 devhouse.hpcw.com
 
@@ -6,3 +8,6 @@ proxy.hpcw.com
 
 [stack]
 stack.hpcw.com
+
+[eventhorizon]
+EventHorizon-Ubu

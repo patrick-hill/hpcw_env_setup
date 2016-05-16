@@ -1,0 +1,13 @@
+---
+- name: NFS-Mounts --> Hills_Shared
+  mount: name=/home/phill/mnt/hills_shared src={{ mount_server }}:/mnt/R6-18TB/Hills_Shared fstype=nfs4 opts=rw,hard,intr state=mounted
+
+- name: NFS-Mounts --> Hill_Main
+  mount: name=/home/phill/mnt/hill_main src={{ mount_server }}:/mnt/R6-18TB/Hill_Main fstype=nfs4 opts=rw,hard,intr state=mounted
+  
+- name: NFS-Mounts --> Games
+  mount: name=/home/phill/mnt/games src={{ mount_server }}:/mnt/R6-12TB/Games fstype=nfs4 opts=rw,hard,intr state=mounted
+
+- name: NFS-Mounts --> Mount Shares
+  shell: mount -a
+  sudo: yes
