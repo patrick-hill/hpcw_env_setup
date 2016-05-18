@@ -49,4 +49,5 @@
 # Backed Up Files: cache.db sickrage_config.ini failed.db sickbeard.db cache
 # Used Command: zip -9 -q -r sickrage-`date \+%Y\%m\%d-%T`.zip cache.db sickrage_config.ini failed.db sickbeard.db cache
 
-
+# zip -v -r sickrage-`date \+%Y\%m\%d`.zip cache.db config.ini failed.db sickbeard.db cache
+# zip -9 -q -r sickrage-`date \+%Y\%m\%d-%T`.zip cache.db sickrage_config.ini failed.db sickbeard.db cache

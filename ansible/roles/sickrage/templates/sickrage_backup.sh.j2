@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+sickrageDir={{ install_dir}}/data
+dts=`date \+%Y\%m\%d-%T`
+nasTarget=10.0.0.150:/mnt/R6-18TB/Hills_Shared/dataset_files/Backups/Computers/vms/
+# Backup
+zip -9 -q -r /tmp/sickrage-${dts}.zip ${sickrageDir}/.sickrage
+scp /tmp/sickrage-${dts}.zip phill@${nasTarget}
