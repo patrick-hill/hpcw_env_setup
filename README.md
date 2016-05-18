@@ -6,12 +6,27 @@ Automated installation of my various environments.
 This project uses Vagrant & Virtualbox for testing.
 
 # Environments
-* DevHouse: My current dev box used for just about everything. Currently undergoing distro testing of: [Mint, (X,K)Ubuntu(14/15), Debian, openSUSE]
+* DevHouse: My current dev box used for just about everything. Currently undergoing distro testing of: [Mint, (X,K)Ubuntu(14/15/16), Debian, openSUSE]
 * Proxy: My reverse proxy used to access my networks nethers from abroad
 * Stack01: (Media): Used to stream my various services
 * Stack02: (Data): Used to collect, process & file my data
 * Mac: Old work laptop no longer used
 * LinuxMint: This was my first attempt at officially moving my main development setup to a Linux enviroment.
+
+## EventHorizon
+** Status: Active   
+Current dev task
+
+### Manual Tasks
+* Settings 
+	* Themes:
+		* Window borders [Mint-Y-Dark]
+		* Icons [Mint-X-Dark]
+		* Controls [Mint-Y-Dark]
+		* Deskotp [Linux Mint]
+	* Bluetooth: Disabled
+* Gnome Terminal -> Edit -> Prefs -> Shortcuts [Reset/Clear == Ctrl + k]
+* VS-Code: Install ext "Sort Lines"
 
 ## Env-DevHouse
 **Status: Active**   

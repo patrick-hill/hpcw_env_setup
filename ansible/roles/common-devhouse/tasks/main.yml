@@ -2,45 +2,6 @@
 - name: Common --> Update sources
   apt: update_cache=yes
   
-- name: Common --> Install packages
-  apt: pkg={{item}} state=installed
-  with_items:
-        # Core utils
-        - nfs-common
-        - gcc
-        - make
-        - build-essential
-        - software-properties-common
-        # Filesystems
-        - exfat-fuse
-        - exfat-utils
-        # Archives
-        - zip
-        - unzip
-        - rar
-        - unrar
-        # Common utils
-        - gparted        
-        - curl
-        - wget
-        - vim
-        - vim-gnome
-        - python-gpgme
-        - python-simplejson
-        # Media
-        - vlc
-        # Coding 
-        - git
-        - numlockx
-        - groovy
-        - npm
-        - gradle
-        # ToDo's
-        # - skype
-
-- name: Common --> Install linux headers
-  shell: apt install -y linux-headers-$(uname -r)
-  
 - name: Common --> Login Script --> Create Dir
   file: dest=/opt/misc state=directory
   sudo: yes
@@ -61,14 +22,7 @@
     line: "greeter-setup-script=/opt/misc/login-setup.sh"
   sudo: yes
 
-- name: Common --> Disable Guest Session
-  lineinfile:
-    dest: /usr/share/lightdm/lightdm.conf.d/50-unity-greeter.conf
-    line: "allow-guest=false"
-  sudo: yes
-
 # Install extra Themes/Icons
-
 - name: Common --> Rave-X Icons --> Add ppa
   apt_repository: repo='ppa:ravefinity-project/ppa'
   
@@ -76,46 +30,3 @@
   apt: pkg={{item}} state=installed  update_cache=yes
   with_items:
         - rave-x-colors-icons
-
-# NFS Mounts
-- name: Common --> NFS --> Hills_Shared
-  mount: name=/home/phill/mnt/hills_shared src=10.0.0.150:/mnt/R6-18TB/Hills_Shared fstype=nfs4 opts=rw,hard,intr state=mounted
-
-- name: Common --> NFS --> Hill_Main
-  mount: name=/home/phill/mnt/hill_main src=10.0.0.150:/mnt/R6-18TB/Hill_Main fstype=nfs4 opts=rw,hard,intr state=mounted
-  
-- name: Common --> NFS --> Games
-  mount: name=/home/phill/mnt/games src=10.0.0.150:/mnt/R6-12TB/Games fstype=nfs4 opts=rw,hard,intr state=mounted
-
-- name: Common --> SSH --> Copy SSH Keys
-  shell: echo 'not done'
-
-# Git Config
-
-- name: Common --> Git --> Create source dir
-  file: path=/home/phill/src state=directory recurse=yes
-  
-- name: Common --> Git --> Copy SSH Keys
-  command: cp -r /home/phill/mnt/hills_shared/dataset_files/Backups/SSH/ubuntu_keys /home/phill/.ssh
-
-# - name: Common --> Git --> Download Repos Script
-#   get_url: url=https://raw.githubusercontent.com/patrick-hill/hpcw_mac_env/master/scripts/repos.groovy dest=/tmp
-  
-# - name: Common --> Git --> Set Script as Executable
-#   file: path=/tmp/repos.groovy mode="a+x"
-
-# - name: Common --> Git --> Clone GitHub Reops
-#   shell: /tmp/repos.groovy 'github' /home/phill/src/ patrick-hill
-
-- name: Common --> Git --> Git Global gitignore
-  shell: git config --global core.excludesfile ~/.gitignore_global
-  
-- name: Common --> Git --> Git Username
-  shell: git config --global user.name {{git_user_name}}
-  
-- name: Common --> Git --> Git Email
-  shell: git config --global user.email {{git_user_email}}
-
-- name: Common --> Ubuntu Specific Settings
-  include: "ubuntu.yml"
-  when: ansible_distribution == 'Ubuntu'

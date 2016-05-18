@@ -8,10 +8,12 @@
 - name: Dropbox --> Install dependencies
   apt: pkg={{ item }} state=installed
   with_items:
-        # - nemo-dropbox
         - python-gpgme
 
 - name: Dropbox --> Remove deb file
   file:
     path: "{{ dropbox_dl_path }}"
     state: absent
+    
+- name: Dropbox --> Install the deamon
+  shell: dropbox start -i

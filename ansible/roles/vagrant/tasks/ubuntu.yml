@@ -10,8 +10,14 @@
     path: "{{ vagrant_dl_path }}"
     state: absent
     
+# - name: Vagrant --> Install plugins
+#   shell: vagrant plugin install {{item}}
+#   with_items:
+#         - vagrant-hostmanager
+#         - vagrant-reload
+        
 - name: Vagrant --> Install plugins
-  shell: vagrant plugin install {{item}}
-  with_items:
-        - vagrant-hostmanager
-        - vagrant-reload
+  shell: vagrant plugin install vagrant-hostmanager
+        
+- name: Vagrant --> Install plugins
+  shell: vagrant plugin install vagrant-reload
