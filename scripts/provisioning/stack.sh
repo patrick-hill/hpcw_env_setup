@@ -298,12 +298,14 @@ if [ $install_guacamole == true ]; then
 	mkdir -p /home/vagrant/guacamole/sqlauth && cd /home/vagrant/guacamole/sqlauth
 	wget http://sourceforge.net/projects/guacamole/files/current/extensions/guacamole-auth-jdbc-0.9.7.tar.gz
 	tar -zxf guacamole-auth-jdbc-0.9.7.tar.gz
-	wget http://dev.mysql.com/get/Downloads/Connector/j/mysql-connector-java-5.1.32.tar.gz
+	mv guacamole-auth-jdbc-0.9.7/mysql/guacamole-auth-jdbc-mysql-0.9.7.jar /usr/share/tomcat/.guacamole/extensions/
+	  
+    wget http://dev.mysql.com/get/Downloads/Connector/j/mysql-connector-java-5.1.32.tar.gz
 	tar -zxf mysql-connector-java-5.1.32.tar.gz
 	mkdir -p /usr/share/tomcat/.guacamole/{extensions,lib}
-	mv guacamole-auth-jdbc-0.9.7/mysql/guacamole-auth-jdbc-mysql-0.9.7.jar /usr/share/tomcat/.guacamole/extensions/
 	mv mysql-connector-java-5.1.32/mysql-connector-java-5.1.32-bin.jar /usr/share/tomcat/.guacamole/lib/
-	systemctl restart mariadb.service
+	
+  systemctl restart mariadb.service
 	
 	exit 0
 	# TODO FIX THIS!!!

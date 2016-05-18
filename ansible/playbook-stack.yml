@@ -1,5 +1,5 @@
 ---
-- hosts: stack
+- hosts: [stack,test]
   gather_facts: yes
   sudo: true
   vars:
@@ -44,8 +44,8 @@
     - sabnzbd       # port 8080
     - sickrage      # port 8081
     - couchpotato   # port 5050
-    - headphones    # port 8181
-    - sonarr        # port 8989
+    # - headphones    # port 8181
+    # - sonarr        # port 8989
     # - transmission  # port 
     # http://geekyadmins.com/install-transmission-on-centos-7/
     # https://elijahpaul.co.uk/script-install-for-transmission-2-83-seedbox-on-centos-6-5/
@@ -61,8 +61,8 @@
       file: dest={{ install_dir }} owner={{ stack_user }}
             group={{ stack_user_group }} recurse=yes
     
-    - name: Reboot system
-      raw: /sbin/shutdown -r 0
-      sudo: yes
-      changed_when: True
+    # - name: Reboot system
+    #   raw: /sbin/shutdown -r 0
+    #   sudo: yes
+    #   changed_when: True
   

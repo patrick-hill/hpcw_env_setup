@@ -16,7 +16,8 @@ BOX_CENT_7      = "hpcw-centos71-nocm-0.0.1.box"
 BOX_UBUNTU_14   = "hpcw-ubuntu1404-desktop-nocm-0.1.0.box"
 HOSTS = {
     :dev    => 'devhouse',
-    :stack  => 'stack'
+    :stack  => 'stack',
+    :test   => 'test'
 }
 # HOSTS = [
 #     {
@@ -72,7 +73,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.verbose = "v" # Vagrant displays ansible commands
       ansible.playbook = "ansible/playbook-#{HOSTS[:stack]}.yml"
     end
-    box.vm.provision :reload
+    # box.vm.provision :reload
+  end
+  
+  config.vm.define HOSTS[:test] do |box|
+    box.ssh.pty = true
+    box.vm.box      = BOX_CENT_7
+    box.vm.hostname  = HOSTS[:test] + DOMAIN
+    box.vm.network :private_network, ip: NETWORK+'7', netmask: NETMASK
+    box.vm.provision :ansible do |ansible|
+      ansible.verbose = "v" # Vagrant displays ansible commands
+      ansible.playbook = "ansible/playbook-#{HOSTS[:stack]}.yml"
+    end
   end
   
 end
