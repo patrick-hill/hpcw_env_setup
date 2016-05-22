@@ -14,8 +14,8 @@
     
   roles:
     - dropbox
-    - nfs-mounts
     - common
+    - nfs-mounts
     - autokey
     - vs-code
     - what-pulse

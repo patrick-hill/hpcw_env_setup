@@ -13,8 +13,8 @@
     - shell: echo 'Starting...'
     
   roles:
-    - nfs-mounts
     - common
+    - nfs-mounts
     - what-pulse
     - chrome
     - remmina
