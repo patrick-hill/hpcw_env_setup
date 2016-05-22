@@ -1,9 +1,6 @@
 ---
-- name: Update sources
-  apt: update_cache=yes
-  
 - name: Install packages
-  apt: pkg={{item}} state=installed
+  apt: pkg={{item}} state=installed update_cache=yes
   with_items:
         # Core utils
         - nfs-common

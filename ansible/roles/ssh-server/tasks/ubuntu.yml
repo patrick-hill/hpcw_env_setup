@@ -31,7 +31,8 @@
     - { regex: "^AllowUsers *", line: "AllowUsers {{ os_username }}" }
     - { regex: "^Port *", line: "Port {{ ssh_port }}" }
     - { regex: "^ForwardX11 *", line: "ForwardX11 yes" }
-    - { regex: "^Tunnel *", line: "Tunnel yes" }
+    # - { regex: "^Tunnel *", line: "Tunnel yes" }
 
 - name: Restart Service
   service: name=ssh state=restarted
+  sudo: yes
