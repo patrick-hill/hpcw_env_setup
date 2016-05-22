@@ -16,8 +16,11 @@
 #         - vagrant-hostmanager
 #         - vagrant-reload
         
-- name: Vagrant --> Install plugins
-  shell: vagrant plugin install vagrant-hostmanager
-        
-- name: Vagrant --> Install plugins
-  shell: vagrant plugin install vagrant-reload
+# - name: Vagrant --> Install plugin script
+#   copy: src=vagrant-plugin-install.sh
+#         dest=/tmp/vagrant-plugin-install.sh
+  
+# - name: Vagrant --> Install Plugins
+#   shell: /tmp/vagrant-plugin-install.sh
+#   sudo: yes
+    

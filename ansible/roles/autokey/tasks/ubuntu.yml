@@ -7,6 +7,9 @@
 - name: Autokey --> Dirs
   file: path=/home/{{os_username}}/.config/ state=directory recurse=yes
   
+- name: Autokey --> Remove default dir
+  file: path=/home/{{os_username}}/.config/autokey state=absent 
+  
 - name: Autokey --> Symlink Backup Dir
-  file: dest=/home/{{os_username}}/.config src={{backup_dir_root}}/configs/autokey state=link
+  file: dest=/home/{{os_username}}/.config/autokey src={{backup_dir_root}}/configs/autokey state=link
   

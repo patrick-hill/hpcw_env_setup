@@ -9,3 +9,8 @@
   file:
     path: "{{ gitkraken_dl_path }}"
     state: absent
+
+- name: GitKraken --> Symlink Settings
+  file: dest=/home/{{os_username}}/.gitkraken
+        src={{backup_dir_root}}/configs/GitKraken
+        state=link

@@ -1,0 +1,37 @@
+---
+# Removed as even though it was installed, it's not configured -.-
+# - name: SSH --> Checking if installed
+#   command: dpkg-query -W openssh-server
+#   register: deb_check
+#   failed_when: deb_check.rc > 1
+#   changed_when: deb_check.rc == 1
+
+- name: Install
+  apt: pkg={{item}} state=installed
+  with_items:
+        - openssh-server
+  # when: deb_check.rc == 1
+
+# Copy Config file
+- name: Backup Config
+  copy: src="{{ ssh_config_file }}" dest="{{ ssh_config_file }}.bak"
+  sudo: yes
+  
+# Disable password login
+- name: Disable Password Login
+  lineinfile: 
+    dest: "{{ ssh_config_file }}"
+    state: present
+    regexp: "{{ item.regex }}"
+    line: "{{ item.line }}"
+    create: yes
+  sudo: yes
+  with_items:
+    - { regex: "^PasswordAuthentication *", line: "PasswordAuthentication no" }
+    - { regex: "^AllowUsers *", line: "AllowUsers {{ os_username }}" }
+    - { regex: "^Port *", line: "Port {{ ssh_port }}" }
+    - { regex: "^ForwardX11 *", line: "ForwardX11 yes" }
+    - { regex: "^Tunnel *", line: "Tunnel yes" }
+
+- name: Restart Service
+  service: name=ssh state=restarted

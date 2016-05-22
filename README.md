@@ -25,8 +25,17 @@ Current dev task
 		* Controls [Mint-Y-Dark]
 		* Deskotp [Linux Mint]
 	* Bluetooth: Disabled
+	* Preferred Applications
+		* Web [Chrome]
 * Gnome Terminal -> Edit -> Prefs -> Shortcuts [Reset/Clear == Ctrl + k]
 * VS-Code: Install ext "Sort Lines"
+* Nemo -> Edit -> Preferences:
+	* Views: 
+		* Default View [List View]
+	* Display: Date Fromat: [YYYY-MM-DD Time]
+* Vagrant --> Plugins
+	* vagrant-hostmanager
+	* vagrant-reload
 
 ## Env-DevHouse
 **Status: Active**   

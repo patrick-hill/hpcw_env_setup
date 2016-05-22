@@ -9,7 +9,6 @@
     git_user_name:  "Patrick Hill"
     git_user_email: "Hill@HillsPCWorld.com"
 
-
   pre_tasks:
     - shell: echo 'Starting...'
     
@@ -31,6 +30,7 @@
     - packer
     - virtualbox
     
+    - ssh-server
 
   post_tasks:
     - shell: echo 'Done'

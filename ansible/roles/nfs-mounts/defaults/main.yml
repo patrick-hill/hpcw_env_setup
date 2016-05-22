@@ -1,1 +1,2 @@
 mount_server: 10.0.0.150
+mount_root_dir: /home/{{ os_username }}/mnt

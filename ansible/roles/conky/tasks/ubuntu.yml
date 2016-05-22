@@ -7,4 +7,10 @@
   with_items:
         - conky
         - conky-manager
-  
+
+- name: Conky --> Remove default ConkyManager Settings
+  file: path=/home/{{os_username}}/.config/conky-manager.json state=absent
+  ignore_errors: yes
+
+- name: Conky --> Symlink ConkyManager Settings
+  file: dest=/home/{{os_username}}/.config/conky-manager.json src={{backup_dir_root}}/configs/conky/conky-manager.json state=link

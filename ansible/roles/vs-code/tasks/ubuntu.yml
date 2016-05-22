@@ -26,3 +26,19 @@
     src: code.desktop
     dest: /usr/share/applications/code.desktop
     mode: 0644
+ 
+- name: VSCode --> Settings PreReq
+  file: path=/home/{{ os_username }}/.config/Code/User state=directory
+
+- name: VSCode --> Symlink Settings
+  file: dest=/home/{{ os_username }}/.config/Code/User/settings.json
+        src={{ backup_dir_root }}/configs/VSCode/settings.json
+        state=link
+
+- name: VSCode --> Extension PreReq
+  file: path=/home/{{ os_username }}/.vscode state=directory
+
+- name: VSCode --> Extensions Symlink
+  file: dest=/home/{{ os_username }}/.vscode/extensions
+        src={{ backup_dir_root }}/configs/VSCode/extensions
+        state=link
