@@ -31,9 +31,9 @@
     - ssh-server
     - git-config
 
-  - name: Copy SSH Keys
-    command: cp -r /home/phill/mnt/hills_shared/dataset_files/Backups/SSH/ubuntu_keys /home/phill/.ssh
-  
   post_tasks:
+    - name: Copy SSH Keys
+      command: cp -r /home/phill/mnt/hills_shared/dataset_files/Backups/SSH/ubuntu_keys /home/phill/.ssh
+    
     - shell: echo 'Done'
 

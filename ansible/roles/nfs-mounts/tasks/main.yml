@@ -7,29 +7,29 @@
   file: path={{ mount_root_dir }} state=directory owner={{ os_username }} group={{ os_username }}
   # when: check_installed.stat.exists == False
 
-- name: Hills_Shared
-  mount:
-    name: {{ mount_root_dir }}/{{ item.name }}
-    src: {{ item.src }} fstype=nfs4 opts=rw,hard,intr
-    state: mounted
-  # when: check_installed.stat.exists == False
-  with_items:
-    - { name: "shared", src: "{{ mount_server }}:/mnt/R6-18TB/Hills_Shared" }
-    - { name: "main", src: "{{ mount_server }}:/mnt/R6-18TB/Hills_Shared" }
-    - { name: "games", src: "{{ mount_server }}:/mnt/R6-18TB/Hills_Shared" }
-
-
 # - name: Hills_Shared
-#   mount: name={{ mount_root_dir }}/hills_shared src={{ mount_server }}:/mnt/R6-18TB/Hills_Shared fstype=nfs4 opts=rw,hard,intr state=mounted
-#   when: check_installed.stat.exists == False
+#   mount:
+#     name: "{{ mount_root_dir }}/{{ item.name }}"
+#     src: "{{ item.src }}"
+#     state: mounted
+#   # when: check_installed.stat.exists == False
+#   with_items:
+#     - { name: "shared", src: "{{ mount_server }}:/mnt/R6-18TB/Hills_Shared {{ mount_options }}" }
+#     - { name: "main", src: "{{ mount_server }}:/mnt/R6-18TB/Hills_Shared {{ mount_options }}" }
+#     - { name: "games", src: "{{ mount_server }}:/mnt/R6-18TB/Hills_Shared {{ mount_options }}" }
 
-# - name: Hill_Main
-#   mount: name={{ mount_root_dir }}/hill_main src={{ mount_server }}:/mnt/R6-18TB/Hill_Main fstype=nfs4 opts=rw,hard,intr state=mounted
-#   when: check_installed.stat.exists == False
+
+- name: Hills_Shared
+  mount: name={{ mount_root_dir }}/hills_shared src={{ mount_server }}:/mnt/R6-18TB/Hills_Shared fstype=nfs4 opts=rw,hard,intr state=mounted
+  # when: check_installed.stat.exists == False
+
+- name: Hill_Main
+  mount: name={{ mount_root_dir }}/hill_main src={{ mount_server }}:/mnt/R6-18TB/Hill_Main fstype=nfs4 opts=rw,hard,intr state=mounted
+  # when: check_installed.stat.exists == False
   
-# - name: Games
-#   mount: name={{ mount_root_dir }}/games src={{ mount_server }}:/mnt/R6-12TB/Games fstype=nfs4 opts=rw,hard,intr state=mounted
-#   when: check_installed.stat.exists == False
+- name: Games
+  mount: name={{ mount_root_dir }}/games src={{ mount_server }}:/mnt/R6-12TB/Games fstype=nfs4 opts=rw,hard,intr state=mounted
+  # when: check_installed.stat.exists == False
 
 - name: Mount Shares
   shell: mount -a
