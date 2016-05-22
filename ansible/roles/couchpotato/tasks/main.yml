@@ -1,8 +1,8 @@
 ---
-- name: CouchPotato --> Check if installed
+- name: Check if installed
   stat: path=/apps/couchpotatoserver
   register: check_installed
 
-- name: CouchPotato --> CentOS Install
+- name: CentOS Install
   include: "centos.yml"
   when: ansible_distribution == 'CentOS' and check_installed.stat.exists == False

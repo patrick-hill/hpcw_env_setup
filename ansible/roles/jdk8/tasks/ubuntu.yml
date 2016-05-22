@@ -1,10 +1,10 @@
 ---
-- name: JDK8 --> Add repo key
+- name: Add repo key
   apt_repository: repo='ppa:webupd8team/java'
   
-- name: JDK8 --> Bypass Oracle Popup Window
+- name: Bypass Oracle Popup Window
   shell: "echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections && echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections"
   sudo: yes
   
-- name: JDK8 --> Install
+- name: Install
   apt: pkg=oracle-java8-installer state=installed update_cache=yes

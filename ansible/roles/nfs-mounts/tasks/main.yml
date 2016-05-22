@@ -1,25 +1,25 @@
 ---
-- name: NFS-Mounts --> Check if installed
+- name: Check if installed
   stat: path={{ mount_root_dir }}
   register: check_installed
 
-- name: NFS-Mounts --> Create mount dir
+- name: Create mount dir
   file: path={{ mount_root_dir }} state=directory owner={{ os_username }} group={{ os_username }}
   when: check_installed.stat.exists == False
 
-- name: NFS-Mounts --> Hills_Shared
+- name: Hills_Shared
   mount: name={{ mount_root_dir }}/hills_shared src={{ mount_server }}:/mnt/R6-18TB/Hills_Shared fstype=nfs4 opts=rw,hard,intr state=mounted
   when: check_installed.stat.exists == False
 
-- name: NFS-Mounts --> Hill_Main
+- name: Hill_Main
   mount: name={{ mount_root_dir }}/hill_main src={{ mount_server }}:/mnt/R6-18TB/Hill_Main fstype=nfs4 opts=rw,hard,intr state=mounted
   when: check_installed.stat.exists == False
   
-- name: NFS-Mounts --> Games
+- name: Games
   mount: name={{ mount_root_dir }}/games src={{ mount_server }}:/mnt/R6-12TB/Games fstype=nfs4 opts=rw,hard,intr state=mounted
   when: check_installed.stat.exists == False
 
-- name: NFS-Mounts --> Mount Shares
+- name: Mount Shares
   shell: mount -a
   sudo: yes
   when: check_installed.stat.exists == False

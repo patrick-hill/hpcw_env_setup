@@ -1,5 +1,4 @@
 ---
-# Don't run a check since we want the plugins too
 - name: Ubuntu install
   include: "ubuntu.yml"
   when: ansible_distribution == 'Ubuntu'

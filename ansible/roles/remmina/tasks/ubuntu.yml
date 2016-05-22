@@ -1,5 +1,5 @@
 ---
-- name: Remmina --> Install with plugins
+- name: Install with plugins
   apt: pkg={{item}} state=installed
   with_items:
         - remmina

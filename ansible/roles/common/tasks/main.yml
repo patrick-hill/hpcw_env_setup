@@ -1,8 +1,8 @@
 ---
-- name: Common --> Update sources
+- name: Update sources
   apt: update_cache=yes
   
-- name: Common --> Install packages
+- name: Install packages
   apt: pkg={{item}} state=installed
   with_items:
         # Core utils
@@ -38,44 +38,9 @@
         # ToDo's
         # - skype
 
-- name: Common --> Install linux headers
+- name: Install linux headers
   shell: apt install -y linux-headers-$(uname -r)
-  
-- name: Common --> Disable Guest Session
-  lineinfile:
-    dest: /usr/share/lightdm/lightdm.conf.d/50-unity-greeter.conf
-    line: "allow-guest=false"
-    state: present
-  sudo: yes
 
-# Git Config
-- name: Common --> Git --> Create source dir
-  file: path=/home/phill/src state=directory recurse=yes
-        owner={{ os_username }} group={{ os_username }} 
-  
-- name: Common --> Git --> Copy SSH Keys
-  command: cp -r /home/phill/mnt/hills_shared/dataset_files/Backups/SSH/ubuntu_keys /home/phill/.ssh
-
-# - name: Common --> Git --> Download Repos Script
-#   get_url: url=https://raw.githubusercontent.com/patrick-hill/hpcw_mac_env/master/scripts/repos.groovy dest=/tmp
-  
-# - name: Common --> Git --> Set Script as Executable
-#   file: path=/tmp/repos.groovy mode="a+x"
-
-# - name: Common --> Git --> Clone GitHub Reops
-#   shell: /tmp/repos.groovy 'github' /home/phill/src/ patrick-hill
-
-- name: Common --> Git --> Git Global gitignore
-  shell: git config --global core.excludesfile ~/.gitignore_global
-  
-- name: Common --> Git --> Git Username
-  shell: git config --global user.name {{git_user_name}}
-  when: git_user_name is defined
-  
-- name: Common --> Git --> Git Email
-  shell: git config --global user.email {{git_user_email}}
-  when: git_user_email is defined
-
-- name: Common --> Ubuntu Specific Settings
+- name: Ubuntu Specific Settings
   include: "ubuntu.yml"
   when: ansible_distribution == 'Ubuntu'

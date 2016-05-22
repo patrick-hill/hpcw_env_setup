@@ -1,26 +1,26 @@
 ---
-- name: Vagrant --> Download archive
+- name: Download archive
   get_url: url={{ vagrant_link }} dest={{ vagrant_dl_path }}
 
-- name: Vagrant --> Install deb package
+- name: Install deb package
   apt: deb={{ vagrant_dl_path }}
   
-- name: Vagrant --> Remove deb
+- name: Remove deb
   file:
     path: "{{ vagrant_dl_path }}"
     state: absent
     
-# - name: Vagrant --> Install plugins
+# - name: Install plugins
 #   shell: vagrant plugin install {{item}}
 #   with_items:
 #         - vagrant-hostmanager
 #         - vagrant-reload
         
-# - name: Vagrant --> Install plugin script
+# - name: Install plugin script
 #   copy: src=vagrant-plugin-install.sh
 #         dest=/tmp/vagrant-plugin-install.sh
   
-# - name: Vagrant --> Install Plugins
+# - name: Install Plugins
 #   shell: /tmp/vagrant-plugin-install.sh
 #   sudo: yes
     

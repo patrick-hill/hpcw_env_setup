@@ -1,9 +1,9 @@
 ---
-# - name: VMWare Workstation --> Check if installed
+# - name: Check if installed
 #   stat: path=/opt/what-pulse/whatpulse
 #   register: vmware_check
 
-- name: VMWare Workstation --> Ubuntu install
+- name: Ubuntu install
   include: "ubuntu.yml"
   when: ansible_distribution == 'Ubuntu'
 #    and whatpulse_check.stat.exists == False

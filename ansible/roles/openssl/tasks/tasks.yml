@@ -1,22 +1,22 @@
 ---
-- name: OpenSSL --> Remove ssl dir
+- name: Remove ssl dir
   file: dest={{ ssl_dir }} state=absent
   ignore_errors: yes
   
-- name:   OpenSSL --> Create ssl dir
+- name:   Create ssl dir
   file:   dest={{ ssl_dir }} state=directory
 
-- name:     OpenSSL --> Generate key
+- name:     Generate key
   command:  openssl genrsa -des3 -passout pass:{{ ssl_key_password }} -out {{ ssl_dir }}/server.key 2048 -noout
 
-- name:     OpenSSL --> Remove passphrase from key     
+- name:     Remove passphrase from key     
   command:  openssl rsa -in {{ ssl_dir }}/server.key -passin pass:{{ ssl_key_password }} -out {{ ssl_dir }}/server.key  
 
-- name:     OpenSSL --> Generating CSR (Certificate Signing Request)    
+- name:     Generating CSR (Certificate Signing Request)    
   command:  openssl req -new -key {{ ssl_dir }}/server.key -out {{ ssl_dir }}/server.csr -passin pass:{{ ssl_key_password }} -subj "/C=US/ST=IOWA/L=America/O=HillsPCWorld/OU=IT/CN=HPCW/emailAddress=Hill@HillsPCWorld.com"
     
-- name:     OpenSSL --> Generating self signed cert     
+- name:     Generating self signed cert     
   command:  openssl x509 -req -days 365 -in {{ ssl_dir }}/server.csr -signkey {{ ssl_dir }}/server.key -passin pass:{{ ssl_key_password }} -out {{ ssl_dir }}/server.crt
   
-- name: OpenSSL --> Take ownership of dir
+- name: Take ownership of dir
   file: dest={{ ssl_dir }} owner={{ stack_user }} group={{ stack_user_group }} recurse=yes

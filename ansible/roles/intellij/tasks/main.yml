@@ -1,9 +1,9 @@
 ---
-- name: Intellij --> Check if installed 
+- name: Check if installed 
   stat: path=/opt/idea-IC-143.2287.1/bin/idea.sh
   register: file_check
 
-- name: Intellij --> Ubuntu install
+- name: Ubuntu install
   include: "ubuntu.yml"
   when: ansible_distribution == 'Ubuntu' and file_check.stat.exists == False
 

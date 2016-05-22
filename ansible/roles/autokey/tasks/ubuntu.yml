@@ -1,15 +1,12 @@
 ---
-- name: Autokey --> Install
+- name: Install
   apt: pkg={{item}} state=installed
   with_items:
         - autokey-gtk
 
-- name: Autokey --> Dirs
-  file: path=/home/{{os_username}}/.config/ state=directory recurse=yes
-  
-- name: Autokey --> Remove default dir
+- name: Remove default dir
   file: path=/home/{{os_username}}/.config/autokey state=absent 
   
-- name: Autokey --> Symlink Backup Dir
+- name: Symlink Backup Dir
   file: dest=/home/{{os_username}}/.config/autokey src={{backup_dir_root}}/configs/autokey state=link
   

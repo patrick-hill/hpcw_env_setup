@@ -1,4 +1,4 @@
 ---
-- name: Common-vms --> CentOS Install
+- name: CentOS Install
   include: "centos.yml"
   when: ansible_distribution == 'CentOS'

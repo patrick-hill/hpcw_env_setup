@@ -13,27 +13,16 @@
     - shell: echo 'Starting...'
     
   roles:
-    - dropbox
     - nfs-mounts
     - common
-    - autokey
-    - vs-code
     - what-pulse
     - chrome
-    - conky
-    - jdk8
-    - gitkraken
     - remmina
-    - intellij
     - vagrant
     - packer
     - virtualbox
     - ssh-server
-    - git-config
 
-  - name: Copy SSH Keys
-    command: cp -r /home/phill/mnt/hills_shared/dataset_files/Backups/SSH/ubuntu_keys /home/phill/.ssh
-  
   post_tasks:
     - shell: echo 'Done'
 

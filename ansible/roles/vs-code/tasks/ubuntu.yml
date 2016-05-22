@@ -1,12 +1,12 @@
 ---
-- name: VSCode --> Download archive
+- name: Download archive
   get_url:
     url: "{{ vs_code_link }}"
     dest: "{{ vs_code_dl_path }}"
     validate_certs: False
   register: vs_code_downloaded
   
-- name: VSCode --> Extract archive
+- name: Extract archive
   unarchive:
     src: "{{ vs_code_dl_path }}"
     dest: "/opt/"
@@ -14,31 +14,31 @@
   sudo: yes
   when: vs_code_downloaded|changed
   
-- name: VSCode --> Symlink executable
+- name: Symlink executable
   file:
     src: /opt/VSCode-linux-x64/code 
     dest: /usr/local/bin/code
     state: link
   sudo: yes
 
-- name: VSCode --> Desktop File
+- name: Desktop File
   copy:
     src: code.desktop
     dest: /usr/share/applications/code.desktop
     mode: 0644
  
-- name: VSCode --> Settings PreReq
+- name: Settings PreReq
   file: path=/home/{{ os_username }}/.config/Code/User state=directory
 
-- name: VSCode --> Symlink Settings
+- name: Symlink Settings
   file: dest=/home/{{ os_username }}/.config/Code/User/settings.json
         src={{ backup_dir_root }}/configs/VSCode/settings.json
         state=link
 
-- name: VSCode --> Extension PreReq
+- name: Extension PreReq
   file: path=/home/{{ os_username }}/.vscode state=directory
 
-- name: VSCode --> Extensions Symlink
+- name: Extensions Symlink
   file: dest=/home/{{ os_username }}/.vscode/extensions
         src={{ backup_dir_root }}/configs/VSCode/extensions
         state=link

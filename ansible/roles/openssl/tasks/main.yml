@@ -1,11 +1,11 @@
 ---
-- name: OpenSSL --> Install
+- name: Install
   package: pkg=openssl state=present
   
-- name: OpenSSL --> Check for certs
+- name: Check for certs
   stat: path={{ ssl_dir }}
   register: check_installed
 
-- name: OpenSSL --> Include tasks
+- name: Include tasks
   include: "tasks.yml"
   when: check_installed.stat.exists == False

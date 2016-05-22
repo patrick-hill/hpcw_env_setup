@@ -1,12 +1,12 @@
 ---
-- name: Common --> Update sources
+- name: Update sources
   apt: update_cache=yes
   
-- name: Common --> Login Script --> Create Dir
+- name: Login Script --> Create Dir
   file: dest=/opt/misc state=directory
   sudo: yes
   
-- name: Common --> Login Script --> Create and Populate Script
+- name: Login Script --> Create and Populate Script
   lineinfile:
     dest: /opt/misc/login-setup.sh
     state: present
@@ -16,17 +16,17 @@
     mode: "a+x"
   sudo: yes 
 
-- name: Common --> Set Greeter Script
+- name: Set Greeter Script
   lineinfile:
     dest: /usr/share/lightdm/lightdm.conf.d/50-unity-greeter.conf
     line: "greeter-setup-script=/opt/misc/login-setup.sh"
   sudo: yes
 
 # Install extra Themes/Icons
-- name: Common --> Rave-X Icons --> Add ppa
+- name: Rave-X Icons --> Add ppa
   apt_repository: repo='ppa:ravefinity-project/ppa'
   
-- name: Common --> Rave-X Icons --> Install
+- name: Rave-X Icons --> Install
   apt: pkg={{item}} state=installed  update_cache=yes
   with_items:
         - rave-x-colors-icons

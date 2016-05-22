@@ -1,9 +1,9 @@
 ---
-- name: Sabnzbd --> Check if installed
+- name: Check if installed
   stat: path=/apps/sabnzbd
   register: check_installed
 
-- name: Sabnzbd --> Create download dirs
+- name: Create download dirs
   file: dest=/_downloads/{{ item }} state=directory recurse=yes
   with_items:
       - complete/movies
@@ -13,10 +13,10 @@
       - nzb_watched
       - nzb_backup
       
-- name: Sabnzbd --> Take ownership of download dirs
+- name: Take ownership of download dirs
   file: dest=/_downloads/ recurse=yes
         owner={{ stack_user }} group={{ stack_user_group }}
 
-- name: Sabnzbd --> CentOS Install
+- name: CentOS Install
   include: "centos.yml"
   when: ansible_distribution == 'CentOS' and check_installed.stat.exists == False

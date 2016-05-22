@@ -2,7 +2,7 @@
 # Guides:
   #: http://www.digitesters.com/install-sabnzbd-on-centos-7/
 
-- name: Sabnzbd --> Install prerequisites
+- name: Install prerequisites
   yum:  pkg={{ item }} state=installed
   with_items:
       # Common
@@ -46,14 +46,14 @@
   # https://forums.sabnzbd.org/viewtopic.php?f=16&t=18793#p99702
 
 # Yenc
-- name: Sabnzbd --> Yenc --> Download file
+- name: Yenc --> Download file
   get_url:
     url: "http://www.golug.it/pub/yenc/yenc-0.4.0.tar.gz"
     dest: "/tmp/yenc-0.4.0.tar.gz"
     validate_certs: False
   register: downloaded_yenc
   
-- name: Sabnzbd --> Yenc --> Extract file
+- name: Yenc --> Extract file
   unarchive:
     src: "/tmp/yenc-0.4.0.tar.gz"
     dest: "/tmp"
@@ -61,58 +61,58 @@
   sudo: yes
   when: downloaded_yenc|changed
   
-- name: Sabnzbd --> Yenc --> Remove download file
+- name: Yenc --> Remove download file
   file: path=/tmp/yenc-0.4.0.tar.gz state=absent
 
-- name:     Sabnzbd --> Yenc --> Build
+- name:     Yenc --> Build
   command:  python setup.py build
   args:
     chdir: /tmp/yenc-0.4.0
 
-- name:     Sabnzbd --> Yenc --> Install
+- name:     Yenc --> Install
   command:  python setup.py install
   args:
     chdir: /tmp/yenc-0.4.0
 
-- name: Sabnzbd --> Yenc --> Remove files
+- name: Yenc --> Remove files
   file: path=/tmp/yenc-0.4.0 state=absent
 
   #pyOpenSSL
-- name: Sabnzbd --> pyOpenSSL --> Download file
+- name: pyOpenSSL --> Download file
   command: pip install pyopenssl
   sudo: yes
   
 # Firewall
-- name:     Sabnzbd --> Firewall 8080
+- name:     Firewall 8080
   command:  firewall-cmd --permanent --add-port=8080/tcp
   when:     firewall_enabled == true
 
-- name:     Sabnzbd --> Firewall 9090
+- name:     Firewall 9090
   command:  firewall-cmd --permanent --add-port=9090/tcp
   when:     firewall_enabled == true
 
 #Sabnzbd Repo
-- name: Sabnzbd --> Clone repo
+- name: Clone repo
   git:  repo=https://github.com/sabnzbd/sabnzbd.git
         dest=/apps/sabnzbd
 
 #Config
-- name: Sabnzbd --> Create /apps/data/.sabnzbd dir
+- name: Create /apps/data/.sabnzbd dir
   file: dest=/apps/data/.sabnzbd state=directory recurse=yes
 
-- name: Sabnzbd --> Copy Sab config file
+- name: Copy Sab config file
   copy: src={{ sab_config_path }} dest=/apps/data/.sabnzbd
         owner={{ stack_user }} group={{ stack_user_group }}
   when: sab_config_path is defined
 
-- name: Sabnzbd --> Set dir owner
+- name: Set dir owner
   file: dest=/apps owner={{ stack_user }}
         group={{ stack_user_group }} recurse=yes
 
-- name: Sabnzbd --> Add service
+- name: Add service
   copy: src=sabnzbd.service
         dest=/etc/systemd/system/
         owner=root group=root mode=0644
         
-- name:     Sabnzbd --> Enable service
+- name:     Enable service
   service:  name=sabnzbd.service enabled=yes state=started

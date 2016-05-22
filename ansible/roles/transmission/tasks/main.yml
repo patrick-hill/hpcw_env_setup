@@ -1,12 +1,12 @@
 ---
 
-yum -y update
-yum -y install transmission transmission-daemon
-service transmission-daemon start
+# yum -y update
+# yum -y install transmission transmission-daemon
+# service transmission-daemon start
 
-# config file: /var/lib/transmission/.config/transmission/settings.json
-"rpc-whitelist": "127.0.0.1",
-"rpc-whitelist-enabled": true,
+# # config file: /var/lib/transmission/.config/transmission/settings.json
+# "rpc-whitelist": "127.0.0.1",
+# "rpc-whitelist-enabled": true,
 
 
 

@@ -1,16 +1,16 @@
 ---
-- name: Conky --> Add Conky-Manager PPA
+- name: Add Conky-Manager PPA
   apt_repository: repo='ppa:teejee2008/ppa'
   
-- name: Conky --> Install
+- name: Install
   apt: pkg={{item}} state=installed  update_cache=yes
   with_items:
         - conky
         - conky-manager
 
-- name: Conky --> Remove default ConkyManager Settings
+- name: Remove default ConkyManager Settings
   file: path=/home/{{os_username}}/.config/conky-manager.json state=absent
   ignore_errors: yes
 
-- name: Conky --> Symlink ConkyManager Settings
+- name: Symlink ConkyManager Settings
   file: dest=/home/{{os_username}}/.config/conky-manager.json src={{backup_dir_root}}/configs/conky/conky-manager.json state=link

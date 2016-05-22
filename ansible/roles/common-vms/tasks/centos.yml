@@ -1,5 +1,5 @@
 ---
-- name: Common-vms --> Disable SELinux for testing ease
+- name: Disable SELinux for testing ease
   lineinfile:
     dest:   /etc/selinux/config
     regexp: "^SELINUX=.*"
@@ -7,31 +7,31 @@
   sudo: yes 
   when: disable_selinux
 
-- name:   Common-vms --> Creating groups
+- name:   Creating groups
   group:  name={{ stack_user_group }} state=present gid={{ stack_user_group_gid }}
 
-- name: Common-vms --> Create usenet user
+- name: Create usenet user
   user: name={{ stack_user }} state=present uid={{ stack_user_uid }} group={{ stack_user_group }}
 
-- name: Common-vms --> EPEL Repo check
+- name: EPEL Repo check
   command: yum list installed epel-release
   register: epel_check
   failed_when: epel_check.rc > 1
 
-- name: Common-vms --> Install EPEL repo
+- name: Install EPEL repo
   yum:  name=epel-release state=latest update_cache=yes
   when: epel_check.rc == 1
 
-- name: Common-vms --> RPMFusion Repo check
+- name: RPMFusion Repo check
   command: yum list installed epel-release
   register: rpm_check
   failed_when: rpm_check.rc > 1
 
-- name: Common-vms --> RPMFusion Repo
+- name: RPMFusion Repo
   yum:  name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm state=present update_cache=yes
   when: rpm_check.rc == 1
 
-- name: Common-vms --> Install common packages
+- name: Install common packages
   yum:  pkg={{ item }} state=installed
   with_items:
     - git
@@ -42,7 +42,7 @@
     - unzip
     - python-pip
 
-- name:   Common-vms --> NFS mounts
+- name:   NFS mounts
   mount:  name={{ item.value.target }}
           src={{ item.value.source }}
           fstype={{ item.value.type }}

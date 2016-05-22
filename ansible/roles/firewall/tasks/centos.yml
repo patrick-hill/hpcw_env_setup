@@ -1,11 +1,11 @@
 ---
 # Enabled --> Configure
-- name:     Firewall --> Enable and Start
+- name:     Enable and Start
   service:  name=firewalld.service enabled=yes state=started
   when:     firewall_enabled == true
 
 # Disabled
-- name:     Firewall --> Disable
+- name:     Disable
   service:  name=firewalld.service enabled=no state=stopped
   when:     firewall_enabled == false
   

@@ -1,16 +1,16 @@
 ---
-- name: GitKraken --> Download installer
+- name: Download installer
   get_url: url={{ gitkraken_link }} dest={{ gitkraken_dl_path }}
 
-- name: GitKraken --> Install deb
+- name: Install deb
   apt: deb={{ gitkraken_dl_path }}
 
-- name: GitKraken --> Remove deb file
+- name: Remove deb file
   file:
     path: "{{ gitkraken_dl_path }}"
     state: absent
 
-- name: GitKraken --> Symlink Settings
+- name: Symlink Settings
   file: dest=/home/{{os_username}}/.gitkraken
         src={{backup_dir_root}}/configs/GitKraken
         state=link

@@ -1,4 +1,4 @@
 ---
-- name: Firewall --> CentOS
+- name: CentOS
   include: "centos.yml"
   when: ansible_distribution == 'CentOS'

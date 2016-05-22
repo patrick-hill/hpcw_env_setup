@@ -1,0 +1,25 @@
+---
+- name: Create src dir
+  file: path=/home/{{ os_username }}/src state=directory recurse=yes
+        owner={{ os_username }} group={{ os_username }} 
+  
+# - name: Download Repos Script
+#   get_url: url=https://raw.githubusercontent.com/patrick-hill/hpcw_mac_env/master/scripts/repos.groovy dest=/tmp
+  
+# - name: Set Script as Executable
+#   file: path=/tmp/repos.groovy mode="a+x"
+
+# - name: Clone GitHub Reops
+#   shell: /tmp/repos.groovy 'github' /home/phill/src/ patrick-hill
+
+- name: Git Global gitignore
+  shell: git config --global core.excludesfile ~/.gitignore_global
+  
+- name: Git Username
+  shell: git config --global user.name {{ git_user_name }}
+  when: git_user_name is defined
+  
+- name: Git Email
+  shell: git config --global user.email {{ git_user_email }}
+  when: git_user_email is defined
+

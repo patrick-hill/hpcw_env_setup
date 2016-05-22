@@ -4,7 +4,7 @@
 #       /jdbc
 #       /sql
 
-- name: Guacamole --> Create dir
+- name: Create dir
   file: dest={{ item }}  state=directory
         owner={{ stack_user }} group={{ stack_user_group }}
   with_items:
@@ -13,12 +13,12 @@
         - /usr/share/tomcat/.guacamole/extensions
         - /usr/share/tomcat/.guacamole/lib
 
-- name: Guacamole --> Add Felfert Repo
+- name: Add Felfert Repo
   copy: src=felfert.repo
         dest=/etc/yum.repos.d/
         owner=root group=root mode=0644
 
-- name: Guacamole --> Install prerequisites
+- name: Install prerequisites
   yum:  pkg={{ item }} state=installed update_cache=yes
   with_items:
       # WebServer
@@ -59,23 +59,23 @@
       - mariadb-server
       - MySQL-python
 
-- name: Guacamole --> Download File --> Guacamole-server
+- name: Download File --> Guacamole-server
   get_url:
     url: "http://sourceforge.net/projects/guacamole/files/current/source/guacamole-server-0.9.9.tar.gz"
     dest: "/tmp/guacamole-server-0.9.9.tar.gz"
     validate_certs: False
   
-- name: Guacamole --> Extract file --> Guacamole-server
+- name: Extract file --> Guacamole-server
   unarchive:
     src: '/tmp/guacamole-server-0.9.9.tar.gz'
     dest: "{{ install_dir }}/guacamole"
     copy: no
   sudo: yes
   
-- name: Guacamole --> Remove download file --> Guacamole-server
+- name: Remove download file --> Guacamole-server
   file: path=/tmp/guacamole-server-0.9.9.tar.gz state=absent
 
-- name: Guacamole --> Config-Make-MakeInstall-ldconfig
+- name: Config-Make-MakeInstall-ldconfig
   shell: "{{ item }}"
   with_items:
       - './configure --with-init-dir=/etc/init.d'
@@ -86,18 +86,18 @@
     chdir: "{{ install_dir }}/guacamole/guacamole-server-0.9.9"
   sudo: yes
 
-- name: Guacamole --> Download file --> Guacamole war
+- name: Download file --> Guacamole war
   get_url:
     url: "http://sourceforge.net/projects/guacamole/files/current/binary/guacamole-0.9.9.war"
     dest: "/var/lib/guacamole/guacamole.war"
     validate_certs: False
   register: downloaded_guacClient
 
-- name: Guacamole --> Remove default rdp lib
+- name: Remove default rdp lib
   file: path=/usr/lib64/freerdp/guacdr.so state=absent
   sudo: yes
 
-- name: Guacamole --> Symlink Files --> Guacamole war
+- name: Symlink Files --> Guacamole war
   file: src={{ item.source }} dest={{ item.target }} state=link
         owner={{ stack_user }} group={{ stack_user_group }}
   with_items:
@@ -107,14 +107,14 @@
           target: /usr/lib64/freerdp/guacdr.so }
   
 # SQL: JDBC
-- name: Guacamole --> Download file --> Guacamole jdbc
+- name: Download file --> Guacamole jdbc
   get_url:
     url: "http://sourceforge.net/projects/guacamole/files/current/extensions/guacamole-auth-jdbc-0.9.9.tar.gz"
     dest: "/tmp/guacamole-auth-jdbc-0.9.9.tar.gz"
     validate_certs: False
   register: downloaded_guac_jdbc
   
-- name: Guacamole --> Extract file --> Guacamole jdbc
+- name: Extract file --> Guacamole jdbc
   unarchive:
     src: "/tmp/guacamole-auth-jdbc-0.9.9.tar.gz"
     dest: "{{ install_dir }}/guacamole"
@@ -124,31 +124,31 @@
     copy: no
   sudo: yes
   
-- name: Guacamole --> Remove download file --> Guacamole jdbc
+- name: Remove download file --> Guacamole jdbc
   file: path=/tmp/guacamole-server-0.9.9.tar.gz state=absent
 
-- name: Guacamole --> JDBC move file --> Guacamole jdbc
+- name: JDBC move file --> Guacamole jdbc
   command: cp "{{ install_dir }}/guacamole/guacamole-auth-jdbc-0.9.9/mysql/guacamole-auth-jdbc-mysql-0.9.9.jar" "/usr/share/tomcat/.guacamole/extensions/guacamole-auth-jdbc-mysql-0.9.9.jar"
   sudo: yes
 
 # SQL: MySQL
-- name: Guacamole --> Download file --> msql-connector
+- name: Download file --> msql-connector
   get_url:
     url: "http://dev.mysql.com/get/Downloads/Connector/j/mysql-connector-java-5.1.38.tar.gz"
     dest: "/tmp/mysql-connector-java-5.1.38.tar.gz"
     validate_certs: False
   
-- name: Guacamole --> Extract file --> msql-connector
+- name: Extract file --> msql-connector
   unarchive:
     src: "/tmp/mysql-connector-java-5.1.38.tar.gz"
     dest: "{{ install_dir }}/guacamole"
     copy: no
   sudo: yes
   
-- name: Guacamole --> Remove download file --> msql-connector
+- name: Remove download file --> msql-connector
   file: path=mysql-connector-java-5.1.38.tar.gz state=absent
 
-- name: Guacamole --> Move File --> msql-connector
+- name: Move File --> msql-connector
   command: cp "{{ install_dir }}/guacamole/mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar" "/usr/share/tomcat/.guacamole/lib/mysql-connector-java-5.1.38-bin.jar"
   sudo: yes
 
@@ -163,7 +163,7 @@
 
 
 # Restart Service
-- name: Guacamole --> SQL --> Restart Service
+- name: SQL --> Restart Service
   service: name=mariadb.service enabled=yes state=started
   
 # SQL
@@ -209,7 +209,7 @@
 #   changed_when: False
 # END: Move to mysql role!
 
-- name: Guacamole --> SQL Setup --> Create db-user
+- name: SQL Setup --> Create db-user
   shell: mysql -ne "{{ item }}"
   with_items:
     - create database guacdb;
@@ -218,36 +218,36 @@
     - FLUSH PRIVILEGES;
   sudo: yes
 
-- name:     Guacamole --> Run 2
+- name:     Run 2
   shell:  mysql guacdb < "{{ install_dir }}/guacamole/guacamole-auth-jdbc-0.9.9/mysql/schema/{{ item }}"
   with_items:
       - 001-create-schema.sql
       - 002-create-admin-user.sql
 
-- name: Guacamole --> Config file
+- name: Config file
   template: src=guacamole.propreties.j2
             dest="{{ install_dir }}/guacamole/guacamole.properties" owner=root group=root mode=0644
 
-- name: Guacamole --> Symlink config to Tomcat
+- name: Symlink config to Tomcat
   file: 
     src: "{{ install_dir }}/guacamole/guacamole.properties"
     dest: /usr/share/tomcat/.guacamole/guacamole.properties
     state: link
 
 #Config
-- name: Guacamole --> Set dir owner
+- name: Set dir owner
   file: dest="{{ install_dir }}" owner={{ stack_user }}
         group={{ stack_user_group }} recurse=yes
 
-- name: Guacamole --> Service --> Tomcat
+- name: Service --> Tomcat
   service: name=tomcat.service enabled=yes state=started
 
-- name: Guacamole --> Service --> SQL
+- name: Service --> SQL
   service: name=mariadb.service enabled=yes state=started
 
-- name: Guacamole --> Service --> Guacamole
+- name: Service --> Guacamole
   command: chkconfig guacd on
   sudo: yes
 
-- name: Guacamole --> Service --> SQL
+- name: Service --> SQL
   service: name=guacd.service enabled=yes state=started

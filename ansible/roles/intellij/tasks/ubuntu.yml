@@ -1,12 +1,12 @@
 ---
-- name: Intellij --> Download archive
+- name: Download archive
   get_url:
     url: "{{ intellij_link }}"
     dest: "{{ intellij_dl_path }}"
     validate_certs: False
   register: intellij_downloaded
   
-- name: Intellij --> Extract files
+- name: Extract files
   unarchive:
     src: "{{ intellij_dl_path }}"
     dest: "/opt/"
@@ -14,14 +14,14 @@
   sudo: yes
   when: intellij_downloaded|changed
   
-- name: Intellij --> Symlink executable
+- name: Symlink executable
   file:
     src: /opt/idea-IC-143.2287.1/bin/idea.sh 
     dest: /usr/local/bin/idea
     state: link
   sudo: yes
 
-- name: Intellij --> Desktop File
+- name: Desktop File
   copy:
     src: intellij.desktop
     dest: /usr/share/applications/intellij.desktop

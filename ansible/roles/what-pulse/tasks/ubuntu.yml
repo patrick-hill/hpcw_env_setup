@@ -1,15 +1,15 @@
 ---
-- name: WhatPulse --> Download archive
+- name: Download archive
   get_url:
     url: "{{ whatpulse_link }}"
     dest: "{{ whatpulse_dl_path }}"
     validate_certs: False
   register: what_pulse_downloaded
   
-- name: WhatPulse --> Creates install directory
+- name: Creates install directory
   file: path=/opt/whatpulse state=directory recurse=yes
   
-- name: WhatPulse --> Extract archive
+- name: Extract archive
   unarchive:
     src: "{{ whatpulse_dl_path }}"
     dest: "/opt/whatpulse/"
@@ -17,7 +17,7 @@
   sudo: yes
   when: what_pulse_downloaded|changed
   
-- name: WhatPulse --> Install dependencies
+- name: Install dependencies
   apt: pkg={{item}} state=installed
   with_items:
         - openssl
@@ -33,33 +33,33 @@
         - libpcap0.8
         - libpcapnav0
   
-- name: WhatPulse --> netcp setup
+- name: netcp setup
   shell: setcap cap_net_raw,cap_net_admin=eip /opt/whatpulse/whatpulse
   sudo: yes
   
-- name: WhatPulse --> Copy My Interactive Permissions Setup Script
+- name: Copy My Interactive Permissions Setup Script
   copy:
     src: setup-input-permissions-enhanced.sh
     dest: /opt/whatpulse/setup-input-permissions-enhanced.sh
     mode: "a+x"
   
-- name: WhatPulse --> Input Permissions Setup (Non-Interactive)
+- name: Input Permissions Setup (Non-Interactive)
   shell: /opt/whatpulse/setup-input-permissions-enhanced.sh true {{os_username}}
   sudo: yes
   
-- name: WhatPulse --> Symlink executable
+- name: Symlink executable
   file:
     src: /opt/whatpulse/whatpulse 
     dest: /usr/local/bin/whatpulse
     state: link
   sudo: yes
 
-- name: WhatPulse --> Remove archive
+- name: Remove archive
   file:
     path: "{{ whatpulse_dl_path }}"
     state: absent
 
-- name: WhatPulse --> Desktop File
+- name: Desktop File
   copy:
     src: whatpulse.desktop
     dest: /usr/share/applications/whatpulse.desktop

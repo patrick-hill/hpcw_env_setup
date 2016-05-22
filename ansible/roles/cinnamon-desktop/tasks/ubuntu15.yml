@@ -1,5 +1,5 @@
 ---
-- name: Cinnamon DE --> Install (Ubuntu15)
+- name: Install (Ubuntu15)
   apt: pkg={{item}} state=installed
   with_items:
         - cinnamon
