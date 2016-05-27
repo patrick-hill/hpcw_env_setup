@@ -1,13 +1,11 @@
 ---
-#- hosts: eventhorizon
+#- hosts: quantum
 - hosts: localhost
   gather_facts: yes
   sudo: true
   vars:
+    hostname:       quantum
     os_username:    'phill'
-    backup_dir_root: /home/phill/Dropbox/0-Backups
-    git_user_name:  "Patrick Hill"
-    git_user_email: "Hill@HillsPCWorld.com"
 
   pre_tasks:
     - shell: echo 'Starting...'
@@ -17,11 +15,9 @@
     - nfs-mounts
     - what-pulse
     - chrome
-    - remmina
     - vagrant
-    - packer
     - virtualbox
-    - ssh-server
+    # - ssh-server
 
   post_tasks:
     - shell: echo 'Done'

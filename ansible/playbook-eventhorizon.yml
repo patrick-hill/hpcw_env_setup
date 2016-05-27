@@ -4,10 +4,13 @@
   gather_facts: yes
   sudo: true
   vars:
+    hostname: eventhorizon
     os_username:    'phill'
     backup_dir_root: /home/phill/Dropbox/0-Backups
     git_user_name:  "Patrick Hill"
     git_user_email: "Hill@HillsPCWorld.com"
+    ssh_port: 22 # Defaults to 22, encrypt true value
+    vnc_password: welcome1 # Defaults to 'welcome1', encrypt true value
 
   pre_tasks:
     - shell: echo 'Starting...'
@@ -32,8 +35,14 @@
     - git-config
 
   post_tasks:
-    - name: Copy SSH Keys
-      command: cp -r /home/phill/mnt/hills_shared/dataset_files/Backups/SSH/ubuntu_keys /home/phill/.ssh
+    # - name: Symlink ssh dir
+    #   file:
+    #     src: {{ backup_dir_root }}/ssh/{{ hostname }}
+    #     dest: /home/{{ os_username }}/.ssh
+    #     state: link
+    
+    # - name: Set owner of .ssh
+    #   shell: chown -R {{ os_username }}:{{ os_username }} /home/{{ os_username }}/.ssh
     
     - shell: echo 'Done'
 

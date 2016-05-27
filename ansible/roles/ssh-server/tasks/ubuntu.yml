@@ -1,10 +1,6 @@
 ---
-# Removed as even though it was installed, it's not configured -.-
-# - name: SSH --> Checking if installed
-#   command: dpkg-query -W openssh-server
-#   register: deb_check
-#   failed_when: deb_check.rc > 1
-#   changed_when: deb_check.rc == 1
+- name: Remove
+  apt: pkg=openssh-server state=removed
 
 - name: Install
   apt: pkg={{item}} state=installed
@@ -30,8 +26,13 @@
     - { regex: "^PasswordAuthentication *", line: "PasswordAuthentication no" }
     - { regex: "^AllowUsers *", line: "AllowUsers {{ os_username }}" }
     - { regex: "^Port *", line: "Port {{ ssh_port }}" }
-    - { regex: "^ForwardX11 *", line: "ForwardX11 yes" }
+    # - { regex: "^ForwardX11 *", line: "ForwardX11 yes" }
     # - { regex: "^Tunnel *", line: "Tunnel yes" }
+
+- name: Open firewall port
+  shell: ufw enable {{ ssh_port }}
+  sudo: yes
+  # when: ssh_port != 22
 
 - name: Restart Service
   service: name=ssh state=restarted
