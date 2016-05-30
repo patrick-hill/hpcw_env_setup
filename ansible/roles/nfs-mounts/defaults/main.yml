@@ -1,3 +1,8 @@
-mount_server: 10.0.0.150
-mount_root_dir: /home/{{ os_username }}/mnt
-mount_options: fstype=nfs4 opts=rw,hard,intr
+nfs_server: 10.0.0.150
+nfs_mount_root_dir: /home/{{ os_username }}/mnt
+nfs_shares:
+#  mount_description:
+#    name: name_of_mount
+#    source: ip:/path
+#    type: nfs4
+#    opts: rw,hard,intr,rsize=8192,wsize=8192

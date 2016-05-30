@@ -1,0 +1,3 @@
+ssl_dir: /opt/ssl
+ssl_key_password: welcome1
+ssl_csr_subject: /C=US/ST=MI/L=America/O=PrivateOwner/OU=IT/CN=PrivateName/emailAddress=Private@email.com

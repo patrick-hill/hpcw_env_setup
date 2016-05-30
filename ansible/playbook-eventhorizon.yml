@@ -11,6 +11,22 @@
     git_user_email: "Hill@HillsPCWorld.com"
     ssh_port: 22 # Defaults to 22, encrypt true value
     vnc_password: welcome1 # Defaults to 'welcome1', encrypt true value
+    nfs_shares:
+      shared:
+        name: shared
+        source: {{ nfs_server }}:/mnt/R6-18TB/Hills_Shared
+        type: nfs4
+        opts: rw,hard,intr,rsize=8192,wsize=8192
+      main:
+        name: main
+        source: 10.0.0.150:/mnt/R6-18TB/Hill_Main
+        type: nfs4
+        opts: rw,hard,intr,rsize=8192,wsize=8192
+      games:
+        name: games
+        source: 10.0.0.150:/mnt/R6-12TB/Games
+        type: nfs4
+        opts: rw,hard,intr,rsize=8192,wsize=8192
 
   pre_tasks:
     - shell: echo 'Starting...'

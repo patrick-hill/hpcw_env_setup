@@ -1,7 +1,4 @@
 ---
-- name: Install
-  package: pkg=openssl state=present
-  
 - name: Check for certs
   stat: path={{ ssl_dir }}
   register: check_installed
