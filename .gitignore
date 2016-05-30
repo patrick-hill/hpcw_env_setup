@@ -15,6 +15,7 @@ Thumbs.db
 
 *~
 # Intellij Files
+.idea/*
 workspace.xml
 rebel_project.xml
 misc.xml
@@ -31,3 +32,4 @@ ansible/plugins/human_log.pyc
 # Configs
 sabnzbd_config.ini
 sabnzbd_old.ini
+
