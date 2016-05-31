@@ -7,6 +7,7 @@
     hostname: eventhorizon
     os_username:    'phill'
     backup_dir_root: /home/phill/Dropbox/0-Backups
+    common_install_comm: false
     git_user_name:  "Patrick Hill"
     git_user_email: "Hill@HillsPCWorld.com"
     ssh_port: 22 # Defaults to 22, encrypt true value
@@ -51,6 +52,14 @@
     - what-pulse
 
   post_tasks:
+#    - name: Clone repo
+#      git:  repo=ssh://git@github.com/patrick-hill/hpcw_dotfiles.git
+#            dest={{ src_dir }}/hpcw/hpcw_dotfiles
+#            accept_hostkey=yes
+#
+#    - name: Run dotfile setup
+#      shell: {{ src_dir }}/hpcw/hpcw_dotfiles/setup.sh
+
     # - name: Symlink ssh dir
     #   file:
     #     src: {{ backup_dir_root }}/ssh/{{ hostname }}

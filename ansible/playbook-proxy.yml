@@ -10,6 +10,13 @@
 
   pre_tasks:
     - shell: echo 'hello'
+
+    - name:   Create group
+      group:  name={{ stack_user_group }} state=present gid={{ stack_user_group_gid }}
+
+    - name: Create user
+      user: name={{ stack_user }} state=present uid={{ stack_user_uid }} group={{ stack_user_group }}
+
     
   roles:
     - common-vms

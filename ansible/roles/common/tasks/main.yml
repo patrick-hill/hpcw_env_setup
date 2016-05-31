@@ -1,44 +1,8 @@
 ---
-- name: Install packages
-  apt: pkg={{item}} state=installed update_cache=yes
-  with_items:
-        # OS Utils
-        - software-properties-common
-        # Build Utils
-        - gcc
-        - make
-        - build-essential
-        # Filesystems
-        - nfs-common
-        - exfat-fuse
-        - exfat-utils
-        # Archives
-        - zip
-        - unzip
-        - rar
-        - unrar
-        # Common Utils
-        - gparted
-        - curl
-        - wget
-        - vim
-        - vim-gnome
-        - python-gpgme
-        - python-simplejson
-        # Media
-        - vlc
-        # Coding 
-        - git
-        - numlockx
-        - groovy
-        - npm
-        - gradle
-        # ToDo's
-        # - skype
-
-- name: Install linux headers
-  shell: apt install -y linux-headers-$(uname -r)
-
-- name: Ubuntu Specific Settings
+- name: Ubuntu install
   include: "ubuntu.yml"
   when: ansible_distribution == 'Ubuntu'
+
+- name: CentOS install
+  include: "centos.yml"
+  when: ansible_distribution == 'CentOS'
