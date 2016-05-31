@@ -1,32 +1,37 @@
 ---
-- hosts: [stack,test]
+- hosts: [stack]
   gather_facts: yes
   sudo: true
   vars:
+    disable_selinux: true #common-vms
+    os_username: usenet
     install_dir: /apps
+    ssl_dir: "{{ install_dir }}/ssl"
+
+
     firewall_enabled: false
     # firewall_enable_services:
     #   - http
     #   - https
-    disable_selinux: true
     stack_user: usenet
     stack_password: welcome1
     stack_user_uid: 1020
     stack_user_group: usenet
     stack_user_group_gid: 1020
+
+    nfs_mount_root_dir: /mnt
     nfs_shares:
       media:
+          name: media
           source: 10.0.0.150:/mnt/R6-18TB/Hills_Shared/dataset_files/Media
-          target: /mnt/media
           type: nfs4
           opts: rw,hard,intr,rsize=8192,wsize=8192
       backup:
-          source: 10.0.0.150:/mnt/R6-18TB/Hills_Shared/dataset_files/Backups/Computers/vms
-          target: /mnt/backup/
+          name: backup
+          source: 10.0.0.150:/mnt/R6-18TB/Hills_Shared/dataset_files/Backups/vms
           type: nfs4
           opts: rw,hard,intr,rsize=8192,wsize=8192
-    ssl_dir: "{{ install_dir }}/ssl"
-    ssl_key_password: welcome1
+
     sab_config_path: /home/phill/Dropbox/0-Backups/configs/vms-stack/sabnzbd_config.ini
     sickrage_backup_path: /home/phill/Dropbox/0-Backups/configs/vms-stack/sickrage_backup.zip
     couchpotato_backup_path: /home/phill/Dropbox/0-Backups/configs/vms-stack/couchpotato_backup.zip
@@ -36,9 +41,14 @@
     
   pre_tasks:
     - shell:  echo "Starting..."
+    #    Verify Ansible Version
+    - assert:
+        that: ansible_version.major > 1
+
     
   roles:
     - common-vms
+    - nfs-mounts
     - firewall
     - openssl
     - sabnzbd       # port 8080
@@ -49,17 +59,16 @@
     # - transmission  # port 
     # http://geekyadmins.com/install-transmission-on-centos-7/
     # https://elijahpaul.co.uk/script-install-for-transmission-2-83-seedbox-on-centos-6-5/
-    - guacamole # Override 'mysql_root_password' w/ stack_mysql_root_password
-
+#    - guacamole # Override 'mysql_root_password' w/ stack_mysql_root_password
     # - plex
     # - subsonic
     # - owncloud
     
     
-  post_tasks:
-    - name: Playbook --> Dir --> Set Owner
-      file: dest={{ install_dir }} owner={{ stack_user }}
-            group={{ stack_user_group }} recurse=yes
+#  post_tasks:
+#    - name: Playbook --> Dir --> Set Owner
+#      file: dest={{ install_dir }} owner={{ stack_user }}
+#            group={{ stack_user_group }} recurse=yes
     
     # - name: Reboot system
     #   raw: /sbin/shutdown -r 0

@@ -7,8 +7,8 @@ Description=SABnzbd Daemon
 
 [Service]
 Type=forking
-User=usenet
-Group=usenet
+User={{ stack_user }}
+Group={{ stack_user_group }}
 ExecStart=/usr/bin/python /apps/sabnzbd/SABnzbd.py --daemon --config-file=/apps/data/.sabnzbd/sabnzbd_config.ini -s 0.0.0.0
 GuessMainPID=no
 

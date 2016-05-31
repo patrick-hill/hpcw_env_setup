@@ -36,19 +36,19 @@
     - common
     - nfs-mounts
     - autokey
-    - vs-code
-    - what-pulse
     - chrome
     - conky
-    - jdk8
     - gitkraken
-    - remmina
-    - intellij
-    - vagrant
-    - packer
-    - virtualbox
-    - ssh-server
     - git-config
+    - intellij
+    - jdk8
+    - packer
+    - remmina
+    - ssh-server
+    - vagrant
+    - virtualbox
+    - vs-code
+    - what-pulse
 
   post_tasks:
     # - name: Symlink ssh dir
