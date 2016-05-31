@@ -1,3 +1,0 @@
----
-- name: Double inotify value
-  shell: echo 16384 | sudo tee -a /proc/sys/fs/inotify/max_user_watches
