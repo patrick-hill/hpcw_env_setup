@@ -110,7 +110,7 @@
 - name: Download file --> Guacamole jdbc
   get_url:
     url: "{{ guac_jdbc_link }}"
-    dest: "/tmp/guacamole-auth-jdbc-0.9.9.tar.gz"
+    dest: "/tmp/{{ guac_server_filename }}"
     validate_certs: False
   register: downloaded_guac_jdbc
   

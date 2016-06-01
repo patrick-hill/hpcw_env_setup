@@ -1,5 +1,5 @@
 ---
-nfs_server: 10.0.0.150
+nfs_server:
 nfs_mount_root_dir: /home/{{ os_username }}/mnt
 nfs_shares:
 #  mount_description:

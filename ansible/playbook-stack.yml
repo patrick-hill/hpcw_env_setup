@@ -8,6 +8,7 @@
     install_dir: /apps
     ssl_dir: "{{ install_dir }}/ssl"
     backup_dir_root: /home/phill/Dropbox/0-Backups
+    nfs_server: 10.0.0.150
     nfs_backup_target: "{{ nfs_mount_root_dir }}/{{ nfs_shares.backup.name }}"
     sab_restore_file: "{{ backup_dir_root }}/configs/vms-stack/sabnzbd_backup.tar.gz"
     couchpotato_restore_file: "{{ backup_dir_root }}/configs/vms-stack/couchpotato_backup.zip"

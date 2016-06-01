@@ -12,6 +12,7 @@
     git_user_email: "Hill@HillsPCWorld.com"
     ssh_port: 22 # Defaults to 22, encrypt true value
     vnc_password: welcome1 # Defaults to 'welcome1', encrypt true value
+    nfs_server: 10.0.0.150
     nfs_shares:
       shared:
         name: shared

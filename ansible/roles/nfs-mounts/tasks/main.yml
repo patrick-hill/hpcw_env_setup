@@ -3,6 +3,7 @@
   file: path={{ nfs_mount_root_dir }}
         state=directory
         owner={{ os_username }} group={{ os_username }}
+  when: nfs_server is defined
 
 - name:   NFS mounts
   mount:  name={{ nfs_mount_root_dir }}/{{ item.value.name }}
@@ -11,3 +12,4 @@
           opts={{ item.value.opts }}
           state=mounted
   with_dict: "{{ nfs_shares }}"
+  when: nfs_server is defined
