@@ -26,3 +26,4 @@
     src: intellij.desktop
     dest: /usr/share/applications/intellij.desktop
     mode: 0644
+  when: intellij_create_desktop_file

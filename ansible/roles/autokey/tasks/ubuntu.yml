@@ -1,12 +1,14 @@
 ---
 - name: Install
-  apt: pkg={{item}} state=installed
+  apt: pkg={{ item }} state=installed
   with_items:
         - autokey-gtk
 
 - name: Remove default dir
-  file: path=/home/{{os_username}}/.config/autokey state=absent 
+  file: path={{ autokey_config_dir }} state=absent
+  when: autokey_ues_backup
   
 - name: Symlink Backup Dir
-  file: dest=/home/{{os_username}}/.config/autokey src={{backup_dir_root}}/configs/autokey state=link
+  file: dest={{ autokey_config_dir }} src={{ autokey_backup_dir }} state=link
+  when: autokey_ues_backup
   

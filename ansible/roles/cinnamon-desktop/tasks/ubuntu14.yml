@@ -4,5 +4,3 @@
   
 - name: Install (Ubuntu14)
   apt: pkg=cinnamon state=installed update_cache=yes
-  
-

@@ -61,19 +61,19 @@
 
 - name: Download File --> Guacamole-server
   get_url:
-    url: "http://sourceforge.net/projects/guacamole/files/current/source/guacamole-server-0.9.9.tar.gz"
-    dest: "/tmp/guacamole-server-0.9.9.tar.gz"
+    url: "{{ guac_server_link }}"
+    dest: "/tmp/{{ guac_server_filename }}"
     validate_certs: False
   
 - name: Extract file --> Guacamole-server
   unarchive:
-    src: '/tmp/guacamole-server-0.9.9.tar.gz'
+    src: "/tmp/{{ guac_server_filename }}"
     dest: "{{ install_dir }}/guacamole"
     copy: no
   sudo: yes
   
 - name: Remove download file --> Guacamole-server
-  file: path=/tmp/guacamole-server-0.9.9.tar.gz state=absent
+  file: path="/tmp/{{ guac_server_filename }}" state=absent
 
 - name: Config-Make-MakeInstall-ldconfig
   shell: "{{ item }}"
@@ -83,12 +83,12 @@
       - make install
       - ldconfig
   args:
-    chdir: "{{ install_dir }}/guacamole/guacamole-server-0.9.9"
+    chdir: "{{ install_dir }}/guacamole/{{ guac_server_name}}"
   sudo: yes
 
 - name: Download file --> Guacamole war
   get_url:
-    url: "http://sourceforge.net/projects/guacamole/files/current/binary/guacamole-0.9.9.war"
+    url: "{{ guac_war_link }}"
     dest: "/var/lib/guacamole/guacamole.war"
     validate_certs: False
   register: downloaded_guacClient
@@ -109,14 +109,14 @@
 # SQL: JDBC
 - name: Download file --> Guacamole jdbc
   get_url:
-    url: "http://sourceforge.net/projects/guacamole/files/current/extensions/guacamole-auth-jdbc-0.9.9.tar.gz"
+    url: "{{ guac_jdbc_link }}"
     dest: "/tmp/guacamole-auth-jdbc-0.9.9.tar.gz"
     validate_certs: False
   register: downloaded_guac_jdbc
   
 - name: Extract file --> Guacamole jdbc
   unarchive:
-    src: "/tmp/guacamole-auth-jdbc-0.9.9.tar.gz"
+    src: "/tmp/{{ guac_jdbc_filename }}"
     dest: "{{ install_dir }}/guacamole"
     owner: "{{ stack_user }}"
     group: "{{ stack_user_group }}"
@@ -125,42 +125,32 @@
   sudo: yes
   
 - name: Remove download file --> Guacamole jdbc
-  file: path=/tmp/guacamole-server-0.9.9.tar.gz state=absent
+  file: path="/tmp/{{ guac_server_filename }}" state=absent
 
 - name: JDBC move file --> Guacamole jdbc
-  command: cp "{{ install_dir }}/guacamole/guacamole-auth-jdbc-0.9.9/mysql/guacamole-auth-jdbc-mysql-0.9.9.jar" "/usr/share/tomcat/.guacamole/extensions/guacamole-auth-jdbc-mysql-0.9.9.jar"
+  command: cp "{{ install_dir }}/guacamole/{{ guac_jdbc_name }}/mysql/guacamole-auth-jdbc-mysql-{{ guac_version }}.jar" "/usr/share/tomcat/.guacamole/extensions/guacamole-auth-jdbc-mysql-{{ guac_version }}.jar"
   sudo: yes
 
 # SQL: MySQL
-- name: Download file --> msql-connector
+- name: Download file --> mysql-connector
   get_url:
-    url: "http://dev.mysql.com/get/Downloads/Connector/j/mysql-connector-java-5.1.38.tar.gz"
-    dest: "/tmp/mysql-connector-java-5.1.38.tar.gz"
+    url: "{{ guac_mysql_link }}"
+    dest: "/tmp/{{ guac_mysql_filename }}"
     validate_certs: False
   
 - name: Extract file --> msql-connector
   unarchive:
-    src: "/tmp/mysql-connector-java-5.1.38.tar.gz"
+    src: "/tmp/{{ guac_mysql_filename }}"
     dest: "{{ install_dir }}/guacamole"
     copy: no
   sudo: yes
   
 - name: Remove download file --> msql-connector
-  file: path=mysql-connector-java-5.1.38.tar.gz state=absent
+  file: path={{ guac_mysql_filename }} state=absent
 
 - name: Move File --> msql-connector
-  command: cp "{{ install_dir }}/guacamole/mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar" "/usr/share/tomcat/.guacamole/lib/mysql-connector-java-5.1.38-bin.jar"
+  command: cp "{{ install_dir }}/guacamole/{{ guac_mysql_name }}/{{ guac_mysql_name }}-bin.jar" "/usr/share/tomcat/.guacamole/lib/{{ guac_mysql_name }}-bin.jar"
   sudo: yes
-
-
-
-
-
-
-
-
-
-
 
 # Restart Service
 - name: SQL --> Restart Service
@@ -219,7 +209,7 @@
   sudo: yes
 
 - name:     Run 2
-  shell:  mysql guacdb < "{{ install_dir }}/guacamole/guacamole-auth-jdbc-0.9.9/mysql/schema/{{ item }}"
+  shell:  mysql guacdb < "{{ install_dir }}/guacamole/{{ guac_jdbc_name }}/mysql/schema/{{ item }}"
   with_items:
       - 001-create-schema.sql
       - 002-create-admin-user.sql

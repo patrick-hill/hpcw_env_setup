@@ -9,8 +9,10 @@
         - conky-manager
 
 - name: Remove default ConkyManager Settings
-  file: path=/home/{{os_username}}/.config/conky-manager.json state=absent
+  file: {{ conky_config_file }} state=absent
   ignore_errors: yes
+  when: conky_use_backup
 
 - name: Symlink ConkyManager Settings
-  file: dest=/home/{{os_username}}/.config/conky-manager.json src={{backup_dir_root}}/configs/conky/conky-manager.json state=link
+  file: dest={{ conky_config_file }} src={{ conky_backup_file }} state=link
+  when: conky_use_backup

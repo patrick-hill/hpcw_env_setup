@@ -6,7 +6,6 @@
   apt: pkg={{item}} state=installed
   with_items:
         - openssh-server
-  # when: deb_check.rc == 1
 
 # Copy Config file
 - name: Backup Config

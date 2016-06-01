@@ -48,34 +48,34 @@
 # Yenc
 - name: Yenc --> Download file
   get_url:
-    url: "http://www.golug.it/pub/yenc/yenc-0.4.0.tar.gz"
-    dest: "/tmp/yenc-0.4.0.tar.gz"
+    url: "{{ sab_yenc_link }}"
+    dest: "/tmp/{{ sab_yenc_filename }}"
     validate_certs: False
   register: downloaded_yenc
   
 - name: Yenc --> Extract file
   unarchive:
-    src: "/tmp/yenc-0.4.0.tar.gz"
+    src: "/tmp/{{ sab_yenc_filename }}"
     dest: "/tmp"
     copy: no
   sudo: yes
   when: downloaded_yenc|changed
   
 - name: Yenc --> Remove download file
-  file: path=/tmp/yenc-0.4.0.tar.gz state=absent
+  file: path="/tmp/{{ sab_yenc_filename }}" state=absent
 
 - name:     Yenc --> Build
   command:  python setup.py build
   args:
-    chdir: /tmp/yenc-0.4.0
+    chdir: "/tmp/{{ sab_yenc_name }}"
 
 - name:     Yenc --> Install
   command:  python setup.py install
   args:
-    chdir: /tmp/yenc-0.4.0
+    chdir: "/tmp/{{ sab_yenc_name }}"
 
 - name: Yenc --> Remove files
-  file: path=/tmp/yenc-0.4.0 state=absent
+  file: path="/tmp/{{ sab_yenc_name }}" state=absent
 
   #pyOpenSSL
 - name: pyOpenSSL --> Download file
@@ -91,19 +91,30 @@
   command:  firewall-cmd --permanent --add-port=9090/tcp
   when:     firewall_enabled == true
 
-#Sabnzbd Repo
 - name: Clone repo
-  git:  repo=https://github.com/sabnzbd/sabnzbd.git
-        dest=/apps/sabnzbd
+  git:  repo="{{ sab_repo }}"
+        dest={{ sab_install_dir }}
 
-#Config
-- name: Create /apps/data/.sabnzbd dir
-  file: dest=/apps/data/.sabnzbd state=directory recurse=yes
+- name: Create data dir
+  file: dest={{ sab_config_dir }} state=directory recurse=yes
 
-- name: Copy Sab config file
-  copy: src={{ sab_config_path }} dest=/apps/data/.sabnzbd
+- name: Restore Backup --> Copy archive
+  copy: src={{ sab_restore_file }} dest=/tmp
         owner={{ stack_user }} group={{ stack_user_group }}
-  when: sab_config_path is defined
+  when: sab_restore_file is defined
+
+- name: Restore Backup --> Extract archive
+  unarchive:
+    src: /tmp/sabnzbd_backup.tar.gz
+    dest: "{{ sab_config_dir }}"
+    copy: no
+  sudo: yes
+  when: sab_restore_file is defined
+
+#- name: Copy Sab config file
+#  copy: src={{ sab_config_path }} dest={{ sab_config_dir }}
+#        owner={{ stack_user }} group={{ stack_user_group }}
+#  when: sab_config_path is defined
 
 - name: Set dir owner
   file: dest=/apps owner={{ stack_user }}
@@ -116,3 +127,32 @@
 
 - name:     Enable service
   service:  name=sabnzbd.service enabled=yes state=started
+
+- name: Stat backup target
+  stat: path={{ sab_backup_target }}
+  register: backup_dir
+
+- name: Create backup dir
+  file: path={{ sab_backup_target }} state=directory
+        owner=root group=root
+  when: backup_dir.stat.exists == False
+
+- name: Stat backup script dir
+  stat: path={{ sab_backup_script_dir }}
+  register: backup_script_dir
+
+- name: Create backup script dir
+  file: path={{ sab_backup_script_dir }} state=directory
+        owner=root group=root
+  when: backup_script_dir.stat.exists == False
+
+- name: Create backup script
+  template: src=sabnzbd_backup.sh.j2
+            dest={{ sab_backup_script_dir }}/sabnzbd_backup.sh
+            owner=root group=root mode="a+x"
+
+- name: Create cron backup
+  cron: name="Sabnzbd Backup"
+        hour="04" minute="10"
+        user="root" job="/apps/sabnzbd_backup.sh"
+        state=present

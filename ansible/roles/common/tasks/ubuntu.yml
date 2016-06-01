@@ -68,7 +68,7 @@
     - gradle
   when: common_install_dev_utils
 
-- name: Common packages -> Dev Utils
+- name: Common packages -> Comm Utils
   apt: pkg={{ item }} state=installed udpate_cache=yes
   with_items:
     - skype

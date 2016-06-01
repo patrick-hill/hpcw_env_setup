@@ -1,6 +1,6 @@
 ---
 - name: Check if installed
-  stat: path=/apps/couchpotatoserver
+  stat: path={{ couchpotato_install_dir }}
   register: check_installed
 
 - name: CentOS Install

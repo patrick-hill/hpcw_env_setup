@@ -14,8 +14,6 @@
   sudo: yes
 
 - name: Install
-  apt: 
-    pkg: google-chrome-stable
-    state: installed
-    update_cache: yes
+  apt: pkg=google-chrome-stable state=installed update_cache=yes
+
   

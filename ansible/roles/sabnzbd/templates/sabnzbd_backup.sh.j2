@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Script is used to backup sensitive files to a compressed file
+
+archive_command="{{ sab_backup_command }}"
+backup_filename={{ sab_backup_filename }}
+backup_dir={{ sab_config_dir }}
+backup_source={{ sab_backup_sources }}
+backup_target={{ sab_backup_target }}
+
+cd $backup_dir
+$archive_command $backup_target/$backup_filename $backup_source

@@ -4,40 +4,67 @@
 #   sudo: yes
 
 - name: Create dirs 
-  file: path=/apps/data/.couchpotatoserver owner={{ stack_user }}
-        group={{ stack_user_group }} recurse=yes
-        state=directory
-        
+  file: path={{ couchpotato_config_dir }} owner={{ stack_user }}
+        group={{ stack_user_group }} recurse=yes state=directory
+
 - name: Clone repo from GitHub
-  git:  repo=https://github.com/RuudBurger/CouchPotatoServer.git
-        dest=/apps/couchpotatoserver
+  git:  repo={{ couchpotato_git_repo }}
+        dest={{ couchpotato_install_dir }}
         version=master
 
 - name: Restore Backup --> Copy archive
-  copy: src={{ couchpotato_backup_path }} dest=/apps/data
+  copy: src={{ couchpotato_restore_file }} dest=/tmp
         owner={{ stack_user }} group={{ stack_user_group }}
-  when: couchpotato_backup_path is defined
+  when: couchpotato_restore_file is defined
   
 - name: Restore Backup --> Extract archive
   unarchive:
-    src: /apps/data/couchpotato_backup.zip
-    dest: /apps/data/.couchpotatoserver
+    src: /tmp/couchpotato_backup.zip
+    dest: "{{ couchpotato_config_dir }}"
     copy: no
   sudo: yes
-  when: couchpotato_backup_path is defined
+  when: couchpotato_restore_file is defined
 
 - name: Set dir owner
-  file: path=/apps/ owner={{ stack_user }}
-        group={{ stack_user_group }} recurse=yes
-        state=directory
+  file: path=/apps/ owner={{ stack_user }} group={{ stack_user_group }}
+        recurse=yes state=directory
 
 - name: Add service
-  copy: src=couchpotatoserver.service
-        dest=/etc/systemd/system/
-        owner=root group=root mode=0644
+  template: src=couchpotatoserver.service.j2
+            dest=/etc/systemd/system/couchpotatoserver.service
+            owner=root group=root mode=0644
 
 - name:     Enable service
   service:  name=couchpotatoserver.service enabled=yes state=started
 
 # Backed Up Files: couchpotatoserver_config.ini cache custom_plugins database
 # Used Command: zip -9 -q -r couchpotato-`date \+%Y\%m\%d-%T`.zip couchpotatoserver_config.ini cache custom_plugins database
+
+- name: Stat backup target
+  stat: path={{ couchpotato_backup_target }}
+  register: backup_dir
+
+- name: Create backup dir
+  file: path={{ couchpotato_backup_target }} state=directory
+        owner=root group=root
+  when: backup_dir.stat.exists == False
+
+- name: Stat backup script dir
+  stat: path={{ couchpotato_backup_script_dir }}
+  register: backup_script_dir
+
+- name: Create backup script dir
+  file: path={{ couchpotato_backup_script_dir }} state=directory
+        owner=root group=root
+  when: backup_script_dir.stat.exists == False
+
+- name: Create backup script
+  template: src=couchpotatoserver_backup.sh.j2
+            dest={{ couchpotato_backup_script_dir }}/couchpotatoserver_backup.sh
+            owner=root group=root mode="a+x"
+
+- name: Create cron backup
+  cron: name="Couch Potato Server Backup"
+        hour="04" minute="00"
+        user="root" job="/apps/couchpotatoserver_backup.sh"
+        state=present

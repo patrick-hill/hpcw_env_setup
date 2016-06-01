@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Script is used to backup sensitive files to a compressed file
+
+archive_command="{{ couchpotato_backup_command }}"
+backup_filename={{ couchpotato_backup_filename }}
+backup_dir={{ couchpotato_config_dir }}
+backup_source={{ couchpotato_backup_sources }}
+backup_target={{ couchpotato_backup_target }}
+
+cd $backup_dir
+$archive_command $backup_target/$backup_filename $backup_source

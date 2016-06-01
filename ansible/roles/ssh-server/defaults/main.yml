@@ -1,2 +1,3 @@
+---
 ssh_config_file: /etc/ssh/sshd_config
 ssh_port: 22

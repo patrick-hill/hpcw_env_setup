@@ -1,0 +1,14 @@
+---
+couchpotato_install_dir: "{{ install_dir }}/couchpotatoserver"
+couchpotato_config_dir: "{{ install_dir }}/data/.couchpotatoserver"
+couchpotato_config_file: "{{ couchpotato_config_dir }}/couchpotatoserver_config.ini"
+couchpotato_git_repo: https://github.com/RuudBurger/CouchPotatoServer.git
+couchpotato_restore_file:
+couchpotato_cron_backup_enabled: true
+
+# Backup Script Variables
+couchpotato_backup_script_dir: "{{ install_dir }}/_backups/scritps"
+couchpotato_backup_command: tar -cpzf
+couchpotato_backup_filename: couchpotato-`date \+%Y\%m\%d-%T`.tar.gz
+couchpotato_backup_sources: "*"
+couchpotato_backup_target: "{{ nfs_backup_target }}"
