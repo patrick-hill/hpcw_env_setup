@@ -5,12 +5,12 @@ If you see me doing something asinine, SAY SOMETHING!
 
 
 # Requirements
-Vagrant 1.7.4+ [https://www.vagrantup.com/]
-Ansible 2.0.1+ [https://www.ansible.com/]
-Virtualbox 4+ [https://www.virtualbox.org/wiki/Downloads]
-CentOS 7.1 Vagrant Boxes (Possibly 6.7)
-* Repo: Make your own like me: [https://github.com/boxcutter/centos]
-* Use prebuilt boxes: [https://atlas.hashicorp.com/boxcutter/boxes/centos71]
+Vagrant 1.7.4+ [https://www.vagrantup.com/]   
+Ansible 2.0.1+ [https://www.ansible.com/]   
+Virtualbox 4+ [https://www.virtualbox.org/wiki/Downloads]   
+CentOS 7.1 Vagrant Boxes (Possibly 6.7)   
+* Repo: Make your own like me: [https://github.com/boxcutter/centos]   
+* Use prebuilt boxes: [https://atlas.hashicorp.com/boxcutter/boxes/centos71]    
 
 
 # Environments
@@ -107,6 +107,6 @@ vs-code
 what-pulse
 
 # Kudos/Respect/Props/Etc
-Major kudos to Derek Horn [https://deviantengineer.com] for writing some great
+Major kudos to Derek Horn [Deviant Engineer](https://deviantengineer.com) for writing some great
 CentOS guides for Sab, CouchPotato, SickRage, HeadPhones, Guacamole, etc
-Check out his site for links to his Twitter [https://twitter.com/DeviantEng] Google+, etc
+Check out his site for links to his [Twitter](https://twitter.com/DeviantEng) Google+, etc
