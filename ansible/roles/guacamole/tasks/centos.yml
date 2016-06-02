@@ -110,7 +110,7 @@
 - name: Download file --> Guacamole jdbc
   get_url:
     url: "{{ guac_jdbc_link }}"
-    dest: "/tmp/{{ guac_server_filename }}"
+    dest: "/tmp/{{ guac_jdbc_filename }}"
     validate_certs: False
   register: downloaded_guac_jdbc
   
@@ -125,7 +125,7 @@
   sudo: yes
   
 - name: Remove download file --> Guacamole jdbc
-  file: path="/tmp/{{ guac_server_filename }}" state=absent
+  file: path="/tmp/{{ guac_jdbc_filename }}" state=absent
 
 - name: JDBC move file --> Guacamole jdbc
   command: cp "{{ install_dir }}/guacamole/{{ guac_jdbc_name }}/mysql/guacamole-auth-jdbc-mysql-{{ guac_version }}.jar" "/usr/share/tomcat/.guacamole/extensions/guacamole-auth-jdbc-mysql-{{ guac_version }}.jar"
