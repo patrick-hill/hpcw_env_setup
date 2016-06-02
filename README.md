@@ -74,37 +74,37 @@ Bash powered setup driven from my Mac script adapted for Linux. Very repatative 
 Bash setup powered mainly by [Brew](http://brew.sh/) & [Brew Cask](https://github.com/caskroom/homebrew-cask)
 
 # Ansible Roles
-autokey
-chrome
-cinnamon-desktop
-common
-conky
-couchpotato
-dropbox
-firewal
-git-config
-gitgraken
-guacamole
-headphones
-intellij
-jdk8
-mysql
-nfs-mounts
-nginx
-openssl
-packer
-remmina
-sabnzbd
-sickrage
-sonarr
-ssh-server
-transmission
-vagrant
-virtualbox
-vmware-workstation
-vnc-x11vnc
-vs-code
-what-pulse
+* autokey
+* chrome
+* cinnamon-desktop
+* common
+* conky
+* couchpotato
+* dropbox
+* firewal
+* git-config
+* gitgraken
+* guacamole
+* headphones
+* intellij
+* jdk8
+* mysql
+* nfs-mounts
+* nginx
+* openssl
+* packer
+* remmina
+* sabnzbd
+* sickrage
+* sonarr
+* ssh-server
+* transmission
+* vagrant
+* virtualbox
+* vmware-workstation
+* vnc-x11vnc
+* vs-code
+* what-pulse
 
 # Kudos/Respect/Props/Etc
 Major kudos to Derek Horn [Deviant Engineer](https://deviantengineer.com) for writing some great
