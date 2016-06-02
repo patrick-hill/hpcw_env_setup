@@ -1,0 +1,4 @@
+---
+remmina_ues_backup: true
+remmina_config_dir: /home/{{ os_username }}/.remmina
+remmina_backup_dir: {{ backup_dir_root }}/configs/remmina

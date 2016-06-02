@@ -9,45 +9,66 @@
   command: pip install pyopenssl
 
 - name: Clone repo from GitHub
-  git:  repo=https://github.com/SickRage/SickRage.git
-        dest=/apps/sickrage
+  git:  repo={{ sickrage_repo }}
+        dest="{{ sickrage_install_dir }}"
         version=master
 
-- name: Set dir/data owner
-  file: path=/apps/data/.sickrage owner={{ stack_user }}
+- name: Create data dir
+  file: path="{{ sickrage_config_dir }}" owner={{ stack_user }}
         group={{ stack_user_group }} recurse=yes
         state=directory mode=755
 
 - name: Restore Backup --> Copy archive
-  copy: src={{ sickrage_backup_path }} dest=/apps/data
+  copy: src={{ sickrage_restore_file }} dest=/tmp
         owner={{ stack_user }} group={{ stack_user_group }}
-  when: sickrage_backup_path is defined
+  when: sickrage_restore_file is defined
   
 - name: Restore Backup --> Extract archive
   unarchive:
-    src: /apps/data/sickrage_backup.zip
-    dest: /apps/data/.sickrage
+    src: /tmp/sickrage_backup.zip
+    dest: "{{ sickrage_config_dir }}"
     copy: no
   sudo: yes
-  when: sickrage_backup_path is defined
+  when: sickrage_restore_file is defined
 
 - name: Set dir owner
-  file: path=/apps owner={{ stack_user }}
+  file: path={{ install_dir }} owner={{ stack_user }}
         group={{ stack_user_group }} recurse=yes
         state=directory mode=755
 
 - name: Add service
-  copy: src=sickrage.service
-        dest=/etc/systemd/system/
-        owner=root group=root mode=0644
+  template: src=sickrage.service.j2
+            dest=/etc/systemd/system/sickrage.service
+            owner=root group=root mode=0644
 
 - name:     Enable service
   service:  name=sickrage.service enabled=yes state=started
 
+- name: Stat backup target
+  stat: path={{ sickrage_backup_target }}
+  register: backup_dir
 
+- name: Create backup dir
+  file: path={{ sickrage_backup_target }} state=directory
+        owner=root group=root
+  when: backup_dir.stat.exists == False
 
-# Backed Up Files: cache.db sickrage_config.ini failed.db sickbeard.db cache
-# Used Command: zip -9 -q -r sickrage-`date \+%Y\%m\%d-%T`.zip cache.db sickrage_config.ini failed.db sickbeard.db cache
+- name: Stat backup script dir
+  stat: path={{ sickrage_backup_script_dir }}
+  register: backup_script_dir
 
-# zip -v -r sickrage-`date \+%Y\%m\%d`.zip cache.db config.ini failed.db sickbeard.db cache
-# zip -9 -q -r sickrage-`date \+%Y\%m\%d-%T`.zip cache.db sickrage_config.ini failed.db sickbeard.db cache
+- name: Create backup script dir
+  file: path={{ sickrage_backup_script_dir }} state=directory
+        owner=root group=root
+  when: backup_script_dir.stat.exists == False
+
+- name: Create backup script
+  template: src=sickrage_backup.sh.j2
+            dest="{{ sickrage_backup_script_dir }}/sickrage_backup.sh"
+            owner=root group=root mode="a+x"
+
+- name: Create cron backup
+  cron: name="SickRage Backup"
+        hour="04" minute="20"
+        user="root" job="{{ sickrage_backup_script_dir }}/sickrage_backup.sh"
+        state=present

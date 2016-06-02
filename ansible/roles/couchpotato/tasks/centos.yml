@@ -37,9 +37,6 @@
 - name:     Enable service
   service:  name=couchpotatoserver.service enabled=yes state=started
 
-# Backed Up Files: couchpotatoserver_config.ini cache custom_plugins database
-# Used Command: zip -9 -q -r couchpotato-`date \+%Y\%m\%d-%T`.zip couchpotatoserver_config.ini cache custom_plugins database
-
 - name: Stat backup target
   stat: path={{ couchpotato_backup_target }}
   register: backup_dir
@@ -60,11 +57,11 @@
 
 - name: Create backup script
   template: src=couchpotatoserver_backup.sh.j2
-            dest={{ couchpotato_backup_script_dir }}/couchpotatoserver_backup.sh
+            dest="{{ couchpotato_backup_script_dir }}/couchpotatoserver_backup.sh"
             owner=root group=root mode="a+x"
 
 - name: Create cron backup
   cron: name="Couch Potato Server Backup"
         hour="04" minute="00"
-        user="root" job="/apps/couchpotatoserver_backup.sh"
+        user="root" job="{{ couchpotato_backup_script_dir }}/couchpotatoserver_backup.sh"
         state=present

@@ -4,6 +4,8 @@
 #       /jdbc
 #       /sql
 
+# Uses MariaDB, Tomcat
+
 - name: Create dir
   file: dest={{ item }}  state=directory
         owner={{ stack_user }} group={{ stack_user_group }}

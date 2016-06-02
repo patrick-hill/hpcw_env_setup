@@ -11,4 +11,4 @@ couchpotato_backup_script_dir: "{{ install_dir }}/_backups/scritps"
 couchpotato_backup_command: tar -cpzf
 couchpotato_backup_filename: couchpotato-`date \+%Y\%m\%d-%T`.tar.gz
 couchpotato_backup_sources: "*"
-couchpotato_backup_target: "{{ nfs_backup_target }}"
+couchpotato_backup_target: "{{ install_dir }}/_backups"

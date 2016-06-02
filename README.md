@@ -47,6 +47,7 @@ Current dev task
 	* vagrant-reload
 
 ### TODO
+* Guacamole: Break out Tomcat/SQL
 * firewall: add services
 * dotfiles
 * SSH Key Setup

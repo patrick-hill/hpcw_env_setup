@@ -144,11 +144,11 @@
 
 - name: Create backup script
   template: src=sabnzbd_backup.sh.j2
-            dest={{ sab_backup_script_dir }}/sabnzbd_backup.sh
+            dest="{{ sab_backup_script_dir }}/sabnzbd_backup.sh"
             owner=root group=root mode="a+x"
 
 - name: Create cron backup
   cron: name="Sabnzbd Backup"
         hour="04" minute="10"
-        user="root" job="/apps/sabnzbd_backup.sh"
+        user="root" job="{{ sab_backup_script_dir }}/sabnzbd_backup.sh"
         state=present

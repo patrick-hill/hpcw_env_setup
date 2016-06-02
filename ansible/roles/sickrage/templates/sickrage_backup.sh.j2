@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 
-sickrageDir={{ install_dir}}/data
-dts=`date \+%Y\%m\%d-%T`
-nasTarget=10.0.0.150:/mnt/R6-18TB/Hills_Shared/dataset_files/Backups/Computers/vms/
-# Backup
-zip -9 -q -r /tmp/sickrage-${dts}.zip ${sickrageDir}/.sickrage
-scp /tmp/sickrage-${dts}.zip phill@${nasTarget}
+# Script is used to backup sensitive files to a compressed file
+
+archive_command="{{ sickrage_backup_command }}"
+backup_filename={{ sickrage_backup_filename }}
+backup_dir={{ sickrage_config_dir }}
+backup_source={{ sickrage_backup_sources }}
+backup_target={{ sickrage_backup_target }}
+
+cd $backup_dir
+$archive_command $backup_target/$backup_filename $backup_source
+
