@@ -1,9 +1,17 @@
 # HPCW Env Setup
-Automated installation of my various environments.
-* Warning: I'm new to Ansible and still learning the best ways to utilize its many features, if you see me doing something asinine, let me know!
+Automated provisioning of my various environments.
+* Warning: I'm new to Ansible and still learning the best ways to utilize its many features.
+If you see me doing something asinine, SAY SOMETHING!
 
-# Testing
-This project uses Vagrant & Virtualbox for testing.
+
+# Requirements
+Vagrant 1.7.4+ [https://www.vagrantup.com/]
+Ansible 2.0.1+ [https://www.ansible.com/]
+Virtualbox 4+ [https://www.virtualbox.org/wiki/Downloads]
+CentOS 7.1 Vagrant Boxes (Possibly 6.7)
+* Repo: Make your own like me: [https://github.com/boxcutter/centos]
+* Use prebuilt boxes: [https://atlas.hashicorp.com/boxcutter/boxes/centos71]
+
 
 # Environments
 * DevHouse: My current dev box used for just about everything. Currently undergoing distro testing of: [Mint, (X,K)Ubuntu(14/15/16), Debian, openSUSE]
@@ -12,6 +20,7 @@ This project uses Vagrant & Virtualbox for testing.
 * Stack02: (Data): Used to collect, process & file my data
 * Mac: Old work laptop no longer used
 * LinuxMint: This was my first attempt at officially moving my main development setup to a Linux enviroment.
+
 
 ## EventHorizon
 ** Status: Active   
@@ -37,35 +46,67 @@ Current dev task
 	* vagrant-hostmanager
 	* vagrant-reload
 
-## Env-DevHouse
-**Status: Active**   
-Ansible provisioning still under development. Flushing our roles, security, backups, integration and overall ability to customize a Linux environment
 ### TODO
-* sickrage: Automatic backup updates
 * firewall: add services
 * dotfiles
 * SSH Key Setup
-* Theme setup (Crunchy)
 * Setup Backups?
-* Chrome: Add menu item?
 * Cinnamon: Set as default DE?
 * Conky: Setup default profile (from dotfiles?)
 * Intellij: setup default settings
-* JDK8: Verify PATH/JAVA_HOME set correctly after install
-* Packer: Add to PATH
 * Vagrant: Add plugin check to roles main.yml
 * VMWare: Fix lib errors
-* Add conditional logic to roles/includes
 * Setup apps for startup
 
------
+
+## Env-DevHouse
+**Status: Abandoned**   
+Ansible provisioning: Abandoned as PC is now re-purposed   
+
 
 ## Env-LinuxMint:
-**Status: Abandonded**    
+**Status: Abandoned**    
 Bash powered setup driven from my Mac script adapted for Linux. Very repatative approach and not dynamic or maintainable.
 
------
 
 ## Env-Mac:
 **Status: Archived**   
 Bash setup powered mainly by [Brew](http://brew.sh/) & [Brew Cask](https://github.com/caskroom/homebrew-cask)
+
+# Ansible Roles
+autokey
+chrome
+cinnamon-desktop
+common
+conky
+couchpotato
+dropbox
+firewal
+git-config
+gitgraken
+guacamole
+headphones
+intellij
+jdk8
+mysql
+nfs-mounts
+nginx
+openssl
+packer
+remmina
+sabnzbd
+sickrage
+sonarr
+ssh-server
+transmission
+vagrant
+virtualbox
+vmware-workstation
+vnc-x11vnc
+vs-code
+what-pulse
+
+# Kudos/Respect/Props/Etc
+Major kudos to Derek Horn [https://deviantengineer.com] for writing some great
+CentOS guides for Sab, CouchPotato, SickRage, HeadPhones, Guacamole, etc
+Check out his site for links to his Twitter [https://twitter.com/DeviantEng] Google+, etc
