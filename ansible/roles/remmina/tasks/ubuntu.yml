@@ -15,3 +15,4 @@
 - name: Symlink Backup Dir
   file: dest={{ remmina_config_dir }} src={{ remmina_backup_dir }} state=link
   when: remmina_ues_backup
+
