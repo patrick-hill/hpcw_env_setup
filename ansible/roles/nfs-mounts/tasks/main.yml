@@ -3,6 +3,7 @@
   file: path={{ nfs_mount_root_dir }}
         state=directory
         owner={{ os_username }} group={{ os_username }}
+  sudo: yes
   when: nfs_server is defined
 
 - name:   NFS mounts
@@ -12,4 +13,5 @@
           opts={{ item.value.opts }}
           state=mounted
   with_dict: "{{ nfs_shares }}"
+  sudo: yes
   when: nfs_server is defined

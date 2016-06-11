@@ -10,4 +10,4 @@ common_install_dev_utils: true
 common_install_comm: true
 
 # CentOS vars
-disable_selinux: false
+selinux_enabled: false

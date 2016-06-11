@@ -12,22 +12,27 @@
         dest={{ couchpotato_install_dir }}
         version=master
 
-- name: Restore Backup --> Copy archive
-  copy: src={{ couchpotato_restore_file }} dest=/tmp
-        owner={{ stack_user }} group={{ stack_user_group }}
-  when: couchpotato_restore_file is defined
-  
 - name: Restore Backup --> Extract archive
   unarchive:
-    src: /tmp/couchpotato_backup.zip
+    src: "{{ couchpotato_restore_file }}"
     dest: "{{ couchpotato_config_dir }}"
     copy: no
   sudo: yes
   when: couchpotato_restore_file is defined
 
 - name: Set dir owner
-  file: path=/apps/ owner={{ stack_user }} group={{ stack_user_group }}
-        recurse=yes state=directory
+  file: path={{ install_dir }} owner={{ stack_user }}
+        group={{ stack_user_group }} recurse=yes
+        state=directory mode=755
+
+- name: Enable port on firewall
+  command: "{{ item }}"
+  with_items:
+    - firewall-cmd --permanent --add-port=5050/tcp  # HTTP port
+    - firewall-cmd --permanent --add-port=5222/tcp  # HTTPS port
+    - firewall-cmd --reload
+  sudo: yes
+  when: firewall_enabled
 
 - name: Add service
   template: src=couchpotatoserver.service.j2

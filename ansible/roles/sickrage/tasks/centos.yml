@@ -18,14 +18,9 @@
         group={{ stack_user_group }} recurse=yes
         state=directory mode=755
 
-- name: Restore Backup --> Copy archive
-  copy: src={{ sickrage_restore_file }} dest=/tmp
-        owner={{ stack_user }} group={{ stack_user_group }}
-  when: sickrage_restore_file is defined
-  
 - name: Restore Backup --> Extract archive
   unarchive:
-    src: /tmp/sickrage_backup.zip
+    src: "{{ sickrage_restore_file }}"
     dest: "{{ sickrage_config_dir }}"
     copy: no
   sudo: yes
@@ -35,6 +30,15 @@
   file: path={{ install_dir }} owner={{ stack_user }}
         group={{ stack_user_group }} recurse=yes
         state=directory mode=755
+
+- name: Enable port on firewall
+  command: "{{ item }}"
+  with_items:
+    - firewall-cmd --permanent --add-port=8081/tcp  # HTTP port
+#    - firewall-cmd --permanent --add-port=9090/tcp  # HTTPS port
+    - firewall-cmd --reload
+  sudo: yes
+  when: firewall_enabled
 
 - name: Add service
   template: src=sickrage.service.j2

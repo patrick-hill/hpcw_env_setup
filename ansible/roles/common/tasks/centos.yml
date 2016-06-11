@@ -5,13 +5,26 @@
     regexp: "^SELINUX=.*"
     line:   "SELINUX=disabled"
   sudo: yes 
-  when: disable_selinux
+  when: selinux_enabled == false
+
+- name: EPEL Repo check
+  command: yum list installed epel-release
+  register: epel_check
+  failed_when: epel_check.rc > 1
 
 - name: Install EPEL repo
   yum:  name=epel-release state=latest update_cache=yes
+  when: epel_check.rc == 1
+
+- name: RPMFusion Repo check
+  command: yum list installed rpmforge-release
+  register: rpm_check
+  failed_when: rpm_check.rc > 1
 
 - name: RPMFusion Repo
-  yum:  name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm state=present update_cache=yes
+  yum:  name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
+        state=latest update_cache=yes
+  when: rpm_check.rc == 1
 
 - name: Install common packages
   yum:  pkg={{ item }} state=installed update_cache=yes
@@ -19,7 +32,8 @@
     - git
     - wget
     - nfs-utils
-    - nfs-utils-lib
+#    - nfs-utils-lib
     - zip
     - unzip
     - python-pip
+  sudo: yes

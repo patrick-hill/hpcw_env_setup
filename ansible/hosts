@@ -7,7 +7,7 @@ devhouse.hpcw.com
 proxy.hpcw.com
 
 [stack]
-stack.hpcw.com
+10.0.0.201
 
 [eventhorizon]
 EventHorizon-Ubu

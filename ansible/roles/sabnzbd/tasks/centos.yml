@@ -99,14 +99,9 @@
 - name: Create data dir
   file: dest={{ sab_config_dir }} state=directory recurse=yes
 
-- name: Restore Backup --> Copy archive
-  copy: src={{ sab_restore_file }} dest=/tmp
-        owner={{ stack_user }} group={{ stack_user_group }}
-  when: sab_restore_file is defined
-
 - name: Restore Backup --> Extract archive
   unarchive:
-    src: /tmp/sabnzbd_backup.tar.gz
+    src: "{{ sab_restore_file }}"
     dest: "{{ sab_config_dir }}"
     copy: no
   sudo: yes
@@ -115,6 +110,15 @@
 - name: Set dir owner
   file: dest="{{ install_dir }}" owner={{ stack_user }}
         group={{ stack_user_group }} recurse=yes
+
+- name: Enable port on firewall
+  command: "{{ item }}"
+  with_items:
+    - firewall-cmd --permanent --add-port=8080/tcp  # HTTP port
+    - firewall-cmd --permanent --add-port=9090/tcp  # HTTPS port
+    - firewall-cmd --reload
+  sudo: yes
+  when: firewall_enabled
 
 - name: Add service
   template: src=sabnzbd.service.j2
