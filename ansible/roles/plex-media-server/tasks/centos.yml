@@ -12,7 +12,7 @@
 - name: Restore Backup --> Extract archive
   unarchive:
     src: "{{ pms_restore_file }}"
-    dest: "{{ pms_config_dir }}"
+    dest: /
     copy: no
   sudo: yes
   when: pms_restore_file is defined

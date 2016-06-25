@@ -1,0 +1,50 @@
+---
+# Cinnamon 3.0 from community PPA
+# http://www.webupd8.org/2016/04/how-to-install-cinnamon-30-in-ubuntu.html
+- name: Add Cinnamon PPA
+  apt_repository: repo='ppa:embrosyn/cinnamon'
+
+- name: Remove packages to be replaced
+  apt: pkg={{ item }} state=absent
+  with_items:
+    - libreoffice-style-human
+
+- name: Install packages
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items:
+    - cinnamon
+    - blueberry
+    - cinnamon-core
+    - cinnamon-control-center
+#    - cinnamon-desktop
+#    - cinnamon-menus
+    - cinnamon-screensaver
+    - cinnamon-settings-daemon
+#    - nemo-dropbox # requires dropbox
+    - nemo-filename-repairer
+    - nemo-image-converter
+    - nemo-pastebin
+#    - nemo-python
+    - nemo-seahorse
+    - nemo-share
+    - nemo-terminal
+    # Theme/icons/etc
+    - numix-gtk-theme
+
+- name: Install DE debs
+  apt: deb={{ item }}
+  with_items:
+    - http://packages.linuxmint.com/pool/main/m/mint-x-icons/mint-x-icons_1.3.7_all.deb
+    - http://packages.linuxmint.com/pool/main/libr/libreoffice-style-mint/libreoffice-style-mint_5.1%2b3_all.deb
+    - http://packages.linuxmint.com/pool/main/m/mint-themes-gtk3/mint-themes-gtk3_3.18%2b6_all.deb
+    - http://packages.linuxmint.com/pool/main/m/mint-y-theme/mint-y-theme_1.0.5_all.deb
+    - http://packages.linuxmint.com/pool/main/m/mint-y-icons/mint-y-icons_1.0.3_all.deb
+    - http://packages.linuxmint.com/pool/main/c/cinnamon-themes/cinnamon-themes_2016.05.03_all.deb
+    - http://packages.linuxmint.com/pool/main/m/mint-themes/mint-themes_1.4.6_all.deb
+
+- name: Fix Cinnamon Quit menu
+  command: "{{ item }}"
+  with_items:
+    - gsettings set org.cinnamon.desktop.session settings-daemon-uses-logind true
+    - gsettings set org.cinnamon.desktop.session session-manager-uses-logind true
+    - gsettings set org.cinnamon.desktop.session screensaver-uses-logind false

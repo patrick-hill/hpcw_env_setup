@@ -1,6 +1,6 @@
 ---
 - name: Add Cinnamon PPA (Ubuntu14)
-  apt_repository: repo='ppa:moorkai/cinnamon'
+  apt_repository: repo="ppa:moorkai/cinnamon"
   
 - name: Install (Ubuntu14)
   apt: pkg=cinnamon state=installed update_cache=yes

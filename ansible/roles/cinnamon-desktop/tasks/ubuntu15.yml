@@ -1,6 +1,6 @@
 ---
 - name: Install (Ubuntu15)
-  apt: pkg={{item}} state=installed
+  apt: pkg={{ item }} state=installed
   with_items:
         - cinnamon
         - cinnamon-common
