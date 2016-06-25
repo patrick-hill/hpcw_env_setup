@@ -1,7 +1,6 @@
 ---
 sickrage_install_dir: "{{ install_dir }}/sickrage"
 sickrage_config_dir: "{{ install_dir }}/data/.sickrage"
-sickrage_restore_file:
 
 sickrage_repo: https://github.com/SickRage/SickRage.git
 

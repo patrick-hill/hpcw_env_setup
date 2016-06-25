@@ -1,7 +1,6 @@
 ---
 sab_install_dir: /apps/sabnzbd
 sab_config_dir: /apps/data/.sabnzbd
-sab_restore_file:
 sab_download_dir: /_downloads
 
 sab_yenc_name: yenc-0.4.0
