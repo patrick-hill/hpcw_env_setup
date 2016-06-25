@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Script is used to backup sensitive files to a compressed file
+archive_command="{{ pms_backup_command }}"
+backup_filename={{ pms_backup_filename }}
+backup_dirs={{ pms_metadata_dir }} {{ pms_config_dir }}
+backup_target={{ pms_backup_target }}
+############################3
+
+# Stop Plex Service
+echo "Stopping plex service..."
+systemctl stop plexmediaserver.service
+
+echo "Creating backup"
+$archive_command $backup_target/$backup_filename $backup_dirs
+
+# Start Plex Service
+echo "Starting plex service..."
+systemctl start plexmediaserver.service

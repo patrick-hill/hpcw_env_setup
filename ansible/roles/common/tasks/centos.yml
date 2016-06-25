@@ -23,7 +23,7 @@
 
 - name: RPMFusion Repo
   yum:  name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
-        state=latest update_cache=yes
+        state=present update_cache=yes
   when: rpm_check.rc == 1
 
 - name: Install common packages

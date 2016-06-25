@@ -62,6 +62,7 @@
     - sabnzbd       # port 8080
     - sickrage      # port 8081
     - couchpotato   # port 5050
+    - plex-media-server # Port 32400/web/index.html#
 #    - guacamole # Override 'mysql_root_password' w/ stack_mysql_root_password
 
     # - headphones    # port 8181
@@ -74,13 +75,13 @@
     # - owncloud
     
     
-#  post_tasks:
+  post_tasks:
 #    - name: Playbook --> Dir --> Set Owner
 #      file: dest={{ install_dir }} owner={{ stack_user }}
 #            group={{ stack_user_group }} recurse=yes
     
-    # - name: Reboot system
-    #   raw: /sbin/shutdown -r 0
-    #   sudo: yes
+     - name: Reboot system
+       raw: /sbin/shutdown -r 0
+       sudo: yes
     #   changed_when: True
   

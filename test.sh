@@ -45,8 +45,8 @@ vm_start() {
 
 vm_destroy() {
     exitCode=1
-	running=$(vagrant status $1 | grep -ic "$1.*running")
-	if [ "$running" == '1' ]; then
+	running=$(vagrant status $1 | grep -ic "$1.*not created")
+	if [ "$running" == '0' ]; then
 		print "$FUNCNAME ==> Destroying Box: $1"
 		vagrant destroy -f $1
         exitCode=$?

@@ -1,0 +1,14 @@
+---
+pms_version: 1.0.0.2261-a17e99e
+pms_filename: "plexmediaserver-{{ pms_version }}.x86_64.rpm"
+
+pms_link: "https://downloads.plex.tv/plex-media-server/{{ pms_version }}/{{ pms_filename }}"
+pms_dl_path: "/tmp/{{ pms_filename }}"
+
+# Backup Script
+pms_metadata_dir: /var/lib/plexmediaserver
+pms_config_dir: /etc/sysconfig/PlexMediaServer
+pms_backup_script_dir: "{{ install_dir }}/_backups/scritps"
+pms_backup_command: tar -cpzf
+pms_backup_filename: plex-media-server-`date \+%Y\%m\%d-%T`.tar.gz
+pms_backup_target: "{{ install_dir }}/_backups"

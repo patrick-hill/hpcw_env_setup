@@ -1,0 +1,11 @@
+---
+# Firewall Ports: https://support.plex.tv/hc/en-us/articles/201543147-What-network-ports-do-I-need-to-allow-through-my-firewall-
+
+- name: Check if installed
+  command: yum list installed plexmediaserver
+  register: check_installed
+  failed_when: check_installed.rc > 1
+
+- name: CentOS Install
+  include: "centos.yml"
+  when: ansible_distribution == 'CentOS' and check_installed.rc == 1
