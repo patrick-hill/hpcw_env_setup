@@ -2,3 +2,7 @@
 - name: CentOS
   include: "centos.yml"
   when: ansible_distribution == 'CentOS'
+
+- name: Ubuntu
+  include: "ubuntu.yml"
+  when: ansible_distribution in [ "Ubuntu", "Linuxmint" ]

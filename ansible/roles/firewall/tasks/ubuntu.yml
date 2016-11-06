@@ -1,0 +1,10 @@
+---
+# Enabled --> Configure
+- name:   Enable and Start
+  shell:  ufw enable
+  when:   firewall_enabled == true
+
+# Disabled
+- name:   Disable
+  shell:  ufw disable
+  when:   firewall_enabled == false
