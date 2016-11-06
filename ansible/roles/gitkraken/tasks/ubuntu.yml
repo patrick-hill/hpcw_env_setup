@@ -1,14 +1,6 @@
 ---
-- name: Download installer
-  get_url: url={{ gitkraken_link }} dest={{ gitkraken_dl_path }}
-
-- name: Install deb
-  apt: deb={{ gitkraken_dl_path }}
-
-- name: Remove deb file
-  file:
-    path: "{{ gitkraken_dl_path }}"
-    state: absent
+- name: Install deb from web
+  apt: deb={{ gitkraken_link }}
 
 - name: Symlink Settings
   file: dest=/home/{{os_username}}/.gitkraken
