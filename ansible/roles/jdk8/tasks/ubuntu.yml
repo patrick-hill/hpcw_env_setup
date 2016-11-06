@@ -13,8 +13,8 @@
   lineinfile:
     dest: /etc/environment
     state: present
-    regexp: {{ item.regex }}
-    line: {{ item.line }}
+    regexp: "{{ item.regex }}"
+    line: "{{ item.line }}"
     create: yes
   sudo: yes
   with_items:
