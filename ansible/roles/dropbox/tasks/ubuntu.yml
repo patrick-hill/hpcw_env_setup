@@ -1,19 +1,13 @@
 ---
-- name: Download installer
-  get_url: url={{ dropbox_link }} dest={{ dropbox_dl_path }}
-
-- name: Install deb
-  apt: deb={{ dropbox_dl_path }}
-  
 - name: Install dependencies
   apt: pkg={{ item }} state=installed
   with_items:
-        - python-gpgme
+    - python-gpgme
 
-- name: Remove deb file
-  file:
-    path: "{{ dropbox_dl_path }}"
-    state: absent
-    
-- name: Install the deamon
-  shell: dropbox start -i
+- name: Install deb
+  apt: deb={{ dropbox_link }}
+  sudo: yes
+
+# No longer working ;(
+# - name: Install the deamon
+#   shell: "dropbox start -i"
