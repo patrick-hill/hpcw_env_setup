@@ -1,9 +1,0 @@
-[Desktop Entry]
-Encoding=UTF-8
-Version=
-Name=Intellij Community Edition
-GenericName=intellij
-Type=Application
-Exec=sh /usr/local/bin/idea.sh
-Icon=/opt/idea-IC-143.2287.1/bin/idea.png
-Categories=Programming

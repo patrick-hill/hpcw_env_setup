@@ -1,0 +1,4 @@
+---
+# Install Intellij
+- src: jdauphant.intellij
+# GitHub: https://github.com/jdauphant/ansible-role-intellij
