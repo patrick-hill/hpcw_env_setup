@@ -1,7 +1,11 @@
 ---
+- name: Debian Common Packages
+  include: "common.yml"
+  when: ansible_distribution in [ "Ubuntu", "Linuxmint" ]
+
 - name: Ubuntu install
   include: "ubuntu.yml"
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_distribution == "Ubuntu"
 
 - name: CentOS install
   include: "centos.yml"

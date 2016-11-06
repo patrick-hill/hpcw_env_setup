@@ -1,0 +1,68 @@
+---
+- name: Common packages -> OS Utils
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items:
+    - software-properties-common
+    - numlockx
+  when: common_install_os_utils
+
+- name: Common packages -> Build Utils
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items:
+    - gcc
+    - make
+    - build-essential
+  when: common_install_build_utils
+
+- name: Common packages -> Filesystem Utils
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items:
+    - nfs-common
+    - exfat-fuse
+    - exfat-utils
+  when: common_install_filesys_utils
+
+- name: Common packages -> Archive Utils
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items:
+    - zip
+    - unzip
+    - rar
+    - unrar
+  when: common_install_archive_utils
+
+- name: Common packages -> Common Utils
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items:
+    - gparted
+    - curl
+    - wget
+    - vim
+    - vim-gnome
+    - python-gpgme
+    - python-simplejson
+  when: common_install_common_utils
+
+- name: Common packages -> Media
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items:
+    - vlc
+  when: common_install_media
+
+- name: Common packages -> Dev Utils
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items:
+    - git
+    - groovy
+    - npm
+    - gradle
+  when: common_install_dev_utils
+
+- name: Common packages -> Comm Utils
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items:
+    - skype
+  when: common_install_comm
+
+- name: Install linux headers
+  shell: apt install -y linux-headers-$(uname -r)
