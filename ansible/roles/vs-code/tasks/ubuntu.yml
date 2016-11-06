@@ -1,28 +1,31 @@
 ---
----
-- name: Download installer
-  get_url: url={{ vs_code_link }} dest={{ vs_code_dl_path }}
-
-- name: Install deb
-  apt: deb={{ vs_code_dl_path }}
-
-- name: Remove deb file
-  file:
-    path: "{{ vs_code_dl_path }}"
-    state: absent
+- name: Install deb from web
+  apt: deb="{{ vs_code_link }}"
+  sudo: yes
 
 - name: Settings PreReq
-  file: path=/home/{{ os_username }}/.config/Code/User state=directory
+  file:
+    path: "/home/{{ os_username }}/.config/Code/User"
+    state: directory
+  when: backup_dir_root is defined
 
 - name: Symlink Settings
-  file: dest=/home/{{ os_username }}/.config/Code/User/settings.json
-        src={{ backup_dir_root }}/configs/VSCode/settings.json
-        state=link
+  file:
+    dest: "/home/{{ os_username }}/.config/Code/User/settings.json"
+    src: "{{ backup_dir_root }}/configs/VSCode/settings.json"
+    state: link
+  when: backup_dir_root is defined
 
 - name: Extension PreReq
-  file: path=/home/{{ os_username }}/.vscode state=directory
+  file:
+    path: "/home/{{ os_username }}/.vscode"
+    state: directory
+  when: backup_dir_root is defined
 
 - name: Extensions Symlink
-  file: dest=/home/{{ os_username }}/.vscode/extensions
-        src={{ backup_dir_root }}/configs/VSCode/extensions
-        state=link
+  file:
+    dest: "/home/{{ os_username }}/.vscode/extensions"
+    src: "{{ backup_dir_root }}/configs/VSCode/extensions"
+    state: link
+  when: backup_dir_root is defined
+
