@@ -1,18 +1,40 @@
 ---
+# GitHub: https://github.com/brndnmtthws/conky
 - name: Add Conky-Manager PPA
   apt_repository: repo='ppa:teejee2008/ppa'
-  
+
 - name: Install
-  apt: pkg={{item}} state=installed  update_cache=yes
+  apt: pkg={{ item }} state=installed  update_cache=yes
   with_items:
-        - conky
+        - conky-all
         - conky-manager
+#        Support packages
+        - lm-sensors
+        - hddtemp
+        - dmidecode
 
 - name: Remove default ConkyManager Settings
-  file: {{ conky_config_file }} state=absent
+  file: path="{{ conky_config_file }}" state=absent
   ignore_errors: yes
   when: conky_use_backup
 
 - name: Symlink ConkyManager Settings
-  file: dest={{ conky_config_file }} src={{ conky_backup_file }} state=link
+  file:
+    dest: "{{ conky_config_file }}"
+    src:  "{{ conky_backup_file }}"
+    state: link
   when: conky_use_backup
+
+- name: Symlink Conky Dir
+  file:
+    dest: "/home/{{os_username}}/.conky"
+    src:  "{{ conky_dir }}"
+    state: link
+  when: conky_use_backup
+
+
+- name: Setup support package perms
+  shell:  {{ item }}
+  with_items:
+    - chmod u+x /usr/sbin/hddtemp
+    - chmod u+s /usr/sbin/dmidecode

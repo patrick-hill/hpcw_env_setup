@@ -1,4 +1,5 @@
 ---
 conky_ues_backup: true
-conky_config_file: path=/home/{{os_username}}/.config/conky-manager.json
-conky_backup_file: {{backup_dir_root}}/configs/conky/conky-manager.json
+conky_dir: "/home/{{os_username}}/.conky"
+conky_config_file: "/home/{{os_username}}/.config/conky-manager.json"
+conky_backup_file: "{{backup_dir_root}}/configs/conky/conky-manager.json"
