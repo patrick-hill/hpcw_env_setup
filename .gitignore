@@ -33,3 +33,5 @@ ansible/plugins/human_log.pyc
 sabnzbd_config.ini
 sabnzbd_old.ini
 
+# Ansible Galaxy Roles
+ansible/roles/jdauphant.intellij
