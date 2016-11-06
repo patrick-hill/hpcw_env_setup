@@ -5,4 +5,4 @@
 
 - name: Ubuntu install
   include: "ubuntu.yml"
-  when: ansible_distribution == 'Ubuntu' and file_check.stat.exists == False
+  when: ansible_distribution in [ "Ubuntu", "Linuxmint" ] and file_check.stat.exists == False
