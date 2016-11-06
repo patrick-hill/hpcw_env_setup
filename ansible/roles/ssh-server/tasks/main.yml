@@ -5,4 +5,4 @@
 
 - name: SSH --> Ubuntu install
   include: "ubuntu.yml"
-  when: ansible_distribution == 'Ubuntu' and check_installed.stat.exists == False
+  when: ansible_distribution in [ "Ubuntu", "Linuxmint" ] and check_installed.stat.exists == False

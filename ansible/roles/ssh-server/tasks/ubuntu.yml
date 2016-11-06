@@ -29,7 +29,7 @@
     # - { regex: "^Tunnel *", line: "Tunnel yes" }
 
 - name: Open firewall port
-  shell: ufw enable {{ ssh_port }}
+  shell: ufw allow {{ ssh_port }}
   sudo: yes
   # when: ssh_port != 22
 
