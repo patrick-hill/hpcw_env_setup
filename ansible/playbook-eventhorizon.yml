@@ -7,7 +7,7 @@
     hostname: eventhorizon
     os_username:    'phill'
     backup_dir_root: /home/phill/Dropbox/0-Backups
-    common_install_comm: false
+    firewall_enabled: true
     git_user_name:  "Patrick Hill"
     git_user_email: "Hill@HillsPCWorld.com"
     ssh_port: 22 # Defaults to 22, encrypt true value
@@ -32,18 +32,20 @@
 
   pre_tasks:
     - shell: echo 'Starting...'
-    
+
   roles:
-    - dropbox
+#    - { role: RoleName, sudo: yes/no }
     - common
+    - firewall
+    - dropbox
     - nfs-mounts
     - autokey
     - chrome
     - conky
     - gitkraken
     - git-config
-    - intellij
     - jdk8
+    - jdauphant.intellij
     - packer
     - remmina
     - ssh-server
