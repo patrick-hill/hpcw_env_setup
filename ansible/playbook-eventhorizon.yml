@@ -41,14 +41,14 @@
     - patrick-hill.autokey
     - patrick-hill.chrome
     - patrick-hill.conky
+    - patrick-hill.packer
+    - patrick-hill.vagrant
     - gitkraken
     - git-config
     - jdk8
     - jdauphant.intellij
-    - packer
     - remmina
     - ssh-server
-    - vagrant
     - virtualbox
     - vs-code
     - what-pulse
