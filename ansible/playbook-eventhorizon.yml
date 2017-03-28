@@ -37,6 +37,7 @@
     - common
     - firewall
     - nfs-mounts
+    - dotfiles
 
     - patrick-hill.dropbox
     - patrick-hill.autokey
