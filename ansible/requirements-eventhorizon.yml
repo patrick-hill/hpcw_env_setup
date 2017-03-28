@@ -8,6 +8,8 @@
 - src: jdauphant.intellij
 # GitHub: https://github.com/jdauphant/ansible-role-intellij# Others Roles
 - name: patrick-hill.packer
+- name: patrick-hill.remmina
 - name: patrick-hill.vagrant
+- name: patrick-hill.whatpulse
 # Others Roles
 - name: gantsign.gitkraken
