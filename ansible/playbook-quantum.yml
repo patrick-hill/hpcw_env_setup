@@ -8,7 +8,6 @@
     os_username:    'phill'
     common_install_media: false
     common_install_dev_utils: false
-    common_install_comm: false
 
   pre_tasks:
     - shell: echo 'Starting...'

@@ -26,7 +26,6 @@ in_list() {
 
 sed_replace() {
 	sed -i "s|.*$2.*|$3|" $1
-  # sed -i 
 }
 
 vm_check_status() {
@@ -71,7 +70,7 @@ if [[ $hostman_installed == 1 ]]; then
 fi
 
 # Install Ansible
-print "Pre-Reqa: Checking for Ansible"
+print "Pre-Reqs: Checking for Ansible"
 installed=$(which ansible && echo $?)
 if [ "$installed" == '1' ]; then
   sudo apt-get install software-properties-common

@@ -4,6 +4,7 @@
   with_items:
     - software-properties-common
     - numlockx
+    - solaar
   when: common_install_os_utils
 
 - name: Common packages -> Build Utils
@@ -41,6 +42,7 @@
     - vim-gnome
     - python-gpgme
     - python-simplejson
+    - k4dirstat
   when: common_install_common_utils
 
 - name: Common packages -> Media
@@ -57,12 +59,6 @@
     - npm
     - gradle
   when: common_install_dev_utils
-
-- name: Common packages -> Comm Utils
-  apt: pkg={{ item }} state=installed update_cache=yes
-  with_items:
-    - skype
-  when: common_install_comm
 
 - name: Install linux headers
   shell: apt install -y linux-headers-$(uname -r)

@@ -7,7 +7,6 @@ common_install_archive_utils: true
 common_install_common_utils: true
 common_install_media: true
 common_install_dev_utils: true
-common_install_comm: true
 
 # CentOS vars
 selinux_enabled: false
