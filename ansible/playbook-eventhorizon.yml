@@ -34,14 +34,13 @@
     - shell: echo 'Starting...'
 
   roles:
-#    - { role: RoleName, sudo: yes/no }
     - common
     - firewall
     - dropbox
     - nfs-mounts
-    - autokey
     - chrome
     - conky
+    - patrick-hill.autokey
     - gitkraken
     - git-config
     - jdk8

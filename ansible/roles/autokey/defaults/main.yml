@@ -1,4 +1,0 @@
----
-autokey_use_backup: true
-autokey_config_dir: "/home/{{ os_username }}/.config/autokey"
-autokey_backup_dir: "{{ backup_dir_root }}/configs/autokey"
