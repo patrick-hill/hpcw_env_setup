@@ -38,9 +38,9 @@
     - firewall
     - dropbox
     - nfs-mounts
-    - conky
     - patrick-hill.autokey
     - patrick-hill.chrome
+    - patrick-hill.conky
     - gitkraken
     - git-config
     - jdk8

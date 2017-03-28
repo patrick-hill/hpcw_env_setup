@@ -3,5 +3,6 @@
 # My Roles
 - name: patrick-hill.autokey
 - name: patrick-hill.chrome
+- name: patrick-hill.conky
 - src: jdauphant.intellij
 # GitHub: https://github.com/jdauphant/ansible-role-intellij
