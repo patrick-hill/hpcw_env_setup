@@ -1,8 +1,0 @@
----
-- name: Install deb from web
-  apt: deb={{ gitkraken_link }}
-
-- name: Symlink Settings
-  file: dest=/home/{{os_username}}/.gitkraken
-        src={{backup_dir_root}}/configs/GitKraken
-        state=link

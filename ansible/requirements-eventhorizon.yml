@@ -6,4 +6,6 @@
 - name: patrick-hill.chrome
 - name: patrick-hill.conky
 - src: jdauphant.intellij
-# GitHub: https://github.com/jdauphant/ansible-role-intellij
+# GitHub: https://github.com/jdauphant/ansible-role-intellij# Others Roles
+# Others Roles
+- name: gantsign.gitkraken
