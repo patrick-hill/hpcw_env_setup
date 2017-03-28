@@ -1,6 +1,7 @@
 ---
 # Install Intellij
 # My Roles
+- name: patrick-hill.dropbox
 - name: patrick-hill.autokey
 - name: patrick-hill.chrome
 - name: patrick-hill.conky

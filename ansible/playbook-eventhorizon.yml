@@ -36,7 +36,7 @@
   roles:
     - common
     - firewall
-    - dropbox
+    - patrick-hill.dropbox
     - nfs-mounts
     - patrick-hill.autokey
     - patrick-hill.chrome
