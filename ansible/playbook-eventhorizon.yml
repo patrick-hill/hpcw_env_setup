@@ -36,22 +36,26 @@
   roles:
     - common
     - firewall
-    - patrick-hill.dropbox
     - nfs-mounts
+
+    - patrick-hill.dropbox
     - patrick-hill.autokey
     - patrick-hill.chrome
     - patrick-hill.conky
+    - patrick-hill.franz
     - patrick-hill.packer
+    - patrick-hill.remmina
     - patrick-hill.vagrant
+    - patrick-hill.whatpulse
+
     - jdauphant.intellij
-    - gitkraken
+    - gantsign.gitkraken
+
     - git-config
     - jdk8
-    - remmina
     - ssh-server
     - virtualbox
     - vs-code
-    - what-pulse
 
   post_tasks:
 #    - name: Clone repo

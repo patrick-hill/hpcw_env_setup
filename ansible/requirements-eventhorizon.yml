@@ -4,6 +4,7 @@
 - name: patrick-hill.autokey
 - name: patrick-hill.chrome
 - name: patrick-hill.conky
+- name: patrick-hill.franz
 - name: patrick-hill.packer
 - name: patrick-hill.remmina
 - name: patrick-hill.vagrant
@@ -11,6 +12,6 @@
 
 # Others Roles
 # GitHub: https://github.com/jdauphant/ansible-role-intellij
-#- src: jdauphant.intellij
+- name: jdauphant.intellij
 - name: gantsign.gitkraken
 
