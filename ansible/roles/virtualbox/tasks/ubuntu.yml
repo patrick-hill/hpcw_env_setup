@@ -3,7 +3,8 @@
   apt: pkg={{item}} state=installed
   with_items:
         - virtualbox
-        - virtualbox-guest-additions-iso 
+        - virtualbox-guest-additions-iso
+        - virtualbox-qt
 
 #- name: Add repo key
 #  apt_key:
