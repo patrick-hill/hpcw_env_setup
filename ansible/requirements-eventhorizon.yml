@@ -1,15 +1,16 @@
 ---
-# Install Intellij
 # My Roles
 - name: patrick-hill.dropbox
 - name: patrick-hill.autokey
 - name: patrick-hill.chrome
 - name: patrick-hill.conky
-- src: jdauphant.intellij
-# GitHub: https://github.com/jdauphant/ansible-role-intellij# Others Roles
 - name: patrick-hill.packer
 - name: patrick-hill.remmina
 - name: patrick-hill.vagrant
 - name: patrick-hill.whatpulse
+
 # Others Roles
+# GitHub: https://github.com/jdauphant/ansible-role-intellij
+#- src: jdauphant.intellij
 - name: gantsign.gitkraken
+

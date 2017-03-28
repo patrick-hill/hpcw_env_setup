@@ -43,10 +43,10 @@
     - patrick-hill.conky
     - patrick-hill.packer
     - patrick-hill.vagrant
+    - jdauphant.intellij
     - gitkraken
     - git-config
     - jdk8
-    - jdauphant.intellij
     - remmina
     - ssh-server
     - virtualbox
