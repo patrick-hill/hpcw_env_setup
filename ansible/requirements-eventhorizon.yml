@@ -2,5 +2,6 @@
 # Install Intellij
 # My Roles
 - name: patrick-hill.autokey
+- name: patrick-hill.chrome
 - src: jdauphant.intellij
 # GitHub: https://github.com/jdauphant/ansible-role-intellij
