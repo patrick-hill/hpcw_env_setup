@@ -1,0 +1,8 @@
+---
+- name: Stat Keyboard conf file
+  stat: path={{ backup_dir_root }}/cinnamon/keybindings_backup.conf"
+  register: kb_conf
+
+- name: Import Keybindings
+  command: "dconf load /org/cinnamon/desktop/keybindings/ < {{ backup_dir_root }}/cinnamon/keybindings_backup.conf"
+  when: kb_conf.stat.exists

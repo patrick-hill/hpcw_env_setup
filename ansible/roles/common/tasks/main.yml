@@ -3,10 +3,14 @@
   include: "common.yml"
   when: ansible_distribution in [ "Ubuntu", "Linuxmint" ]
 
-- name: Ubuntu install
+- name: Ubuntu Common
   include: "ubuntu.yml"
   when: ansible_distribution == "Ubuntu"
 
-- name: CentOS install
+- name: CentOS Common
   include: "centos.yml"
   when: ansible_distribution == 'CentOS'
+
+- name: Cinnamon Common
+  include: "cinnamon.yml"
+  when: ansible_distribution == 'Linuxmint'
