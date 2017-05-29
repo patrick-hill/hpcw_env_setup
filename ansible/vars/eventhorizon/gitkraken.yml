@@ -1,0 +1,4 @@
+---
+
+gitkraken_backup_use_symlink: true
+gitkraken_backup_src_dir: "{{ backup_dir_root }}/configs/GitKraken"
