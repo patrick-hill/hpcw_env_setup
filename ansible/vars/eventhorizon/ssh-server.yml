@@ -1,0 +1,2 @@
+---
+ssh_port: 22 # Defaults to 22, encrypt true value

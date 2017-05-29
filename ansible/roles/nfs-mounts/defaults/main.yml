@@ -1,9 +1,0 @@
----
-nfs_server:
-nfs_mount_root_dir: "/home/{{ os_username }}/mnt"
-nfs_shares:
-#  mount_description:
-#    name: name_of_mount
-#    source: ip:/path
-#    type: nfs4
-#    opts: rw,hard,intr,rsize=8192,wsize=8192

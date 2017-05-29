@@ -1,9 +1,0 @@
----
-- name: Check if installed
-  stat: path=/opt/VSCode-linux-x64/code
-  register: file_check
-
-- name: Ubuntu install
-  include: "ubuntu.yml"
-  when: ansible_distribution in [ "Ubuntu", "Linuxmint" ] and file_check.stat.exists == False
-

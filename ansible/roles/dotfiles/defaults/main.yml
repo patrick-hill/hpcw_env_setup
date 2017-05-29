@@ -1,4 +1,0 @@
----
-dotfiles_dir:   "/home/{{ os_username }}/.dotfiles"
-dotfiles_repo:  https://github.com/patrick-hill/hpcw_dotfiles.git
-dotfiles_installer: "{{ dotfiles_dir }}/installer.sh"

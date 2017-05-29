@@ -1,0 +1,17 @@
+---
+
+nfs_server: 10.0.0.150
+nfs_shares:
+  - name: shared
+    source: "{{ nfs_server }}:/mnt/R6-18TB/Hills_Shared"
+    type: nfs4
+    opts: rw,hard,intr,rsize=8192,wsize=8192
+  - name: main
+    source: "{{ nfs_server }}:/mnt/R6-18TB/Hill_Main"
+    type: nfs4
+    opts: rw,hard,intr,rsize=8192,wsize=8192
+  - name: games
+    source: "{{ nfs_server }}:/mnt/R6-12TB/Games"
+    type: nfs4
+    opts: rw,hard,intr,rsize=8192,wsize=8192
+    

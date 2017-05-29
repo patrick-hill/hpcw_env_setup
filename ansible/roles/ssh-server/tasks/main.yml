@@ -1,8 +1,0 @@
----
-- name: Check for backup config file
-  stat: path=/etc/ssh/sshd_config.bak
-  register: check_installed
-
-- name: SSH --> Ubuntu install
-  include: "ubuntu.yml"
-  when: ansible_distribution in [ "Ubuntu", "Linuxmint" ] and check_installed.stat.exists == False

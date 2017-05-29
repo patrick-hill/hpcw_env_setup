@@ -1,9 +1,0 @@
----
-# - name: Check if installed
-#   stat: path=/opt/what-pulse/whatpulse
-#   register: vmware_check
-
-- name: Ubuntu install
-  include: "ubuntu.yml"
-  when: ansible_distribution == 'Ubuntu'
-#    and whatpulse_check.stat.exists == False

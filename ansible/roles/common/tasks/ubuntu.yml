@@ -1,8 +1,0 @@
----
-- name: Disable Guest Session
-  lineinfile:
-    dest: /usr/share/lightdm/lightdm.conf.d/50-unity-greeter.conf
-    line: "allow-guest=false"
-    state: present
-  sudo: yes
-

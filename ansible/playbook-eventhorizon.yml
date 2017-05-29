@@ -1,80 +1,49 @@
 ---
-#- hosts: eventhorizon
-- hosts: localhost
+- hosts: all
   gather_facts: yes
-  sudo: true
+  become: true
   vars:
-    hostname: eventhorizon
-    os_username:    'phill'
-    backup_dir_root: /home/phill/Dropbox/0-Backups
-    firewall_enabled: true
-    git_user_name:  "Patrick Hill"
-    git_user_email: "Hill@HillsPCWorld.com"
-    ssh_port: 22 # Defaults to 22, encrypt true value
+    os_username:    'vagrant'
+    backup_dir_root: "/home/{{ os_username }}/Dropbox/0-Backups"
     vnc_password: welcome1 # Defaults to 'welcome1', encrypt true value
-    nfs_server: 10.0.0.150
-    nfs_shares:
-      shared:
-        name: shared
-        source: "{{ nfs_server }}:/mnt/R6-18TB/Hills_Shared"
-        type: nfs4
-        opts: rw,hard,intr,rsize=8192,wsize=8192
-      main:
-        name: main
-        source: "{{ nfs_server }}:/mnt/R6-18TB/Hill_Main"
-        type: nfs4
-        opts: rw,hard,intr,rsize=8192,wsize=8192
-      games:
-        name: games
-        source: "{{ nfs_server }}:/mnt/R6-12TB/Games"
-        type: nfs4
-        opts: rw,hard,intr,rsize=8192,wsize=8192
+    
+    gitkraken_backup_use_symlink: true
+    gitkraken_backup_src_dir: "{{ backup_dir_root }}/configs/GitKraken"
+  
+  vars_files:
+    - vars/eventhorizon/common.yml
+    - vars/eventhorizon/nfs-mounts.yml
+    - vars/eventhorizon/dropbox.yml
+    - vars/eventhorizon/autokey.yml
+    - vars/eventhorizon/ssh-server.yml
+    # - vars/eventhorizon/
 
   pre_tasks:
     - shell: echo 'Starting...'
 
   roles:
-    - common
-    - firewall
-    - nfs-mounts
-    - dotfiles
-
+    - patrick-hill.common
+    # - patrick-hill.firewall
+    - patrick-hill.nfs-mounts
+    - patrick-hill.dotfiles
     - patrick-hill.dropbox
-    - patrick-hill.autokey
+    - patrick-hill.jdk8
+    # Don't use backups
     - patrick-hill.chrome
-    - patrick-hill.conky
     - patrick-hill.franz
     - patrick-hill.packer
-    - patrick-hill.remmina
     - patrick-hill.vagrant
     - patrick-hill.whatpulse
-
+    - patrick-hill.ssh-server
     - jdauphant.intellij
-    - gantsign.gitkraken
+    # Use Backups
+    - patrick-hill.autokey
+    - patrick-hill.conky
+    - patrick-hill.remmina
+    - patrick-hill.gitkraken
+    - patrick-hill.vs-code
 
-    - git-config
-    - jdk8
-    - ssh-server
-    - virtualbox
-    - vs-code
 
   post_tasks:
-#    - name: Clone repo
-#      git:  repo=ssh://git@github.com/patrick-hill/hpcw_dotfiles.git
-#            dest={{ src_dir }}/hpcw/hpcw_dotfiles
-#            accept_hostkey=yes
-#
-#    - name: Run dotfile setup
-#      shell: {{ src_dir }}/hpcw/hpcw_dotfiles/setup.sh
-
-    # - name: Symlink ssh dir
-    #   file:
-    #     src: {{ backup_dir_root }}/ssh/{{ hostname }}
-    #     dest: /home/{{ os_username }}/.ssh
-    #     state: link
-    
-    # - name: Set owner of .ssh
-    #   shell: chown -R {{ os_username }}:{{ os_username }} /home/{{ os_username }}/.ssh
-    
     - shell: echo 'Done'
 
