@@ -60,7 +60,14 @@ SERVERS = [
     :cpu          => 4,
     :gui          => false,
     :playbook     => 'playbook-stack.ymldb',  # Gets appended to playbook-<var_name>.yml
-    :ports        => []
+    :ports        => [
+      { :host => 8080,  :guest => 8080 },  # Sabnzbd
+      { :host => 8081,  :guest => 8081 },  # Sickrage
+      { :host => 5050,  :guest => 5050 },  # CouchPotato
+      { :host => 32400, :guest => 32400 }, # Plex
+      { :host => 8181,  :guest => 8181 },  # Headphones
+      { :host => 8989,  :guest => 8989 },  # Sonarr
+    ]
   }
 ]
 
@@ -95,7 +102,7 @@ Vagrant.configure("2") do |config|
       node.vm.hostname          = machine[:hostname] + DOMAIN
       # Ports for accessing the box services
       machine[:ports].each do |port|
-        node.vm.network :forwarded_port, guest: port[:g], host: port[:h], auto_correct: true
+        node.vm.network :forwarded_port, guest: port[:guest], host: port[:host], auto_correct: true
       end
       # Private net is generally desired
       node.vm.network :private_network, ip: machine[:ip],

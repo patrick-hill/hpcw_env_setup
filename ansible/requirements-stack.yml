@@ -1,0 +1,32 @@
+---
+# My Roles
+- name: patrick-hill.common
+  src:  https://github.com/patrick-hill/ansible-role-common
+
+- name: patrick-hill.firewall
+  src:  https://github.com/patrick-hill/ansible-role-firewall
+
+- name: patrick-hill.nfs-mounts
+  src:  https://github.com/patrick-hill/ansible-role-nfs-mounts
+
+- name: patrick-hill.openssl
+  src:  https://github.com/patrick-hill/ansible-role-openssl
+
+- name: patrick-hill.sabnzbd
+  src:  https://github.com/patrick-hill/ansible-role-sabnzbd
+
+- name: patrick-hill.couchpotato
+  src:  https://github.com/patrick-hill/ansible-role-couchpotato
+  
+- name: patrick-hill.sickrage
+  src:  https://github.com/patrick-hill/ansible-role-sickrage
+  
+- name: patrick-hill.plexmediaserver
+  src:  https://github.com/patrick-hill/ansible-role-plexmediaserver
+  
+- name: patrick-hill.headphones
+  src:  https://github.com/patrick-hill/ansible-role-headphones
+  
+- name: patrick-hill.sonarr
+  src:  https://github.com/patrick-hill/ansible-role-sonarr
+  

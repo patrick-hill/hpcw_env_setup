@@ -1,8 +1,0 @@
----
-- name: Check if installed
-  stat: path=/apps/headphones
-  register: check_installed
-
-- name: CentOS Install
-  include: "centos.yml"
-  when: ansible_distribution == 'CentOS' and check_installed.stat.exists == False

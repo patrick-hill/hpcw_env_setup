@@ -1,8 +1,0 @@
----
-- name: Check for certs
-  stat: path={{ ssl_dir }}
-  register: check_installed
-
-- name: Include tasks
-  include: "tasks.yml"
-  when: check_installed.stat.exists == False

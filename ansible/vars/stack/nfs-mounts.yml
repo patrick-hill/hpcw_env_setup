@@ -1,0 +1,13 @@
+---
+
+nfs_mount_root_dir: /mnt
+nfs_server: 10.0.0.150
+nfs_shares:
+  - name: Media
+    source: "{{ nfs_server }}:/mnt/R6-18TB/Hills_Shared/dataset_files/Media"
+    type: nfs4
+    opts: rw,hard,intr,rsize=8192,wsize=8192
+  - name: backup
+    source: "{{ nfs_server }}:/mnt/R6-18TB/Hills_Shared/dataset_files/Backups/vms"
+    type: nfs4
+    opts: rw,hard,intr,rsize=8192,wsize=8192
