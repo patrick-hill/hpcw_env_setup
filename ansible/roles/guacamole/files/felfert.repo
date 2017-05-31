@@ -1,7 +1,0 @@
-[home_felfert]
-name=felfert's Home Project (Fedora_19)
-type=rpm-md
-baseurl=http://download.opensuse.org/repositories/home:/felfert/Fedora_19/
-gpgcheck=1
-gpgkey=http://download.opensuse.org/repositories/home:/felfert/Fedora_19/repodata/repomd.xml.key
-enabled=1

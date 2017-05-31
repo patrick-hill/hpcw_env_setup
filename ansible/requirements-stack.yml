@@ -30,3 +30,13 @@
 - name: patrick-hill.sonarr
   src:  https://github.com/patrick-hill/ansible-role-sonarr
   
+# In Development
+# - name: patrick-hill.transmission
+#   src:  https://github.com/patrick-hill/ansible-role-transmission
+  
+# - name: patrick-hill.guacamole
+#   src:  https://github.com/patrick-hill/ansible-role-guacamole
+  
+# - name: patrick-hill.nginx
+#   src:  https://github.com/patrick-hill/ansible-role-nginx
+  
