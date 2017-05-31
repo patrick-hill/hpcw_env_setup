@@ -33,44 +33,39 @@
 
   pre_tasks:
     - shell:  echo "Starting..."
-    #    Verify Ansible Version
-    - assert:
-        that: ansible_version.major > 1
 
     - name:   Create group
-      group:  name={{ stack_user_group }} state=present gid={{ stack_user_group_gid }}
+      group:  name={{ stack_user_group }}
+              state=present
+              gid={{ stack_user_group_gid }}
 
     - name: Create user
-      user: name={{ stack_user }} state=present uid={{ stack_user_uid }} group={{ stack_user_group }}
+      user: name={{ stack_user }}
+            state=present
+            uid={{ stack_user_uid }}
+            group={{ stack_user_group }}
 
   roles:
     - patrick-hill.common
     - patrick-hill.nfs-mounts
     - patrick-hill.firewall
-    - openssl
-    - sabnzbd       # port 8080
-    - sickrage      # port 8081
-    - couchpotato   # port 5050
-    - plex-media-server # Port 32400/web/index.html#
-#    - guacamole # Override 'mysql_root_password' w/ stack_mysql_root_password
-
-    # - headphones    # port 8181
-    # - sonarr        # port 8989
-    # - transmission  # port 
+    - patrick-hill.openssl
+    - patrick-hill.sabnzbd          # port 8080
+    - patrick-hill.sickrage         # port 8081
+    - patrick-hill.couchpotato      # port 5050
+    - patrick-hill.plexmediaserver  # Port 32400/web/index.html#
+    - patrick-hill.headphones       # port 8181
+    - patrick-hill.sonarr           # port 8989
     # http://geekyadmins.com/install-transmission-on-centos-7/
     # https://elijahpaul.co.uk/script-install-for-transmission-2-83-seedbox-on-centos-6-5/
-    # - plex
+    # - transmission  # port 
+#    - guacamole # Override 'mysql_root_password' w/ stack_mysql_root_password
     # - subsonic
     # - owncloud
     
-    
   post_tasks:
-#    - name: Playbook --> Dir --> Set Owner
-#      file: dest={{ install_dir }} owner={{ stack_user }}
-#            group={{ stack_user_group }} recurse=yes
-    
-     - name: Reboot system
-       raw: /sbin/shutdown -r 0
-       sudo: yes
+    #  - name: Reboot system
+    #    raw: /sbin/shutdown -r 0
+    #    sudo: yes
     #   changed_when: True
   
