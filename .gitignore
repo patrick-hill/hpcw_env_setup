@@ -35,3 +35,4 @@ sabnzbd_old.ini
 
 # Ansible
 ansible/vault-password-file.txt
+ansible/roles/patrick-hill*
