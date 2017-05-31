@@ -14,7 +14,7 @@
     - vars/eventhorizon/autokey.yml
     - vars/eventhorizon/ssh-server.yml
     - vars/eventhorizon/gitkraken.yml
-    # - vars/eventhorizon/
+    - vars/eventhorizon/remmina.yml
 
   pre_tasks:
     - shell: echo 'Starting...'
