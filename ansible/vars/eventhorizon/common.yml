@@ -8,3 +8,4 @@ common_install_media: true
 common_install_dev_utils: true
 common_install_hw_apps: true
 common_install_av: true
+common_install_printer_scanners: true
