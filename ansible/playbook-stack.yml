@@ -11,13 +11,13 @@
     backup_dir_root: /mnt/backup
 
     nfs_backup_target: "{{ nfs_mount_root_dir }}/backup"
+    
     sab_restore_file: "{{ backup_dir_root }}/configs/vms-stack/sabnzbd_backup.tar.gz"
     sab_backup_target: "{{ nfs_backup_target }}"
+    
     sickrage_restore_file: "{{ backup_dir_root }}/configs/vms-stack/sickrage_backup.tar.gz"
     sickrage_backup_target: "{{ nfs_backup_target }}"
-    couchpotato_restore_file: "{{ backup_dir_root }}/configs/vms-stack/couchpotato_backup.tar.gz"
-    couchpotato_backup_target: "{{ nfs_backup_target }}"
-
+    
     stack_user: "{{ os_username }}"
     stack_password: welcome1
     stack_user_uid: 1020
@@ -30,6 +30,7 @@
   
   vars_files:
     - vars/stack/nfs-mounts.yml
+    - vars/stack/couchpotato.yml
 
   pre_tasks:
     - shell:  echo "Starting..."

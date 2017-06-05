@@ -1,0 +1,6 @@
+---
+
+couchpotato_restore_file: "{{ backup_dir_root }}/configs/vms-stack/couchpotato_backup.tar.gz"
+
+# Backups
+couchpotato_backup_target: "{{ nfs_mount_root_dir }}/backup/couchpotato"
