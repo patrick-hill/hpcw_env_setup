@@ -59,7 +59,7 @@ SERVERS = [
     :ram          => 4096,
     :cpu          => 4,
     :gui          => false,
-    :playbook     => 'playbook-stack.ymldb',  # Gets appended to playbook-<var_name>.yml
+    :playbook     => 'playbook-stack.yml',  # Gets appended to playbook-<var_name>.yml
     :ports        => [
       { :host => 8080,  :guest => 8080 },  # Sabnzbd
       { :host => 8081,  :guest => 8081 },  # Sickrage
