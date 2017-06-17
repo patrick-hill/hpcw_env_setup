@@ -10,5 +10,4 @@
   roles:
     - patrick-hill.common
     - patrick-hill.firewall
-    # - patrick-hill.ansible-tower
-    - ansible-role-ansible-tower
+    - patrick-hill.ansible-tower

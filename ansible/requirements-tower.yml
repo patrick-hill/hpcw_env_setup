@@ -6,5 +6,5 @@
 - name: patrick-hill.firewall
   src:  https://github.com/patrick-hill/ansible-role-firewall
 
-# - name: patrick-hill.ansible-tower
-#   src:  https://github.com/patrick-hill/ansible-role-ansible-tower
+- name: patrick-hill.ansible-tower
+  src:  https://github.com/patrick-hill/ansible-role-ansible-tower
