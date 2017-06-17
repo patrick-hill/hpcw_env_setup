@@ -5,7 +5,7 @@
   vars:
     os_username: usenet
     install_dir: /apps
-    selinux_enabled: false
+    common_centos_selinux_enabled: false
     firewall_enabled: false
     ssl_dir: "{{ install_dir }}/ssl"
     backup_dir_root: /mnt/backup
