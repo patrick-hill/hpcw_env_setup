@@ -28,12 +28,10 @@ ansible.cfg
 ansible/plugins/human_log.py
 ansible/plugins/human_log.pyc
 *.retry
+ansible/vault-password-file.txt
+ansible/roles/patrick-hill*
+ansible/files
 
 # Configs
 sabnzbd_config.ini
 sabnzbd_old.ini
-
-# Ansible
-ansible/vault-password-file.txt
-ansible/roles/patrick-hill*
-ansible/files
