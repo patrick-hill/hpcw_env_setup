@@ -1,0 +1,22 @@
+---
+
+# Common
+common_centos_selinux_enabled: false
+common_centos_repo_epel_enabled: true
+common_centos_repo_rpmfusion_enabled: false
+common_centos_ipv6_enabled: false
+
+# Firewall
+firewall_enabled: false
+
+# Ansible Tower
+tower_version: '3.1.3'
+tower_archive: "ansible-tower-setup-{{ tower_version }}.tar.gz"
+tower_url: "http://releases.ansible.com/ansible-tower/setup/{{ tower_archive }}"
+
+tower_archive_path: "{{ playbook_dir }}/files/{{ tower_archive }}"
+
+# Vault Keys
+# tower_admin_password: 
+# tower_pg_password: 
+# tower_rabbitmq_password: 

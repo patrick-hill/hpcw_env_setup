@@ -68,6 +68,19 @@ SERVERS = [
       { :host => 8181,  :guest => 8181 },  # Headphones
       { :host => 8989,  :guest => 8989 },  # Sonarr
     ]
+  } ,{
+    :hostname     => 'tower',
+    :ip           => NETWORK + '6',
+    :box          => BOX_CENT_7,
+    :box_updates  => true,
+    :ram          => 2048,
+    :cpu          => 2,
+    :gui          => false,
+    :playbook     => 'playbook-tower.yml',  # Gets appended to playbook-<var_name>.yml
+    :ports        => [
+      { :host => 8080,  :guest => 80 },  # Ansible Tower
+      { :host => 8443,  :guest => 443 }, # Ansible Tower
+    ]
   }
 ]
 

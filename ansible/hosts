@@ -11,3 +11,6 @@ proxy.hpcw.com
 
 [eventhorizon]
 localhost
+
+[tower]
+10.0.0.9 ansible_user=phill
