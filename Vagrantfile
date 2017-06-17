@@ -43,7 +43,7 @@ SERVERS = [
     :ports        => []
   } ,{
     :hostname     => 'proxy',
-    :ip           => NETWORK + '5',
+    :ip           => NETWORK + '4',
     :box          => BOX_CENT_7,
     :box_updates  => true,
     :ram          => 2048,
@@ -53,7 +53,7 @@ SERVERS = [
     :ports        => []
   } ,{
     :hostname     => 'stack',
-    :ip           => NETWORK + '3',
+    :ip           => NETWORK + '5',
     :box          => BOX_CENT_7,
     :box_updates  => true,
     :ram          => 4096,
