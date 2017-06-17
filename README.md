@@ -1,4 +1,8 @@
 # HPCW Env Setup
+This repo is just an archive now.   
+All environment provision now follows the ansible-role-${name}, ansible-playbook-${name} or vagrant-ansible-${name} schema repos.
+
+
 Automated provisioning of my various environments.
 * Warning: I'm new to Ansible and still learning the best ways to utilize its many features.
 If you see me doing something asinine, SAY SOMETHING!
